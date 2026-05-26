@@ -51,7 +51,12 @@ export function PhotoEditor() {
       "127.0.0.1", 
       "ilanx.com", 
       "www.ilanx.com", 
-      "arsaisaretleme.vercel.app" // Add any additional staging/deployment domains here
+      "arsaisaretleme.vercel.app",
+      "ynadijital.com",
+      "ynadigitalsites.com",
+      "ankaraustabul.com",
+      "celenkdiyari.com",
+      "tsukodesign.com"
     ];
 
     // 1. Domain Lock: Prevent running the application on copied/unauthorized domains
