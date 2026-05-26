@@ -16,11 +16,12 @@ export const LocationSettingsPanel = memo(function LocationSettingsPanel({
       <label className="block space-y-1">
         <span className="text-xs text-muted-foreground">Etiket</span>
         <input
+          id="location-label-input"
           type="text"
           value={locationSettings.label ?? ""}
           onChange={(e) => handleLocationSettingsUpdate({ label: e.target.value })}
           placeholder="Örn: Ana Giriş"
-          className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm"
+          className="h-9 w-full rounded-lg border border-input bg-background px-3 text-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         />
       </label>
 

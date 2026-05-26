@@ -339,6 +339,13 @@ export function useCanvasTools(
 
     onCanvasReady?.(canvas);
 
+    (window as any).__finishDrawing = () => {
+      finishPolygon(canvas);
+    };
+    (window as any).__cancelDrawing = () => {
+      clearPolygonPreview(canvas);
+    };
+
     const fitImage = () => {
       if (!canvas.backgroundImage || typeof canvas.backgroundImage === "string") {
         return;
@@ -565,12 +572,14 @@ export function useCanvasTools(
         return;
       }
       if (data?.type === "location") {
-        const currentLabel = data.label ?? "Lokasyon";
-        const newLabel = window.prompt("Lokasyon etiketi:", currentLabel);
-        if (newLabel !== null && newLabel.trim() !== "") {
-          target.set?.({ label: newLabel });
-          saveHistory();
-        }
+        useEditorStore.getState().setSidePanelOpen(true);
+        setTimeout(() => {
+          const input = document.getElementById("location-label-input") as HTMLInputElement | null;
+          if (input) {
+            input.focus();
+            input.select();
+          }
+        }, 80);
         return;
       }
 
@@ -643,22 +652,23 @@ export function useCanvasTools(
         const textChild = group.getObjects().find(o => o.type === "text" || o.type === "i-text") as import("fabric").Text | undefined;
         if (textChild) {
           const currentText = textChild.text === " " ? "" : (textChild.text || "");
-          const newText = window.prompt("Pano metnini girin:", currentText);
-          if (newText !== null) {
-            const formatted = newText.trim() === "" ? " " : newText;
-            textChild.set({ text: formatted });
-            const bgObj = group.getObjects()[0];
-            if (bgObj && bgObj.width && bgObj.height) {
-              textChild.set({
-                left: (bgObj.left ?? 0) + bgObj.width / 2,
-                top: (bgObj.top ?? 0) + bgObj.height / 2,
-              });
-            }
-            group.set("dirty", true);
-            (group as any)._calcBounds?.(true);
-            group.setCoords();
-            canvas.requestRenderAll();
-            saveHistory();
+          if ((window as any).__openPanoModal) {
+            (window as any).__openPanoModal(currentText, (newText: string) => {
+              const formatted = newText.trim() === "" ? " " : newText;
+              textChild.set({ text: formatted });
+              const bgObj = group.getObjects()[0];
+              if (bgObj && bgObj.width && bgObj.height) {
+                textChild.set({
+                  left: (bgObj.left ?? 0) + bgObj.width / 2,
+                  top: (bgObj.top ?? 0) + bgObj.height / 2,
+                });
+              }
+              group.set("dirty", true);
+              (group as any)._calcBounds?.(true);
+              group.setCoords();
+              canvas.requestRenderAll();
+              saveHistory();
+            });
           }
         }
         return;
@@ -751,6 +761,9 @@ export function useCanvasTools(
       canvas.off("object:rotating", onRotating);
       canvas.off("object:added", onLayerSync);
       canvas.off("object:removed", onLayerSync);
+      delete (window as any).__finishDrawing;
+      delete (window as any).__cancelDrawing;
+
       onCanvasReady?.(null);
       canvas.dispose();
       canvasRef.current = null;

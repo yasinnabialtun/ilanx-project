@@ -29,9 +29,36 @@ export function PhotoEditor() {
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
   const [tabConflict, setTabConflict] = useState(false);
   const [showLandscapeTip, setShowLandscapeTip] = useState(false);
+  const [panoModal, setPanoModal] = useState<{
+    open: boolean;
+    text: string;
+    onSave: (newText: string) => void;
+  }>({ open: false, text: "", onSave: () => {} });
 
   const isRecordingVideo = useEditorStore((s) => s.isRecordingVideo);
   const autosaveStatus = useEditorStore((s) => s.autosaveStatus);
+  const exportOptions = useEditorStore((s) => s.exportOptions);
+  const [videoProgress, setVideoProgress] = useState(0);
+
+  // Video recording progress animator
+  useEffect(() => {
+    if (!isRecordingVideo) {
+      setVideoProgress(0);
+      return;
+    }
+
+    const durationMs = (exportOptions.duration || 5) * 1000;
+    const intervalTime = 100;
+    const step = (intervalTime / durationMs) * 100;
+
+    let currentProgress = 0;
+    const interval = setInterval(() => {
+      currentProgress = Math.min(99, currentProgress + step);
+      setVideoProgress(Math.floor(currentProgress));
+    }, intervalTime);
+
+    return () => clearInterval(interval);
+  }, [isRecordingVideo, exportOptions.duration]);
 
   // License state from Zustand
   const isLicensed = useEditorStore((s) => s.isLicensed);
@@ -257,6 +284,17 @@ export function PhotoEditor() {
     };
   }, []);
 
+  // Expose pano text edit modal trigger
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    (window as any).__openPanoModal = (currentText: string, onSave: (newText: string) => void) => {
+      setPanoModal({ open: true, text: currentText, onSave });
+    };
+    return () => {
+      delete (window as any).__openPanoModal;
+    };
+  }, []);
+
   const handleRecover = () => {
     const savedBg = localStorage.getItem("ilanx_bg_data");
     if (savedBg) {
@@ -441,12 +479,16 @@ export function PhotoEditor() {
             <h3 className="text-sm font-semibold text-white">Video Dışa Aktarılıyor</h3>
             <p className="text-xs text-zinc-400 mt-2">Animasyon karesi kaydediliyor ve video dosyası kodlanıyor.</p>
             
-            <div className="mt-4 flex items-center justify-center gap-2">
-              <span className="size-2 rounded-full bg-cyan-500 animate-bounce delay-75" />
-              <span className="size-2 rounded-full bg-purple-500 animate-bounce delay-150" />
-              <span className="size-2 rounded-full bg-pink-500 animate-bounce delay-300" />
+            {/* Progress Bar & Percentage */}
+            <div className="mt-5 w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+              <div 
+                className="bg-gradient-to-r from-cyan-500 to-purple-500 h-1.5 rounded-full transition-all duration-100 ease-out" 
+                style={{ width: `${videoProgress}%` }}
+              />
             </div>
-            <p className="text-[10px] text-zinc-500 mt-3">Lütfen bu sekmeyi kapatmayın.</p>
+            <p className="text-xs font-bold text-cyan-400 mt-2.5">Kayıt Durumu: %{videoProgress}</p>
+            
+            <p className="text-[10px] text-zinc-500 mt-3.5">Lütfen tarayıcı sekmesini kapatmayın.</p>
           </div>
         </div>
       )}
@@ -484,6 +526,47 @@ export function PhotoEditor() {
 
       {/* Licensing Modal */}
       <LicenseModal />
+
+      {/* Pano Metni Düzenleme Modalı */}
+      {panoModal.open && (
+        <div className="absolute inset-0 z-[120] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="w-[90%] max-w-sm rounded-2xl border border-white/10 bg-zinc-900/95 p-5 shadow-2xl backdrop-blur-md animate-in zoom-in-95 duration-200 text-white">
+            <h3 className="text-sm font-semibold">Pano Metnini Düzenle</h3>
+            <input
+              type="text"
+              value={panoModal.text}
+              onChange={(e) => setPanoModal(prev => ({ ...prev, text: e.target.value }))}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  panoModal.onSave(panoModal.text);
+                  setPanoModal(prev => ({ ...prev, open: false }));
+                } else if (e.key === "Escape") {
+                  setPanoModal(prev => ({ ...prev, open: false }));
+                }
+              }}
+              className="mt-3 h-10 w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 text-sm text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-cyan-500"
+              autoFocus
+            />
+            <div className="mt-4 flex gap-2 justify-end">
+              <button
+                onClick={() => setPanoModal(prev => ({ ...prev, open: false }))}
+                className="rounded-lg px-3 py-1.5 text-xs font-semibold text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              >
+                İptal
+              </button>
+              <button
+                onClick={() => {
+                  panoModal.onSave(panoModal.text);
+                  setPanoModal(prev => ({ ...prev, open: false }));
+                }}
+                className="rounded-lg bg-cyan-500 hover:bg-cyan-600 text-white px-3.5 py-1.5 text-xs font-semibold shadow-sm transition-colors cursor-pointer"
+              >
+                Kaydet
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

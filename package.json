@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:cpanel": "npm run build && node scripts/pack-cpanel.js",
     "start": "next start",
     "lint": "eslint",
     "fix-perms": "chmod -R 755 .next"

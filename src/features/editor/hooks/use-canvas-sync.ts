@@ -319,8 +319,15 @@ export function useCanvasSync() {
     const vpt = canvas.viewportTransform;
     if (!vpt) return;
     
-    const centerX = (canvas.getWidth() / 2 - vpt[4]) / zoom;
-    const centerY = (canvas.getHeight() / 2 - vpt[5]) / zoom;
+    // Count existing stickers to stagger positions and prevent perfect overlap
+    const stickerCount = canvas.getObjects().filter(o => {
+      const d = o.get?.("data") as any;
+      return d?.type === "sticker";
+    }).length;
+    const offset = (stickerCount * 25) % 150;
+
+    const centerX = (canvas.getWidth() / 2 - vpt[4]) / zoom + offset;
+    const centerY = (canvas.getHeight() / 2 - vpt[5]) / zoom + offset;
 
     let sticker: import("fabric").Group | null = null;
     switch (type) {

@@ -152,6 +152,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
         isRecordingVideo
       }
       title={tool.label}
+      aria-label={tool.label}
       className="min-h-[40px] min-w-[40px] shrink-0 touch-manipulation"
     >
       <tool.icon className="size-4" />
@@ -196,6 +197,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           size="sm"
           onClick={() => fileRef.current?.click()}
           disabled={!isLicensed}
+          aria-label="Görsel Yükle"
           className="min-h-[36px] touch-manipulation"
         >
           <ImagePlus className="size-4" />
@@ -210,6 +212,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => setMobileToolsOpen(!mobileToolsOpen)}
           className="md:hidden min-h-[36px] touch-manipulation"
           title="Araçları Göster/Gizle"
+          aria-label="Araçları Göster veya Gizle"
         >
           <Menu className="size-4" />
           <span className="hidden xs:inline">Araçlar</span>
@@ -224,6 +227,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!isLicensed}
           className="min-h-[36px] touch-manipulation"
           title="Ayarlar/Özellikler Paneli"
+          aria-label="Özellikler Panelini Aç veya Kapat"
         >
           <SlidersHorizontal className="size-4" />
           <span className="hidden sm:inline">Panel</span>
@@ -239,6 +243,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => undoEditor()}
           disabled={!canUndo || !isLicensed}
           title="Geri al (Ctrl+Z)"
+          aria-label="Son yapılan işlemi geri al"
           className="min-h-[36px] min-w-[36px] touch-manipulation"
         >
           <Undo2 className="size-4" />
@@ -250,6 +255,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => redoEditor()}
           disabled={!canRedo || !isLicensed}
           title="Yinele (Ctrl+Y)"
+          aria-label="Geri alınan işlemi yinele"
           className="min-h-[36px] min-w-[36px] touch-manipulation"
         >
           <Redo2 className="size-4" />
@@ -262,6 +268,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           size="sm"
           onClick={() => deleteEditorSelection()}
           disabled={!hasBackground || !isLicensed}
+          aria-label="Seçili nesneyi sil"
           className="min-h-[36px] touch-manipulation"
         >
           <Trash2 className="size-4" />
@@ -278,6 +285,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!hasBackground || isRecordingVideo || !isLicensed}
           className="min-h-[36px] touch-manipulation"
           title="PNG olarak indir"
+          aria-label="Tasarımı PNG görseli olarak indir"
         >
           <Download className="size-4" />
           <span className="hidden sm:inline">PNG</span>
@@ -290,6 +298,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!hasBackground || isRecordingVideo || !isLicensed}
           className="min-h-[36px] touch-manipulation"
           title="PDF olarak indir"
+          aria-label="Tasarımı PDF belgesi olarak indir"
         >
           <Download className="size-4" />
           <span className="hidden sm:inline">PDF</span>
@@ -301,6 +310,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           variant={isRecordingVideo ? "destructive" : "outline"}
           onClick={handleSaveVideo}
           disabled={!hasBackground || isRecordingVideo || !isLicensed}
+          aria-label="Tasarımı canlandırmalı WebM videosu olarak indir"
           className={`min-h-[36px] touch-manipulation ${isRecordingVideo ? "animate-pulse" : ""}`}
         >
           <Video className={`size-4 ${isRecordingVideo ? "text-red-500" : ""}`} />
@@ -319,6 +329,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => zoomCanvas(0.15)}
           disabled={!hasBackground}
           title="Yakınlaştır"
+          aria-label="Tuali yakınlaştır"
           className="min-h-[36px] min-w-[36px] touch-manipulation"
         >
           <ZoomIn className="size-4" />
@@ -330,6 +341,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => zoomCanvas(-0.15)}
           disabled={!hasBackground}
           title="Uzaklaştır"
+          aria-label="Tuali uzaklaştır"
           className="min-h-[36px] min-w-[36px] touch-manipulation"
         >
           <ZoomOut className="size-4" />
@@ -341,6 +353,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => fitCanvasToScreen()}
           disabled={!hasBackground}
           title="Sığdır"
+          aria-label="Görseli ekrana sığdır"
           className="min-h-[36px] min-w-[36px] touch-manipulation"
         >
           <Maximize2 className="size-4" />
@@ -352,6 +365,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => resetCanvasZoom()}
           disabled={!hasBackground}
           title="Zoom sıfırla"
+          aria-label="Yakınlaştırmayı bire bir oranına sıfırla"
           className="hidden lg:inline-flex min-h-[36px] min-w-[36px]"
         >
           1:1
@@ -371,6 +385,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
             }
           }}
           title="Klavye Kısayolları (?)"
+          aria-label="Klavye kısayolları listesini aç"
           className="min-h-[36px] min-w-[36px]"
         >
           <Keyboard className="size-4" />
@@ -386,6 +401,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
             }
           }}
           disabled={!hasBackground || !isLicensed}
+          aria-label="Tüm çizimleri temizle"
           className="hidden md:inline-flex"
         >
           Temizle
