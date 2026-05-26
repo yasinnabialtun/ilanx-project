@@ -45,3 +45,6 @@ next-env.d.ts
 /tmp-screens
 /saa-s-landing-page
 /scratch
+
+# Safe Data Storage
+.data/*.json

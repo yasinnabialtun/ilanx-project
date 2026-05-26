@@ -8,8 +8,15 @@ import { LandingButton } from "@/shared/components/ui/landing-button"
 
 import { CanvasMockup } from "./canvas-mockup"
 import { PlotDrawingAnimation } from "./plot-drawing-animation"
+import type { ContentData } from "@/core/db/content-db"
 
-export function HeroSection() {
+export function HeroSection({ content }: { content?: ContentData["hero"] }) {
+  // Use provided content or fallback to hardcoded text during development if missing
+  const title = content?.title || "Arsa İlanlarınızı 10 Kat Daha Hızlı Satın";
+  const description = content?.description || "Tasarımcı tutmadan, sadece 2 dakikada dikkat çeken neon sınırlar, 3D satılık tabelaları ve animasyonlu video sunumları hazırlayın. Sıradan görsellerle ilan sitelerinde kaybolmayın.";
+  const btn1 = content?.buttonPrimary || "Ücretsiz Çizmeye Başla";
+  const btn2 = content?.buttonSecondary || "Nasıl Çalışır?";
+
   return (
     <section className="relative min-h-screen overflow-hidden pt-24 pb-16">
       {/* Background Effects */}
@@ -42,11 +49,9 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance"
-            >
-              Arsa İlanlarınızı{" "}
-              <span className="text-gradient">10 Kat Daha Hızlı Satın</span>
-            </motion.h1>
+              className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ __html: title.replace(/(10 Kat Daha Hızlı Satın)/g, '<span class="text-gradient">$1</span>') }}
+            />
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -54,7 +59,7 @@ export function HeroSection() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-xl"
             >
-              Tasarımcı tutmadan, sadece 2 dakikada dikkat çeken neon sınırlar, 3D satılık tabelaları ve animasyonlu video sunumları hazırlayın. Sıradan görsellerle ilan sitelerinde kaybolmayın.
+              {description}
             </motion.p>
 
             <motion.div
@@ -66,12 +71,12 @@ export function HeroSection() {
               <LandingButton size="lg" className="glow-primary group" asChild>
                 <Link href="/editor">
                   <Play className="mr-2 h-4 w-4" />
-                  Ücretsiz Çizmeye Başla
+                  {btn1}
                 </Link>
               </LandingButton>
               <LandingButton size="lg" variant="outline" className="group" asChild>
                 <Link href="#demo">
-                  Nasıl Çalışır?
+                  {btn2}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </LandingButton>

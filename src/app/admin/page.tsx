@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { KeyRound, ShieldAlert, Sparkles, Plus, Trash2, Calendar, HardDrive, RefreshCw } from "lucide-react";
+import { KeyRound, ShieldAlert, Sparkles, Plus, Trash2, Calendar, HardDrive, RefreshCw, Type, Key } from "lucide-react";
 import Link from "next/link";
+import { ContentEditor } from "@/features/admin/components/ContentEditor";
 
 type License = {
   id: string;
@@ -23,6 +24,7 @@ export default function AdminPage() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"licenses" | "content">("licenses");
 
   // Load admin secret from localStorage if it exists
   useEffect(() => {
@@ -220,7 +222,29 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* Stats Dashboard */}
+        {/* TABS */}
+        <div className="flex items-center gap-2 border-b border-zinc-900 pb-4">
+          <button
+            onClick={() => setActiveTab("licenses")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
+              activeTab === "licenses" ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/50 border border-transparent"
+            }`}
+          >
+            <Key className="size-4" /> Lisans Yönetimi
+          </button>
+          <button
+            onClick={() => setActiveTab("content")}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
+              activeTab === "content" ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20" : "text-zinc-500 hover:text-zinc-300 hover:bg-zinc-900/50 border border-transparent"
+            }`}
+          >
+            <Type className="size-4" /> Site Metinleri (CMS)
+          </button>
+        </div>
+
+        {activeTab === "licenses" ? (
+          <>
+            {/* Stats Dashboard */}
         <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
           <div className="rounded-xl border border-zinc-900 bg-zinc-900/20 p-4 backdrop-blur-md flex flex-col justify-between">
             <span className="text-xs text-zinc-500 font-medium">Aktif Lisanslar</span>
@@ -368,6 +392,10 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
+        </>
+        ) : (
+          <ContentEditor adminSecret={adminSecret} />
+        )}
       </main>
     </div>
   );

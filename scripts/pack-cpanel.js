@@ -46,7 +46,7 @@ try {
   const desktopPath = path.join(process.env.USERPROFILE || process.env.HOME, 'Desktop', 'ilanx_guncel_surum.tar.gz');
   execSync(`tar -a -c -f "${desktopPath}" -C "${standaloneDir}" *`, { stdio: 'inherit' });
   console.log(`✅ BAŞARILI! Masaüstünüzde "ilanx_guncel_surum.tar.gz" oluşturuldu.`);
-  console.log('🚀 Bu dosyayı cPanel\\'e yükleyip Extract edin ve Restart tuşuna basın.');
+  console.log("🚀 Bu dosyayı cPanel'e yükleyip Extract edin ve Restart tuşuna basın.");
 } catch (error) {
   console.error('❌ ZIP oluşturulurken hata oluştu:', error.message);
 }

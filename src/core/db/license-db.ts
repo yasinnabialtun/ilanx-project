@@ -11,7 +11,7 @@ export type License = {
   deviceLimit: number;
 };
 
-const DB_PATH = path.join(process.cwd(), "src/core/db/licenses.json");
+const DB_PATH = path.join(process.cwd(), ".data/licenses.json");
 
 // Ensure the directory and file exist with initial data if empty
 function ensureDb() {

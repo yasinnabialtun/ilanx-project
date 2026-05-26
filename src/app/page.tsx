@@ -10,15 +10,18 @@ import { TechStackSection } from "@/features/landing/components/tech-stack-secti
 import { UseCasesSection } from "@/features/landing/components/use-cases-section";
 import { ProblemSection } from "@/features/landing/components/problem-section";
 import { FAQSection } from "@/features/landing/components/faq-section";
+import { contentDb } from "@/core/db/content-db";
 
 export default function Home() {
+  const content = contentDb.get();
+
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       <Navbar />
-      <HeroSection />
+      <HeroSection content={content.hero} />
       <ProblemSection />
       <InteractiveDemoSection />
-      <FeaturesSection />
+      <FeaturesSection content={content.features} />
       <HowItWorksSection />
       <UseCasesSection />
       <TechStackSection />

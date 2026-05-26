@@ -9,6 +9,7 @@ import {
   MapPin, 
   Video 
 } from "lucide-react"
+import type { ContentData } from "@/core/db/content-db"
 
 const features = [
   {
@@ -58,7 +59,20 @@ const item = {
   show: { opacity: 1, y: 0 },
 }
 
-export function FeaturesSection() {
+export function FeaturesSection({ content }: { content?: ContentData["features"] }) {
+  const title = content?.title || "Profesyonel Çizim Araçları";
+  const subtitle = content?.subtitle || "Gayrimenkul danışmanlığında fark yaratmak için ihtiyacınız olan tüm araçlar.";
+  
+  // Merge dynamic text with static icons
+  const displayFeatures = features.map((f, i) => {
+    const dynamicItem = content?.items?.[i];
+    return {
+      ...f,
+      title: dynamicItem?.title || f.title,
+      description: dynamicItem?.description || f.description,
+    };
+  });
+
   return (
     <section id="features" className="relative py-24 overflow-hidden">
       {/* Background decoration */}
@@ -73,10 +87,10 @@ export function FeaturesSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
-            Profesyonel Çizim Araçları
+            {title}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Gayrimenkul danışmanlığında fark yaratmak için ihtiyacınız olan tüm araçlar.
+            {subtitle}
           </p>
         </motion.div>
 
@@ -87,7 +101,7 @@ export function FeaturesSection() {
           viewport={{ once: true }}
           className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
         >
-          {features.map((feature, index) => (
+          {displayFeatures.map((feature, index) => (
             <motion.div
               key={feature.title}
               variants={item}
