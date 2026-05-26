@@ -1,0 +1,6 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/ynad6503/ilanx_projesi/
+    - /bin/cp -R * $DEPLOYPATH/
+    - /bin/cp -R .next $DEPLOYPATH/
