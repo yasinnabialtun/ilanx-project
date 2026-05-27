@@ -13,6 +13,7 @@ type License = {
   createdAt: string;
   devices: string[];
   deviceLimit: number;
+  customerName?: string;
 };
 
 export default function AdminPage() {
