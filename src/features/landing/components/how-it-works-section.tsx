@@ -3,28 +3,26 @@
 import { motion } from "framer-motion"
 import { Upload, MousePointer2, FileOutput } from "lucide-react"
 
-const steps = [
-  {
-    number: "01",
-    icon: Upload,
-    title: "Görsel Yükle",
-    description: "Arsa fotoğrafınızı veya harita görselinizi platforma yükleyin.",
-  },
-  {
-    number: "02",
-    icon: MousePointer2,
-    title: "Düzenle ve Efekt Ekle",
-    description: "Sınırları çizin, 3D metinler, lokasyon pinleri ve kendi logonuzu ekleyerek kişiselleştirin.",
-  },
-  {
-    number: "03",
-    icon: FileOutput,
-    title: "Paylaş & Video Çıktısı Al",
-    description: "Projenizi isterseniz yüksek kaliteli fotoğraf, isterseniz animasyonlu video (MP4) olarak indirin.",
-  },
-]
+interface HowItWorksProps {
+  content: {
+    title: string;
+    subtitle: string;
+    steps: {
+      title: string;
+      description: string;
+    }[];
+  }
+}
 
-export function HowItWorksSection() {
+export function HowItWorksSection({ content }: HowItWorksProps) {
+  // Merge icons with CMS steps
+  const steps = content.steps.map((s, i) => ({
+    number: `0${i + 1}`,
+    icon: i === 0 ? Upload : i === 1 ? MousePointer2 : FileOutput,
+    title: s.title,
+    description: s.description,
+  }));
+
   return (
     <section id="how-it-works" className="relative py-24 overflow-hidden">
       {/* Background */}
@@ -39,10 +37,10 @@ export function HowItWorksSection() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
-            Nasıl Çalışır?
+            {content.title}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Sadece 3 adımda profesyonel arsa çizimleri oluşturun.
+            {content.subtitle}
           </p>
         </motion.div>
 

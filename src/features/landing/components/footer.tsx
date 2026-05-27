@@ -28,13 +28,22 @@ const footerLinks = {
   ],
 }
 
-const socialLinks = [
-  { icon: Share2, href: "#", label: "Paylaş" },
-  { icon: Globe, href: "#", label: "Web" },
-  { icon: Mail, href: "#", label: "E-posta" },
-]
+interface FooterProps {
+  content: {
+    copyright: string;
+    email: string;
+    facebook: string;
+    instagram: string;
+    twitter: string;
+  }
+}
 
-export function Footer() {
+export function Footer({ content }: FooterProps) {
+  const socialLinks = [
+    { icon: Share2, href: content.facebook, label: "Facebook" },
+    { icon: Globe, href: content.instagram, label: "Instagram" },
+    { icon: Mail, href: `mailto:${content.email}`, label: "E-posta" },
+  ];
   return (
     <footer className="relative border-t border-border bg-card/50">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -143,7 +152,7 @@ export function Footer() {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} ilanx. Tüm hakları saklıdır.
+            {content.copyright}
           </p>
           <p className="text-sm text-muted-foreground">
             Türkiye&apos;de 🇹🇷 tasarlandı ve geliştirildi.

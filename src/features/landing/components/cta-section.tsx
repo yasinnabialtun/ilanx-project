@@ -6,7 +6,15 @@ import Link from "next/link"
 
 import { LandingButton } from "@/shared/components/ui/landing-button"
 
-export function CTASection() {
+interface CTAProps {
+  content: {
+    title: string;
+    subtitle: string;
+    buttonText: string;
+  }
+}
+
+export function CTASection({ content }: CTAProps) {
   return (
     <section className="relative py-24 overflow-hidden">
       {/* Background effects */}
@@ -43,8 +51,7 @@ export function CTASection() {
             transition={{ delay: 0.3 }}
             className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl text-balance"
           >
-            Emlak İlanlarınızda{" "}
-            <span className="text-gradient">Fark Yaratmaya Başlayın</span>
+            {content.title}
           </motion.h2>
 
           <motion.p
@@ -54,7 +61,7 @@ export function CTASection() {
             transition={{ delay: 0.4 }}
             className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            Tasarım bütçelerinden ve zamandan %90 tasarruf edin. Sadece 2 dakikada ilk profesyonel arsa çiziminizi yapın ve ilanlarınızı hemen canlandırın.
+            {content.subtitle}
           </motion.p>
 
           <motion.div
@@ -66,7 +73,7 @@ export function CTASection() {
           >
             <LandingButton size="lg" className="glow-primary group px-8 text-base" asChild>
               <Link href="/editor">
-                Şimdi Ücretsiz Çizmeye Başla
+                {content.buttonText}
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </LandingButton>

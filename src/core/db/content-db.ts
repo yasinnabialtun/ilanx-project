@@ -17,6 +17,26 @@ export type ContentData = {
       description: string;
     }[];
   };
+  howItWorks: {
+    title: string;
+    subtitle: string;
+    steps: {
+      title: string;
+      description: string;
+    }[];
+  };
+  cta: {
+    title: string;
+    subtitle: string;
+    buttonText: string;
+  };
+  footer: {
+    copyright: string;
+    email: string;
+    facebook: string;
+    instagram: string;
+    twitter: string;
+  };
 };
 
 const DB_PATH = path.join(process.cwd(), ".data/content.json");

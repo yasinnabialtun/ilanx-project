@@ -26,5 +26,35 @@
         "description": "Görüntü kalitesi bozulmadan, baskıya ve dijital sunumlara uygun yüksek çözünürlüklü (4K) çıktılar elde edin."
       }
     ]
+  },
+  "howItWorks": {
+    "title": "Nasıl Çalışır?",
+    "subtitle": "Sadece 3 adımda profesyonel sunumlarınızı hazırlayın.",
+    "steps": [
+      {
+        "title": "Görseli Yükle",
+        "description": "Harita veya drone görüntünüzü sisteme yükleyin."
+      },
+      {
+        "title": "İşaretle ve Düzenle",
+        "description": "Akıllı araçlarla sınırları çizin, metrekare ve fiyat etiketlerini yerleştirin."
+      },
+      {
+        "title": "Dışa Aktar",
+        "description": "Sosyal medya veya sunum için optimize edilmiş yüksek çözünürlüklü görselinizi indirin."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Gayrimenkul Sunumlarınızı Bir Üst Seviyeye Taşıyın",
+    "subtitle": "İlanX ile rakiplerinizin bir adım önüne geçin ve müşterilerinizi etkileyin.",
+    "buttonText": "Hemen Başlayın"
+  },
+  "footer": {
+    "copyright": "2026 İlanX. Tüm hakları saklıdır.",
+    "email": "destek@ilanx.com.tr",
+    "facebook": "https://facebook.com",
+    "instagram": "https://instagram.com",
+    "twitter": "https://twitter.com"
   }
 }

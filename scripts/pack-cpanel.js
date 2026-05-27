@@ -43,6 +43,12 @@ copyRecursiveSync(path.join(__dirname, '..', '.next', 'static'), path.join(stand
 // 3. tar.gz oluştur
 console.log('🗜️ ilanx_guncel_surum.tar.gz dosyası oluşturuluyor (Bu biraz sürebilir)...');
 try {
+  const dataPath = path.join(standaloneDir, '.data');
+  if (fs.existsSync(dataPath)) {
+    fs.rmSync(dataPath, { recursive: true, force: true });
+    console.log('🧹 .data klasörü paketten çıkarıldı (Canlı veriler ezilmesin diye).');
+  }
+
   const desktopPath = path.join(process.env.USERPROFILE || process.env.HOME, 'Desktop', 'ilanx_guncel_surum.tar.gz');
   execSync(`tar -a -c -f "${desktopPath}" -C "${standaloneDir}" *`, { stdio: 'inherit' });
   console.log(`✅ BAŞARILI! Masaüstünüzde "ilanx_guncel_surum.tar.gz" oluşturuldu.`);

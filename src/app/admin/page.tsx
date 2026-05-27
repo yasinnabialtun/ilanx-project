@@ -21,6 +21,7 @@ export default function AdminPage() {
   const [licenses, setLicenses] = useState<License[]>([]);
   const [durationDays, setDurationDays] = useState(365);
   const [deviceLimit, setDeviceLimit] = useState(3);
+  const [customerName, setCustomerName] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -78,12 +79,14 @@ export default function AdminPage() {
         body: JSON.stringify({
           expiresInDays: durationDays,
           deviceLimit: deviceLimit,
+          customerName: customerName.trim() || undefined,
         }),
       });
       const data = await res.json();
       if (res.ok && data.success) {
         setInfoMsg(`Lisans başarıyla üretildi: ${data.license.licenseKey}`);
         setLicenses([data.license, ...licenses]);
+        setCustomerName(""); // Reset after success
       } else {
         setErrorMsg(data.error || "Lisans üretilemedi.");
       }
@@ -314,6 +317,17 @@ export default function AdminPage() {
                 />
               </label>
 
+              <label className="block space-y-1">
+                <span className="text-xs text-zinc-400">Müşteri / Kurum Adı (İsteğe Bağlı)</span>
+                <input
+                  type="text"
+                  placeholder="Örn: Ahmet Yılmaz"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white placeholder-zinc-700 focus:border-cyan-500/50 focus:outline-none"
+                />
+              </label>
+
               <button
                 type="submit"
                 disabled={isLoading}
@@ -362,6 +376,11 @@ export default function AdminPage() {
                           {lic.status === "active" ? "Aktif" : lic.status === "expired" ? "Süresi Doldu" : "İptal Edildi"}
                         </span>
                       </div>
+                      {lic.customerName && (
+                        <div className="text-xs font-medium text-cyan-400/80 mb-1">
+                          👤 Müşteri: {lic.customerName}
+                        </div>
+                      )}
                       <div className="flex flex-wrap items-center gap-4 text-[10px] text-zinc-400">
                         <span className="flex items-center gap-1"><Calendar className="size-3" /> Son Gün: {lic.expiresAt}</span>
                         {lic.status === "active" && (() => {

@@ -9,6 +9,7 @@ export type License = {
   createdAt: string;
   devices: string[];
   deviceLimit: number;
+  customerName?: string;
 };
 
 const DB_PATH = path.join(process.cwd(), ".data/licenses.json");
@@ -29,6 +30,7 @@ function ensureDb() {
         createdAt: new Date().toISOString(),
         devices: [],
         deviceLimit: 3,
+        customerName: "Test Kullanıcısı",
       },
     ];
     fs.writeFileSync(DB_PATH, JSON.stringify(initialLicenses, null, 2), "utf8");

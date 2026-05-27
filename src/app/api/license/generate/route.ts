@@ -26,7 +26,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { expiresInDays = 365, deviceLimit = 3 } = await req.json();
+    const { expiresInDays = 365, deviceLimit = 3, customerName } = await req.json();
 
     const licenseKey = generateLicenseKey();
     
@@ -41,6 +41,7 @@ export async function POST(req: Request) {
       createdAt: new Date().toISOString(),
       devices: [],
       deviceLimit: Number(deviceLimit),
+      customerName: customerName || undefined,
     };
 
     addLicense(newLicense);

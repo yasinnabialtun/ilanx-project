@@ -66,6 +66,23 @@ export function ContentEditor({ adminSecret }: { adminSecret: string }) {
     setData({ ...data, features: { ...data.features, items: newItems } });
   };
 
+  const handleHowItWorksStepChange = (index: number, field: "title" | "description", value: string) => {
+    if (!data) return;
+    const newSteps = [...data.howItWorks.steps];
+    newSteps[index] = { ...newSteps[index], [field]: value };
+    setData({ ...data, howItWorks: { ...data.howItWorks, steps: newSteps } });
+  };
+
+  const handleCtaChange = (field: keyof ContentData["cta"], value: string) => {
+    if (!data) return;
+    setData({ ...data, cta: { ...data.cta, [field]: value } });
+  };
+
+  const handleFooterChange = (field: keyof ContentData["footer"], value: string) => {
+    if (!data) return;
+    setData({ ...data, footer: { ...data.footer, [field]: value } });
+  };
+
   if (isLoading && !data) {
     return <div className="p-8 text-center text-zinc-500 animate-pulse">İçerik yükleniyor...</div>;
   }
@@ -182,6 +199,141 @@ export function ContentEditor({ adminSecret }: { adminSecret: string }) {
               />
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* HOW IT WORKS SECTION */}
+      <div className="rounded-2xl border border-zinc-900 bg-zinc-900/40 p-6 space-y-4">
+        <h4 className="font-semibold text-cyan-400 border-b border-zinc-800 pb-2">Nasıl Çalışır? (How It Works)</h4>
+        
+        <label className="block space-y-1">
+          <span className="text-xs text-zinc-400">Bölüm Başlığı</span>
+          <input
+            type="text"
+            value={data.howItWorks.title}
+            onChange={(e) => setData({ ...data, howItWorks: { ...data.howItWorks, title: e.target.value } })}
+            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+          />
+        </label>
+        
+        <label className="block space-y-1">
+          <span className="text-xs text-zinc-400">Bölüm Alt Başlığı</span>
+          <input
+            type="text"
+            value={data.howItWorks.subtitle}
+            onChange={(e) => setData({ ...data, howItWorks: { ...data.howItWorks, subtitle: e.target.value } })}
+            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+          />
+        </label>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          {data.howItWorks.steps.map((step, index) => (
+            <div key={index} className="p-4 rounded-xl border border-zinc-800 bg-zinc-950/50 space-y-3">
+              <span className="text-xs font-bold text-zinc-500">Adım {index + 1}</span>
+              <input
+                type="text"
+                value={step.title}
+                onChange={(e) => handleHowItWorksStepChange(index, "title", e.target.value)}
+                className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+                placeholder="Adım Başlığı"
+              />
+              <textarea
+                value={step.description}
+                onChange={(e) => handleHowItWorksStepChange(index, "description", e.target.value)}
+                rows={2}
+                className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs text-white focus:border-cyan-500/50 focus:outline-none resize-none"
+                placeholder="Adım Açıklaması"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* CTA SECTION */}
+      <div className="rounded-2xl border border-zinc-900 bg-zinc-900/40 p-6 space-y-4">
+        <h4 className="font-semibold text-cyan-400 border-b border-zinc-800 pb-2">Harekete Geçirici Mesaj (CTA)</h4>
+        
+        <label className="block space-y-1">
+          <span className="text-xs text-zinc-400">Başlık</span>
+          <input
+            type="text"
+            value={data.cta.title}
+            onChange={(e) => handleCtaChange("title", e.target.value)}
+            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+          />
+        </label>
+        
+        <label className="block space-y-1">
+          <span className="text-xs text-zinc-400">Alt Başlık</span>
+          <input
+            type="text"
+            value={data.cta.subtitle}
+            onChange={(e) => handleCtaChange("subtitle", e.target.value)}
+            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+          />
+        </label>
+        
+        <label className="block space-y-1">
+          <span className="text-xs text-zinc-400">Buton Yazısı</span>
+          <input
+            type="text"
+            value={data.cta.buttonText}
+            onChange={(e) => handleCtaChange("buttonText", e.target.value)}
+            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+          />
+        </label>
+      </div>
+
+      {/* FOOTER SECTION */}
+      <div className="rounded-2xl border border-zinc-900 bg-zinc-900/40 p-6 space-y-4">
+        <h4 className="font-semibold text-cyan-400 border-b border-zinc-800 pb-2">Alt Bilgi (Footer)</h4>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label className="block space-y-1">
+            <span className="text-xs text-zinc-400">Telif Hakkı Metni</span>
+            <input
+              type="text"
+              value={data.footer.copyright}
+              onChange={(e) => handleFooterChange("copyright", e.target.value)}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+            />
+          </label>
+          <label className="block space-y-1">
+            <span className="text-xs text-zinc-400">E-Posta Adresi</span>
+            <input
+              type="text"
+              value={data.footer.email}
+              onChange={(e) => handleFooterChange("email", e.target.value)}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+            />
+          </label>
+          <label className="block space-y-1">
+            <span className="text-xs text-zinc-400">Facebook URL</span>
+            <input
+              type="text"
+              value={data.footer.facebook}
+              onChange={(e) => handleFooterChange("facebook", e.target.value)}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+            />
+          </label>
+          <label className="block space-y-1">
+            <span className="text-xs text-zinc-400">Instagram URL</span>
+            <input
+              type="text"
+              value={data.footer.instagram}
+              onChange={(e) => handleFooterChange("instagram", e.target.value)}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+            />
+          </label>
+          <label className="block space-y-1 md:col-span-2">
+            <span className="text-xs text-zinc-400">Twitter (X) URL</span>
+            <input
+              type="text"
+              value={data.footer.twitter}
+              onChange={(e) => handleFooterChange("twitter", e.target.value)}
+              className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white focus:border-cyan-500/50 focus:outline-none"
+            />
+          </label>
         </div>
       </div>
     </div>

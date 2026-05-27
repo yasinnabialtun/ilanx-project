@@ -12,6 +12,8 @@ import { ProblemSection } from "@/features/landing/components/problem-section";
 import { FAQSection } from "@/features/landing/components/faq-section";
 import { contentDb } from "@/core/db/content-db";
 
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   const content = contentDb.get();
 
@@ -22,13 +24,13 @@ export default function Home() {
       <ProblemSection />
       <InteractiveDemoSection />
       <FeaturesSection content={content.features} />
-      <HowItWorksSection />
+      <HowItWorksSection content={content.howItWorks} />
       <UseCasesSection />
       <TechStackSection />
       <SocialProofSection />
       <FAQSection />
-      <CTASection />
-      <Footer />
+      <CTASection content={content.cta} />
+      <Footer content={content.footer} />
     </main>
   );
 }

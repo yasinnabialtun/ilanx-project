@@ -1,0 +1,30 @@
+{
+  "hero": {
+    "title": "Arazi ve Gayrimenkullerinizi Saniyeler İçinde İşaretleyin",
+    "description": "Profesyonel gayrimenkul danışmanları için geliştirilmiş akıllı işaretleme aracı. Arazilerinizi, dükkanlarınızı ve projelerinizi harita üzerinde kolayca çizin, metrekare ve fiyat ekleyerek müşterilerinize profesyonel sunumlar hazırlayın.",
+    "buttonPrimary": "Demo Modunu Dene",
+    "buttonSecondary": "Lisans Satın Al"
+  },
+  "features": {
+    "title": "Neden İlanX'i Seçmelisiniz?",
+    "subtitle": "Gayrimenkul pazarlamasında fark yaratmanızı sağlayacak güçlü araçlar.",
+    "items": [
+      {
+        "title": "Hızlı Çizim Araçları",
+        "description": "Arazi sınırlarını, bina konumlarını ve özel alanları tek tıkla çizin. Otomatik hizalama ve akıllı snap özellikleri ile profesyonel sonuçlar elde edin."
+      },
+      {
+        "title": "Dinamik Etiketler",
+        "description": "Fiyat, metrekare, parsel no gibi bilgileri harita üzerine şık etiketlerle ekleyin. Etiket tasarımlarını kendi markanıza göre özelleştirin."
+      },
+      {
+        "title": "Hazır Şablonlar",
+        "description": "Sosyal medya (Instagram, Facebook), ilan siteleri ve WhatsApp için optimize edilmiş hazır boyutlarda çıktılar alın."
+      },
+      {
+        "title": "Yüksek Çözünürlük",
+        "description": "Görüntü kalitesi bozulmadan, baskıya ve dijital sunumlara uygun yüksek çözünürlüklü (4K) çıktılar elde edin."
+      }
+    ]
+  }
+}

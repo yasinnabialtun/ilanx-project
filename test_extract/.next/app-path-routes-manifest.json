@@ -1,0 +1,13 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/admin/page": "/admin",
+  "/api/content/route": "/api/content",
+  "/api/license/generate/route": "/api/license/generate",
+  "/api/license/revoke/route": "/api/license/revoke",
+  "/api/license/status/route": "/api/license/status",
+  "/api/license/validate/route": "/api/license/validate",
+  "/editor/page": "/editor",
+  "/favicon.ico/route": "/favicon.ico",
+  "/page": "/"
+}
