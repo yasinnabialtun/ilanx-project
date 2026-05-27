@@ -8,12 +8,17 @@ const standaloneDir = path.join(__dirname, '..', '.next', 'standalone');
 const serverJsPath = path.join(standaloneDir, 'server.js');
 const customServerJsPath = path.join(__dirname, '..', 'server.js');
 
-// 1. Kendi özel server.js dosyamızı standalone içine kopyala (MIME type fix dahil)
-if (fs.existsSync(customServerJsPath)) {
-  console.log('🔧 Özel server.js dosyası standalone içine kopyalanıyor (MIME type fix dahil)...');
-  fs.copyFileSync(customServerJsPath, serverJsPath);
+// 1. Next.js standalone server.js dosyasındaki PORT okuma hatasını düzelt
+if (fs.existsSync(serverJsPath)) {
+  console.log('🔧 server.js dosyasındaki PORT okuma hatası düzeltiliyor (cPanel socket desteği dahil)...');
+  let serverJs = fs.readFileSync(serverJsPath, 'utf8');
+  serverJs = serverJs.replace(
+    'const currentPort = parseInt(process.env.PORT, 10) || 3000',
+    'const currentPort = (process.env.PORT && isNaN(Number(process.env.PORT))) ? process.env.PORT : (parseInt(process.env.PORT, 10) || 3000)'
+  );
+  fs.writeFileSync(serverJsPath, serverJs, 'utf8');
 } else {
-  console.error('❌ Kök dizinde server.js bulunamadı!');
+  console.error('❌ Standalone server.js bulunamadı! Önce npm run build yapmalısınız.');
   process.exit(1);
 }
 
