@@ -57,7 +57,16 @@ export const contentDb = {
     try {
       ensureDb();
       const data = fs.readFileSync(DB_PATH, "utf8");
-      return JSON.parse(data) as ContentData;
+      const parsed = JSON.parse(data);
+      
+      // Merge parsed data with default content to handle schema updates
+      return {
+        hero: { ...defaultContent.hero, ...(parsed.hero || {}) },
+        features: { ...defaultContent.features, ...(parsed.features || {}) },
+        howItWorks: parsed.howItWorks || defaultContent.howItWorks,
+        cta: parsed.cta || defaultContent.cta,
+        footer: parsed.footer || defaultContent.footer,
+      } as ContentData;
     } catch (e) {
       console.error("Error reading content DB:", e);
       return defaultContent as ContentData;
