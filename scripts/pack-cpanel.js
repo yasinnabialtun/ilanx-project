@@ -6,18 +6,14 @@ console.log('📦 cPanel için özel derleme başlatılıyor...');
 
 const standaloneDir = path.join(__dirname, '..', '.next', 'standalone');
 const serverJsPath = path.join(standaloneDir, 'server.js');
+const customServerJsPath = path.join(__dirname, '..', 'server.js');
 
-// 1. Port hatasını (parseInt) düzelt
-if (fs.existsSync(serverJsPath)) {
-  console.log('🔧 server.js dosyasındaki PORT okuma hatası düzeltiliyor...');
-  let serverJs = fs.readFileSync(serverJsPath, 'utf8');
-  serverJs = serverJs.replace(
-    'const currentPort = parseInt(process.env.PORT, 10) || 3000',
-    'const currentPort = process.env.PORT || 3000'
-  );
-  fs.writeFileSync(serverJsPath, serverJs, 'utf8');
+// 1. Kendi özel server.js dosyamızı standalone içine kopyala (MIME type fix dahil)
+if (fs.existsSync(customServerJsPath)) {
+  console.log('🔧 Özel server.js dosyası standalone içine kopyalanıyor (MIME type fix dahil)...');
+  fs.copyFileSync(customServerJsPath, serverJsPath);
 } else {
-  console.error('❌ server.js bulunamadı! Önce npm run build yapmalısınız.');
+  console.error('❌ Kök dizinde server.js bulunamadı!');
   process.exit(1);
 }
 
