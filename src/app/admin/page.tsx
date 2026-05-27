@@ -14,6 +14,7 @@ type License = {
   devices: string[];
   deviceLimit: number;
   customerName?: string;
+  customerPhone?: string;
 };
 
 export default function AdminPage() {
@@ -23,6 +24,7 @@ export default function AdminPage() {
   const [durationDays, setDurationDays] = useState(365);
   const [deviceLimit, setDeviceLimit] = useState(3);
   const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -81,6 +83,7 @@ export default function AdminPage() {
           expiresInDays: durationDays,
           deviceLimit: deviceLimit,
           customerName: customerName.trim() || undefined,
+          customerPhone: customerPhone.trim() || undefined,
         }),
       });
       const data = await res.json();
@@ -88,6 +91,7 @@ export default function AdminPage() {
         setInfoMsg(`Lisans başarıyla üretildi: ${data.license.licenseKey}`);
         setLicenses([data.license, ...licenses]);
         setCustomerName(""); // Reset after success
+        setCustomerPhone(""); // Reset after success
       } else {
         setErrorMsg(data.error || "Lisans üretilemedi.");
       }
@@ -329,6 +333,17 @@ export default function AdminPage() {
                 />
               </label>
 
+              <label className="block space-y-1">
+                <span className="text-xs text-zinc-400">İletişim Numarası (İsteğe Bağlı)</span>
+                <input
+                  type="text"
+                  placeholder="Örn: 0555 123 45 67"
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
+                  className="w-full rounded-lg border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-white placeholder-zinc-700 focus:border-cyan-500/50 focus:outline-none"
+                />
+              </label>
+
               <button
                 type="submit"
                 disabled={isLoading}
@@ -379,7 +394,7 @@ export default function AdminPage() {
                       </div>
                       {lic.customerName && (
                         <div className="text-xs font-medium text-cyan-400/80 mb-1">
-                          👤 Müşteri: {lic.customerName}
+                          👤 Müşteri: {lic.customerName} {lic.customerPhone && <span className="text-zinc-500 ml-2">📞 {lic.customerPhone}</span>}
                         </div>
                       )}
                       <div className="flex flex-wrap items-center gap-4 text-[10px] text-zinc-400">
