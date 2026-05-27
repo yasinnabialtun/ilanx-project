@@ -12,6 +12,7 @@ import { UseCasesSection } from "@/features/landing/components/use-cases-section
 import { ProblemSection } from "@/features/landing/components/problem-section";
 import { FAQSection } from "@/features/landing/components/faq-section";
 import { contentDb } from "@/core/db/content-db";
+import { WhatsAppChatbot } from "@/features/landing/components/whatsapp-chatbot";
 
 export const dynamic = "force-dynamic";
 
@@ -97,7 +98,7 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text:
-              "Evet, demo modu tamamen ücretsizdir. Tam özellikli kullanım için lisans satın alabilirsiniz.",
+              "Evet, demo modu tamamen ücretsizdir. Tam özellikli kullanım için WhatsApp üzerinden 0542 136 70 56 numarasından lisans satın alabilirsiniz.",
           },
         },
         {
@@ -145,6 +146,7 @@ export default function Home() {
         <FAQSection />
         <CTASection content={content.cta} />
         <Footer content={content.footer} />
+        <WhatsAppChatbot />
       </main>
     </>
   );

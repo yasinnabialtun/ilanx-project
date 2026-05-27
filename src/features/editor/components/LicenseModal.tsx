@@ -140,13 +140,13 @@ export function LicenseModal() {
 
         <div className="mt-6 flex flex-col gap-2">
           <a
-            href="https://ilanx.com/satinal"
+            href="https://wa.me/905421367056?text=Merhaba%2C%20%C4%B0lanX%20lisans%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/30 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-900 hover:text-white transition-all"
           >
             <ShoppingBag className="size-3.5" />
-            Lisans Satın Al
+            Lisans Satın Al (WhatsApp)
           </a>
 
           <button

@@ -75,10 +75,10 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
                 </Link>
               </LandingButton>
               <LandingButton size="lg" variant="outline" className="group" asChild>
-                <Link href="#demo">
+                <a href="https://wa.me/905421367056?text=Merhaba%2C%20%C4%B0lanX%20lisans%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">
                   {btn2}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                </a>
               </LandingButton>
             </motion.div>
 

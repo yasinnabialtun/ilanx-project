@@ -89,7 +89,7 @@ export function CTASection({ content }: CTAProps) {
             transition={{ delay: 0.6 }}
             className="mt-6 text-sm text-muted-foreground"
           >
-            ✓ 14 Gün Ücretsiz Deneme &nbsp;&nbsp; ✓ Kredi kartı gerekmez &nbsp;&nbsp; ✓ Kurulum yok, tarayıcıda çalışır
+            ✓ Demo modu ücretsiz &nbsp;&nbsp; ✓ Lisans için WhatsApp: 0542 136 70 56 &nbsp;&nbsp; ✓ Kurulum yok, tarayıcıda çalışır
           </motion.p>
         </motion.div>
       </div>

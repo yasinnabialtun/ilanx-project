@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "Kredi kartı bilgisi vermem gerekiyor mu? Gizli maliyetler var mı?",
-    answer: "Ücretsiz deneme sürecini başlatırken kesinlikle kredi kartı bilgisi vermeniz gerekmez. Gizli hiçbir maliyet yoktur. 14 günlük deneme süresi sonunda memnun kalırsanız üyeliğinizi başlatabilirsiniz, kalmazsanız hiçbir ücret ödemezsiniz.",
+    answer: "Kesinlikle kredi kartı bilgisi gerekmez. Demo modunu ücretsiz deneyebilirsiniz. Lisans almak için WhatsApp üzerinden 0542 136 70 56 numarasıyla bize ulaşabilirsiniz.",
   },
   {
     question: "Projem yarıda kalırsa çizimlerim kaybolur mu?",
