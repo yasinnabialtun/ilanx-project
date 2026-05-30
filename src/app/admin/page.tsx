@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { KeyRound, ShieldAlert, Sparkles, Plus, Trash2, Calendar, HardDrive, RefreshCw, Type, Key } from "lucide-react";
+import { KeyRound, ShieldAlert, Sparkles, Plus, Trash2, Calendar, HardDrive, RefreshCw, Type, Key, Edit } from "lucide-react";
 import Link from "next/link";
 import { ContentEditor } from "@/features/admin/components/ContentEditor";
 
@@ -29,6 +29,14 @@ export default function AdminPage() {
   const [infoMsg, setInfoMsg] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"licenses" | "content">("licenses");
+
+  // State variables for editing existing license
+  const [editingLicenseId, setEditingLicenseId] = useState<string | null>(null);
+  const [editDaysToAdd, setEditDaysToAdd] = useState(30);
+  const [editDeviceLimit, setEditDeviceLimit] = useState(3);
+  const [editCustomerName, setEditCustomerName] = useState("");
+  const [editCustomerPhone, setEditCustomerPhone] = useState("");
+  const [editStatus, setEditStatus] = useState<"active" | "expired" | "revoked">("active");
 
   // Load admin secret from localStorage if it exists
   useEffect(() => {
@@ -123,6 +131,42 @@ export default function AdminPage() {
       }
     } catch {
       setErrorMsg("Lisans iptal edilirken hata oluştu.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleUpdate = async (id: string, resetDevices = false) => {
+    setIsLoading(true);
+    setErrorMsg(null);
+    setInfoMsg(null);
+    try {
+      const res = await fetch("/api/license/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-secret": adminSecret,
+        },
+        body: JSON.stringify({
+          id,
+          deviceLimit: editDeviceLimit,
+          status: editStatus,
+          customerName: editCustomerName.trim() || undefined,
+          customerPhone: editCustomerPhone.trim() || undefined,
+          resetDevices,
+          addDays: editDaysToAdd || undefined,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setInfoMsg(`Lisans başarıyla güncellendi.`);
+        setLicenses(licenses.map((l) => (l.id === id ? data.license : l)));
+        setEditingLicenseId(null);
+      } else {
+        setErrorMsg(data.error || "Lisans güncellenemedi.");
+      }
+    } catch {
+      setErrorMsg("Lisans güncellenirken hata oluştu.");
     } finally {
       setIsLoading(false);
     }
@@ -373,55 +417,171 @@ export default function AdminPage() {
                 <p className="text-xs text-zinc-500 text-center py-8">Kayıtlı lisans bulunamadı.</p>
               ) : (
                 licenses.map((lic) => (
-                  <div
-                    key={lic.id}
-                    className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-900/80 bg-zinc-950/60 hover:border-zinc-800 transition-all"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-sm font-bold text-white select-all">{lic.licenseKey}</span>
-                        <span
-                          className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${
-                            lic.status === "active"
-                              ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
-                              : lic.status === "expired"
-                              ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                              : "bg-red-500/10 text-red-400 border border-red-500/20"
-                          }`}
+                  editingLicenseId === lic.id ? (
+                    <div
+                      key={lic.id}
+                      className="p-4 rounded-xl border border-cyan-500/30 bg-zinc-950/90 space-y-4 text-left"
+                    >
+                      <div className="flex items-center justify-between border-b border-zinc-900 pb-2">
+                        <span className="font-mono text-xs font-bold text-cyan-400">{lic.licenseKey} Düzenleniyor</span>
+                        <button
+                          type="button"
+                          onClick={() => setEditingLicenseId(null)}
+                          className="text-zinc-500 hover:text-white text-xs cursor-pointer"
                         >
-                          {lic.status === "active" ? "Aktif" : lic.status === "expired" ? "Süresi Doldu" : "İptal Edildi"}
-                        </span>
+                          Vazgeç
+                        </button>
                       </div>
-                      {lic.customerName && (
-                        <div className="text-xs font-medium text-cyan-400/80 mb-1">
-                          👤 Müşteri: {lic.customerName} {lic.customerPhone && <span className="text-zinc-500 ml-2">📞 {lic.customerPhone}</span>}
+                      <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                        <label className="block space-y-1">
+                          <span className="text-[10px] text-zinc-400">Süre Ekle (Gün)</span>
+                          <input
+                            type="number"
+                            value={editDaysToAdd}
+                            onChange={(e) => setEditDaysToAdd(Number(e.target.value))}
+                            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500/50"
+                          />
+                        </label>
+                        <label className="block space-y-1">
+                          <span className="text-[10px] text-zinc-400">Cihaz Sınırı</span>
+                          <input
+                            type="number"
+                            value={editDeviceLimit}
+                            onChange={(e) => setEditDeviceLimit(Number(e.target.value))}
+                            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500/50"
+                          />
+                        </label>
+                        <label className="block space-y-1">
+                          <span className="text-[10px] text-zinc-400">Müşteri Adı</span>
+                          <input
+                            type="text"
+                            value={editCustomerName}
+                            onChange={(e) => setEditCustomerName(e.target.value)}
+                            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500/50"
+                          />
+                        </label>
+                        <label className="block space-y-1">
+                          <span className="text-[10px] text-zinc-400">Müşteri Telefon</span>
+                          <input
+                            type="text"
+                            value={editCustomerPhone}
+                            onChange={(e) => setEditCustomerPhone(e.target.value)}
+                            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500/50"
+                          />
+                        </label>
+                        <label className="block space-y-1">
+                          <span className="text-[10px] text-zinc-400">Durum</span>
+                          <select
+                            value={editStatus}
+                            onChange={(e) => setEditStatus(e.target.value as any)}
+                            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-1.5 text-xs text-white focus:outline-none focus:border-cyan-500/50"
+                          >
+                            <option value="active">Aktif</option>
+                            <option value="expired">Süresi Doldu</option>
+                            <option value="revoked">İptal Edildi</option>
+                          </select>
+                        </label>
+                        <div className="flex items-end">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (confirm("Kayıtlı tüm cihazları sıfırlamak istediğinizden emin misiniz?")) {
+                                handleUpdate(lic.id, true);
+                              }
+                            }}
+                            className="w-full rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-amber-500 py-1.5 text-xs font-semibold cursor-pointer text-center"
+                          >
+                            Cihazları Sıfırla
+                          </button>
                         </div>
-                      )}
-                      <div className="flex flex-wrap items-center gap-4 text-[10px] text-zinc-400">
-                        <span className="flex items-center gap-1"><Calendar className="size-3" /> Son Gün: {lic.expiresAt}</span>
-                        {lic.status === "active" && (() => {
-                          const info = getExpirationInfo(lic.expiresAt, lic.status);
-                          return info ? (
-                            <span className={`px-1.5 py-0.5 rounded text-[9px] ${info.class}`}>
-                              {info.text}
-                            </span>
-                          ) : null;
-                        })()}
-                        <span className="flex items-center gap-1"><HardDrive className="size-3" /> Cihaz: {lic.devices.length}/{lic.deviceLimit}</span>
+                      </div>
+                      <div className="flex gap-2 justify-end border-t border-zinc-900 pt-2.5 mt-2">
+                        <button
+                          type="button"
+                          onClick={() => setEditingLicenseId(null)}
+                          className="rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 px-3.5 py-1.5 text-xs font-semibold cursor-pointer text-zinc-300"
+                        >
+                          İptal
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleUpdate(lic.id, false)}
+                          className="rounded-lg bg-cyan-500 hover:bg-cyan-600 text-white px-5 py-1.5 text-xs font-semibold cursor-pointer"
+                        >
+                          Değişiklikleri Kaydet
+                        </button>
                       </div>
                     </div>
+                  ) : (
+                    <div
+                      key={lic.id}
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-zinc-900/80 bg-zinc-950/60 hover:border-zinc-800 transition-all"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-sm font-bold text-white select-all">{lic.licenseKey}</span>
+                          <span
+                            className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${
+                              lic.status === "active"
+                                ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                                : lic.status === "expired"
+                                ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
+                                : "bg-red-500/10 text-red-400 border border-red-500/20"
+                            }`}
+                          >
+                            {lic.status === "active" ? "Aktif" : lic.status === "expired" ? "Süresi Doldu" : "İptal Edildi"}
+                          </span>
+                        </div>
+                        {lic.customerName && (
+                          <div className="text-xs font-medium text-cyan-400/80 mb-1">
+                            👤 Müşteri: {lic.customerName} {lic.customerPhone && <span className="text-zinc-500 ml-2">📞 {lic.customerPhone}</span>}
+                          </div>
+                        )}
+                        <div className="flex flex-wrap items-center gap-4 text-[10px] text-zinc-400">
+                          <span className="flex items-center gap-1"><Calendar className="size-3" /> Son Gün: {lic.expiresAt}</span>
+                          {lic.status === "active" && (() => {
+                            const info = getExpirationInfo(lic.expiresAt, lic.status);
+                            return info ? (
+                              <span className={`px-1.5 py-0.5 rounded text-[9px] ${info.class}`}>
+                                {info.text}
+                              </span>
+                            ) : null;
+                          })()}
+                          <span className="flex items-center gap-1"><HardDrive className="size-3" /> Cihaz: {lic.devices.length}/{lic.deviceLimit}</span>
+                        </div>
+                      </div>
 
-                    {lic.status === "active" && (
-                      <button
-                        onClick={() => handleRevoke(lic.id)}
-                        className="rounded-lg bg-red-950/20 hover:bg-red-950/50 border border-red-900/30 text-red-400 p-2 text-xs flex items-center justify-center gap-1.5 transition-colors self-end sm:self-auto cursor-pointer"
-                        title="İptal Et"
-                      >
-                        <Trash2 className="size-3.5" />
-                        İptal Et
-                      </button>
-                    )}
-                  </div>
+                      <div className="flex items-center gap-2 self-end sm:self-auto">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setEditingLicenseId(lic.id);
+                            setEditDaysToAdd(30);
+                            setEditDeviceLimit(lic.deviceLimit);
+                            setEditCustomerName(lic.customerName || "");
+                            setEditCustomerPhone(lic.customerPhone || "");
+                            setEditStatus(lic.status);
+                          }}
+                          className="rounded-lg bg-zinc-900/50 hover:bg-zinc-800/80 border border-zinc-800 text-zinc-300 p-2 text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                          title="Lisansı Düzenle"
+                        >
+                          <Edit className="size-3.5" />
+                          Düzenle
+                        </button>
+                        {lic.status === "active" && (
+                          <button
+                            type="button"
+                            onClick={() => handleRevoke(lic.id)}
+                            className="rounded-lg bg-red-950/20 hover:bg-red-950/50 border border-red-900/30 text-red-400 p-2 text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                            title="İptal Et"
+                          >
+                            <Trash2 className="size-3.5" />
+                            İptal Et
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  )
                 ))
               )}
             </div>

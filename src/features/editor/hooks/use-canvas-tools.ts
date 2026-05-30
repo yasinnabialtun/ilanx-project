@@ -367,6 +367,13 @@ export function useCanvasTools(
     const resize = () => {
       if (useEditorStore.getState().isRecordingVideo) return;
       if (!containerRef.current) return;
+
+      // Prevent canvas from jumping/resizing when mobile virtual keyboard opens during text editing
+      const activeObj = canvas.getActiveObject();
+      if (activeObj && (activeObj.type === "i-text" || activeObj.type === "textbox" || (activeObj as any).isEditing)) {
+        return;
+      }
+
       const w = containerRef.current.clientWidth;
       const h = containerRef.current.clientHeight;
       if (w < 10 || h < 10) return;

@@ -5,7 +5,8 @@ import { telemetry } from "@/core/utils/telemetry";
 
 export async function resizeImageFile(file: File): Promise<string> {
   const bitmap = await createImageBitmap(file);
-  const maxSize = 2400;
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const maxSize = isMobile ? 1600 : 2400;
   const scale = Math.min(1, maxSize / Math.max(bitmap.width, bitmap.height));
   const width = Math.round(bitmap.width * scale);
   const height = Math.round(bitmap.height * scale);

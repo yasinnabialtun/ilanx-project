@@ -41,6 +41,14 @@ console.log('📂 public ve .next/static klasörleri standalone içine kopyalan�
 copyRecursiveSync(path.join(__dirname, '..', 'public'), path.join(standaloneDir, 'public'));
 copyRecursiveSync(path.join(__dirname, '..', '.next', 'static'), path.join(standaloneDir, '.next', 'static'));
 
+// 2.5. Passenger restart dosyası oluştur (tmp/restart.txt)
+const tmpDir = path.join(standaloneDir, 'tmp');
+if (!fs.existsSync(tmpDir)) {
+  fs.mkdirSync(tmpDir, { recursive: true });
+}
+fs.writeFileSync(path.join(tmpDir, 'restart.txt'), `Restarted at: ${new Date().toISOString()}`, 'utf8');
+console.log('🔄 tmp/restart.txt oluşturuldu (cPanel otomatik restart tetikleyici)...');
+
 // 3. tar.gz oluştur
 console.log('🗜️ ilanx_guncel_surum.tar.gz dosyası oluşturuluyor (Bu biraz sürebilir)...');
 try {
