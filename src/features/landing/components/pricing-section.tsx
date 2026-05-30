@@ -108,11 +108,10 @@ export function PricingSection() {
               {/* Card Image Display */}
               <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-zinc-950 mb-6 group cursor-pointer shadow-lg border border-zinc-900">
                 <a href="https://www.shopier.com/ilanx" target="_blank" rel="noopener noreferrer" className="block w-full h-full">
-                  <Image
+                  <img
                     src={plan.image}
                     alt={plan.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span className="rounded-xl bg-white text-black text-xs font-semibold px-4 py-2.5 shadow-xl flex items-center gap-1.5 active:scale-95 transition-transform">
