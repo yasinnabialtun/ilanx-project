@@ -42,14 +42,14 @@ import { LogoPanel } from "./panels/LogoPanel";
 type TabId = "draw" | "text" | "text3d" | "location" | "sticker" | "animation" | "logo" | "layers";
 
 const TABS: { id: TabId; label: string; icon: any }[] = [
-  { id: "draw", label: "Çizim", icon: Palette },
-  { id: "text", label: "Metin", icon: Type },
-  { id: "text3d", label: "3D", icon: TextIcon },
-  { id: "location", label: "Konum", icon: MapPin },
-  { id: "sticker", label: "Etiket", icon: Smile },
-  { id: "logo", label: "Logo", icon: ImageIcon },
-  { id: "animation", label: "Efekt", icon: Sparkles },
-  { id: "layers", label: "Katman", icon: Layers },
+  { id: "draw", label: "Çizimler", icon: Palette },
+  { id: "text", label: "Yazı", icon: Type },
+  { id: "text3d", label: "3D Tabela", icon: TextIcon },
+  { id: "location", label: "Konum/Okul", icon: MapPin },
+  { id: "sticker", label: "İkon/Rozet", icon: Smile },
+  { id: "logo", label: "Kendi Logon", icon: ImageIcon },
+  { id: "animation", label: "Neon Efekt", icon: Sparkles },
+  { id: "layers", label: "Katmanlar", icon: Layers },
 ];
 
 const TYPE_ICON: Record<string, any> = {
@@ -182,9 +182,12 @@ export function SidePanel() {
         </div>
 
         {!hasBackground && (
-          <p className="text-sm text-muted-foreground">
-            Gayrimenkul planınızı veya arsa fotoğrafınızı yükleyerek başlayın.
-          </p>
+          <div className="rounded-xl border border-dashed border-primary/30 bg-primary/5 p-4 text-center mt-2 mb-2">
+            <h4 className="text-sm font-bold text-primary mb-1">👋 İlanX'e Hoş Geldiniz!</h4>
+            <p className="text-xs text-muted-foreground leading-relaxed">
+              Tasarım araçlarını görebilmek için önce üst menüdeki <strong>"Görsel"</strong> butonuna tıklayarak satacağınız dairenin veya arsanın fotoğrafını yükleyin.
+            </p>
+          </div>
         )}
 
       {/* Sekmeler */}

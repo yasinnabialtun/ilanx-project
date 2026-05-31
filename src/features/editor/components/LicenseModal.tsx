@@ -148,10 +148,10 @@ export function LicenseModal() {
           </div>
 
           <h3 className="text-xl font-bold text-white flex items-center justify-center gap-2">
-            İlanX Lisans Sistemi
+            İlanX Premium Lisans Sistemi
           </h3>
-          <p className="mt-2 text-xs text-zinc-400 leading-relaxed md:px-4">
-            Editörü tam kapasiteyle kullanmak için geçerli bir lisans anahtarı girin.
+          <p className="mt-2 text-[11px] text-zinc-400 leading-relaxed md:px-4">
+            Editördeki filigranı (şerit yazıları) kaldırmak ve 3D etiketler, neon çizgiler gibi tüm özellikleri limitsiz kullanmak için lisans anahtarınızı girin.
           </p>
 
           <form onSubmit={handleValidate} className="mt-6 space-y-4">
@@ -222,13 +222,18 @@ export function LicenseModal() {
               className="flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-medium text-cyan-400 hover:text-cyan-300 transition-all cursor-pointer border border-transparent hover:border-cyan-500/20 bg-cyan-500/5 hover:bg-cyan-500/10 mt-2"
             >
               <Sparkles className="size-3.5" />
-              Tüm Özellikleri Dene (Ücretsiz & Filigranlı)
+              Tüm Özellikleri Ücretsiz Dene (Çıktılarda İlanX Logosu Olur)
             </button>
           </div>
 
-          <p className="mt-6 text-[9px] text-zinc-600">
-            * Bir lisans anahtarı en fazla 3 cihazda aktif edilebilir.
-          </p>
+          <div className="mt-6 rounded-lg bg-zinc-900/40 p-3 border border-zinc-800/50">
+            <p className="text-[10px] text-zinc-400 leading-relaxed text-left flex items-start gap-2">
+              <Sparkles className="size-3.5 text-cyan-500 shrink-0 mt-0.5" />
+              <span>
+                <strong>Bilgi:</strong> Satın aldığınız bir lisans anahtarını aynı anda <strong>3 farklı cihazda</strong> (örn: ofis bilgisayarı, ev bilgisayarı ve cep telefonunuz) kullanabilirsiniz.
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -62,16 +62,16 @@ type ToolDef = {
 const TOOLS: ToolDef[] = [
   { id: "select", label: "Seç", icon: MousePointer2, group: "navigate" },
   { id: "pan", label: "Kaydır", icon: Hand, group: "navigate" },
-  { id: "polygon", label: "Parsel", icon: LandPlot, group: "draw" },
-  { id: "rect", label: "Dikdörtgen", icon: Square, group: "draw" },
-  { id: "circle", label: "Daire", icon: Circle, group: "draw" },
-  { id: "line", label: "Çizgi", icon: Minus, group: "draw" },
-  { id: "arrow", label: "Ok", icon: ArrowUpRight, group: "draw" },
-  { id: "pencil", label: "Kalem", icon: Pencil, group: "draw" },
-  { id: "text", label: "Metin", icon: Type, group: "annotate" },
-  { id: "text3d", label: "3D Metin", icon: Boxes, group: "annotate" },
-  { id: "location", label: "Lokasyon", icon: MapPin, group: "annotate" },
-  { id: "logo", label: "Logo", icon: ImageIcon, group: "annotate" },
+  { id: "polygon", label: "Arazi/Parsel", icon: LandPlot, group: "draw" },
+  { id: "rect", label: "Kutu Çiz", icon: Square, group: "draw" },
+  { id: "circle", label: "Daire Çiz", icon: Circle, group: "draw" },
+  { id: "line", label: "Düz Çizgi", icon: Minus, group: "draw" },
+  { id: "arrow", label: "Yön/Ok", icon: ArrowUpRight, group: "draw" },
+  { id: "pencil", label: "Serbest Çizim", icon: Pencil, group: "draw" },
+  { id: "text", label: "Düz Yazı", icon: Type, group: "annotate" },
+  { id: "text3d", label: "3D Tabela", icon: Boxes, group: "annotate" },
+  { id: "location", label: "Konum/Pin", icon: MapPin, group: "annotate" },
+  { id: "logo", label: "Ofis Logon", icon: ImageIcon, group: "annotate" },
 ];
 
 export function Toolbar({ onImageLoaded }: ToolbarProps) {
