@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   description:
     "Gayrimenkul ve arazi fotoğraflarınızı saniyeler içinde profesyonel ilanlara dönüştürün. 3D fiyat etiketleri, kurumsal logonuz ve neon çizgilerle dikkat çekici görseller hazırlayın.",
   alternates: {
-    canonical: "https://ilanx.com.tr",
+    canonical: "https://siteniz.com",
   },
 };
 
@@ -31,9 +31,9 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebApplication",
-      "@id": "https://ilanx.com.tr/#webapp",
-      name: "İlanX",
-      url: "https://ilanx.com.tr",
+      "@id": "https://siteniz.com/#webapp",
+      name: "İlanX - Gayrimenkul Tasarım Stüdyosu",
+      url: "https://siteniz.com",
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web Browser",
       offers: {
@@ -51,12 +51,12 @@ const jsonLd = {
     },
     {
       "@type": "Organization",
-      "@id": "https://ilanx.com.tr/#organization",
+      "@id": "https://siteniz.com/#organization",
       name: "İlanX",
-      url: "https://ilanx.com.tr",
+      url: "https://siteniz.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://ilanx.com.tr/og-image.png",
+        url: "https://siteniz.com/og-image.png",
       },
       contactPoint: {
         "@type": "ContactPoint",
@@ -66,16 +66,16 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://ilanx.com.tr/#website",
-      url: "https://ilanx.com.tr",
+      "@id": "https://siteniz.com/#website",
+      url: "https://siteniz.com",
       name: "İlanX",
-      publisher: { "@id": "https://ilanx.com.tr/#organization" },
+      publisher: { "@id": "https://siteniz.com/#organization" },
       inLanguage: "tr-TR",
       potentialAction: {
         "@type": "SearchAction",
         target: {
           "@type": "EntryPoint",
-          urlTemplate: "https://ilanx.com.tr/editor",
+          urlTemplate: "https://siteniz.com/editor",
         },
         "query-input": "required name=search_term_string",
       },

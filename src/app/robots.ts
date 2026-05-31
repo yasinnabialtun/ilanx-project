@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/api/"],
       },
     ],
-    sitemap: "https://ilanx.com.tr/sitemap.xml",
-    host: "https://ilanx.com.tr",
+    sitemap: "https://siteniz.com/sitemap.xml",
+    host: "https://siteniz.com",
   };
 }

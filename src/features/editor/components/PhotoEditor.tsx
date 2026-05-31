@@ -75,21 +75,8 @@ export function PhotoEditor() {
     if (typeof window === "undefined") return;
 
     const hostname = window.location.hostname;
-    const allowedHosts = [
-      "localhost", 
-      "127.0.0.1", 
-      "ilanx.com", 
-      "www.ilanx.com", 
-      "arsaisaretleme.vercel.app",
-      "ynadijital.com",
-      "ynadigitalsites.com",
-      "ankaraustabul.com",
-      "celenkdiyari.com",
-      "tsukodesign.com"
-    ];
-
-    // 1. Domain Lock: Prevent running the application on copied/unauthorized domains
-    const isAllowed = allowedHosts.some(host => hostname === host || hostname.endsWith("." + host));
+    // Alan adı kilit mekanizması devre dışı bırakıldı. İstediğiniz her domaine kurabilirsiniz.
+    const isAllowed = true;
     if (!isAllowed) {
       document.body.innerHTML = `
         <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#09090b;color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;text-align:center;padding:20px;">
@@ -98,8 +85,8 @@ export function PhotoEditor() {
           <p style="color:#a1a1aa;font-size:14px;max-width:420px;line-height:1.6;margin:0 auto 24px auto;">
             Bu yazılımın lisanssız bir kopyasını kullanıyorsunuz. İlanX editörü bu alan adında çalıştırılmak üzere yetkilendirilmemiştir.
           </p>
-          <a href="https://ilanx.com" style="display:inline-block;padding:12px 24px;background-color:#06b6d4;color:white;text-decoration:none;border-radius:12px;font-weight:600;font-size:14px;transition:all 0.2s;">
-            ilanx.com Resmi Sayfasına Git
+          <a href="/" style="display:inline-block;padding:12px 24px;background-color:#06b6d4;color:white;text-decoration:none;border-radius:12px;font-weight:600;font-size:14px;transition:all 0.2s;">
+            Ana Sayfaya Git
           </a>
         </div>
       `;

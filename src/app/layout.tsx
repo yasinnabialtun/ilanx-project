@@ -3,7 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/core/providers/theme-provider";
 import { CSPostHogProvider } from "@/core/providers/posthog-provider";
 
-const siteUrl = "https://ilanx.com.tr";
+const siteUrl = "https://siteniz.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
