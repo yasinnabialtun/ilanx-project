@@ -39,8 +39,7 @@ const jsonLd = {
       offers: {
         "@type": "Offer",
         price: "0",
-        priceCurrency: "TRY",
-        description: "Demo modu ücretsiz, tam sürüm lisans ile aktif olur.",
+        description: "Tüm özellikleri ücretsiz test edin. Filigransız çıktılar için lisans edinin.",
       },
       description:
         "Emlak danışmanları için geliştirilmiş gayrimenkul ilan görseli hazırlama platformu. Arazi sınırlarını çizin, fiyat etiketleri ekleyin ve profesyonel görseller oluşturun.",
@@ -99,7 +98,7 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text:
-              "Evet, demo modu tamamen ücretsizdir. Tam özellikli kullanım için WhatsApp üzerinden 0542 136 70 56 numarasından lisans satın alabilirsiniz.",
+              "Evet, sistemi tüm özellikleriyle tamamen ücretsiz test edebilirsiniz. Sadece ücretsiz sürümde indirdiğiniz çıktılarda İlanX filigranı bulunur. Filigransız profesyonel kullanım için lisans satın alabilirsiniz.",
           },
         },
         {

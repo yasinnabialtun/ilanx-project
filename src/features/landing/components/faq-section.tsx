@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     question: "Kredi kartı bilgisi vermem gerekiyor mu? Gizli maliyetler var mı?",
-    answer: "Kesinlikle kredi kartı bilgisi gerekmez. Demo modunu ücretsiz deneyebilirsiniz. Lisans almak için WhatsApp üzerinden 0542 136 70 56 numarasıyla bize ulaşabilirsiniz.",
+    answer: "Kesinlikle kredi kartı bilgisine ihtiyacınız yok! İlanX'i tüm gelişmiş özellikleriyle ücretsiz olarak test edebilirsiniz. Sadece ücretsiz sürümde indirdiğiniz görsellerde İlanX filigranı yer alacaktır. Filigranı kaldırmak ve profesyonel kullanıma geçmek için lisans satın almanız yeterlidir.",
   },
   {
     question: "Projem yarıda kalırsa çizimlerim kaybolur mu?",

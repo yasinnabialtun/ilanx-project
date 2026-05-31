@@ -14,8 +14,8 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
   // Use provided content or fallback to hardcoded text during development if missing
   const title = content?.title || "Arsa İlanlarınızı 10 Kat Daha Hızlı Satın";
   const description = content?.description || "Tasarımcı tutmadan, sadece 2 dakikada dikkat çeken neon sınırlar, 3D satılık tabelaları ve animasyonlu video sunumları hazırlayın. Sıradan görsellerle ilan sitelerinde kaybolmayın.";
-  const btn1 = content?.buttonPrimary || "Ücretsiz Çizmeye Başla";
-  const btn2 = content?.buttonSecondary || "Nasıl Çalışır?";
+  const btn1 = content?.buttonPrimary || "Ücretsiz Dene (Filigranlı)";
+  const btn2 = content?.buttonSecondary || "Lisans Paketleri";
 
   return (
     <section className="relative min-h-screen overflow-hidden pt-24 pb-16">
@@ -75,10 +75,10 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
                 </Link>
               </LandingButton>
               <LandingButton size="lg" variant="outline" className="group" asChild>
-                <a href="https://wa.me/905421367056?text=Merhaba%2C%20%C4%B0lanX%20lisans%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer">
+                <Link href="#pricing">
                   {btn2}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
+                </Link>
               </LandingButton>
             </motion.div>
 

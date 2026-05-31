@@ -83,7 +83,7 @@ export function PricingSection() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mt-4 text-lg text-zinc-400"
           >
-            Kredi kartı gerekmeden demo modunda deneyin, işiniz büyüdükçe Shopier üzerinden anında lisansınızı aktif edin.
+            Kredi kartı gerekmeden tüm özellikleri ücretsiz test edin. İndirdiğiniz görsellerdeki İlanX filigranını kaldırmak için size uygun lisansı seçin.
           </motion.p>
         </div>
 
