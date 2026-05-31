@@ -142,7 +142,7 @@ export function SidePanel() {
       )}
       <aside
         className={`
-          relative fixed inset-y-0 right-0 z-50 flex shrink-0 flex-col gap-3 border-l border-border bg-card/98 backdrop-blur p-4 shadow-2xl transition-all duration-300 ease-in-out overflow-y-auto
+          fixed inset-y-0 right-0 z-50 flex shrink-0 flex-col gap-3 border-l border-border bg-card/98 backdrop-blur p-4 shadow-2xl transition-all duration-300 ease-in-out overflow-y-auto
           [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-muted-foreground/20 [&::-webkit-scrollbar-thumb]:rounded-full
           ${isSidePanelOpen ? "w-[85vw] sm:w-80 translate-x-0" : "w-0 translate-x-full lg:translate-x-0 lg:w-0 lg:p-0 lg:border-none opacity-0 lg:opacity-100"}
           lg:relative lg:inset-auto lg:z-0 lg:bg-card lg:shadow-none

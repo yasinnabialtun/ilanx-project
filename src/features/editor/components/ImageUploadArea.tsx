@@ -22,7 +22,7 @@ export function ImageUploadArea({ setBackgroundDataUrl }: ImageUploadAreaProps) 
     e.preventDefault();
     setIsDragging(false);
     const file = e.dataTransfer.files?.[0];
-    if (file && (file.type === "image/jpeg" || file.type === "image/png" || file.type === "image/webp")) {
+    if (file && (file.type.startsWith("image/") || file.name.match(/\.(jpg|jpeg|png|webp|heic|heif)$/i))) {
       try {
         const reader = new FileReader();
         reader.onload = (event) => {

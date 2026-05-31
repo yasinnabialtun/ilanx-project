@@ -153,7 +153,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
       }
       title={tool.label}
       aria-label={tool.label}
-      className="min-h-[40px] min-w-[40px] shrink-0 touch-manipulation"
+      className="min-h-[44px] min-w-[44px] shrink-0 touch-manipulation"
     >
       <tool.icon className="size-4" />
       <span className="hidden md:inline">{tool.label}</span>
@@ -185,7 +185,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
         <input
           ref={fileRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept="image/jpeg,image/png,image/webp,image/heic,image/heif"
           className="hidden"
           onChange={handleFile}
         />
@@ -198,7 +198,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => fileRef.current?.click()}
           disabled={!isLicensed}
           aria-label="Görsel Yükle"
-          className="min-h-[36px] touch-manipulation"
+          className="min-h-[44px] touch-manipulation"
         >
           <ImagePlus className="size-4" />
           <span className="hidden xs:inline sm:inline">Görsel</span>
@@ -210,7 +210,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           variant={mobileToolsOpen ? "default" : "outline"}
           size="sm"
           onClick={() => setMobileToolsOpen(!mobileToolsOpen)}
-          className="md:hidden min-h-[36px] touch-manipulation"
+          className="md:hidden min-h-[44px] touch-manipulation"
           title="Araçları Göster/Gizle"
           aria-label="Araçları Göster veya Gizle"
         >
@@ -225,7 +225,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           size="sm"
           onClick={() => setSidePanelOpen(!isSidePanelOpen)}
           disabled={!isLicensed}
-          className="min-h-[36px] touch-manipulation"
+          className="min-h-[44px] touch-manipulation"
           title="Ayarlar/Özellikler Paneli"
           aria-label="Özellikler Panelini Aç veya Kapat"
         >
@@ -244,7 +244,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!canUndo || !isLicensed}
           title="Geri al (Ctrl+Z)"
           aria-label="Son yapılan işlemi geri al"
-          className="min-h-[36px] min-w-[36px] touch-manipulation"
+          className="min-h-[44px] min-w-[44px] touch-manipulation"
         >
           <Undo2 className="size-4" />
         </Button>
@@ -256,7 +256,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!canRedo || !isLicensed}
           title="Yinele (Ctrl+Y)"
           aria-label="Geri alınan işlemi yinele"
-          className="min-h-[36px] min-w-[36px] touch-manipulation"
+          className="min-h-[44px] min-w-[44px] touch-manipulation"
         >
           <Redo2 className="size-4" />
         </Button>
@@ -269,7 +269,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={() => deleteEditorSelection()}
           disabled={!hasBackground || !isLicensed}
           aria-label="Seçili nesneyi sil"
-          className="min-h-[36px] touch-manipulation"
+          className="min-h-[44px] touch-manipulation"
         >
           <Trash2 className="size-4" />
           <span className="hidden sm:inline">Sil</span>
@@ -283,7 +283,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           size="sm"
           onClick={handleSave}
           disabled={!hasBackground || isRecordingVideo || !isLicensed}
-          className="min-h-[36px] touch-manipulation"
+          className="min-h-[44px] touch-manipulation"
           title="PNG olarak indir"
           aria-label="Tasarımı PNG görseli olarak indir"
         >
@@ -296,7 +296,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           size="sm"
           onClick={handleSavePdf}
           disabled={!hasBackground || isRecordingVideo || !isLicensed}
-          className="min-h-[36px] touch-manipulation"
+          className="min-h-[44px] touch-manipulation"
           title="PDF olarak indir"
           aria-label="Tasarımı PDF belgesi olarak indir"
         >
@@ -311,7 +311,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           onClick={handleSaveVideo}
           disabled={!hasBackground || isRecordingVideo || !isLicensed}
           aria-label="Tasarımı canlandırmalı WebM videosu olarak indir"
-          className={`min-h-[36px] touch-manipulation ${isRecordingVideo ? "animate-pulse" : ""}`}
+          className={`min-h-[44px] touch-manipulation ${isRecordingVideo ? "animate-pulse" : ""}`}
         >
           <Video className={`size-4 ${isRecordingVideo ? "text-red-500" : ""}`} />
           <span className="hidden md:inline">
@@ -330,7 +330,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!hasBackground}
           title="Yakınlaştır"
           aria-label="Tuali yakınlaştır"
-          className="min-h-[36px] min-w-[36px] touch-manipulation"
+          className="min-h-[44px] min-w-[44px] touch-manipulation"
         >
           <ZoomIn className="size-4" />
         </Button>
@@ -342,7 +342,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!hasBackground}
           title="Uzaklaştır"
           aria-label="Tuali uzaklaştır"
-          className="min-h-[36px] min-w-[36px] touch-manipulation"
+          className="min-h-[44px] min-w-[44px] touch-manipulation"
         >
           <ZoomOut className="size-4" />
         </Button>
@@ -354,7 +354,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!hasBackground}
           title="Sığdır"
           aria-label="Görseli ekrana sığdır"
-          className="min-h-[36px] min-w-[36px] touch-manipulation"
+          className="min-h-[44px] min-w-[44px] touch-manipulation"
         >
           <Maximize2 className="size-4" />
         </Button>
@@ -366,7 +366,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           disabled={!hasBackground}
           title="Zoom sıfırla"
           aria-label="Yakınlaştırmayı bire bir oranına sıfırla"
-          className="hidden lg:inline-flex min-h-[36px] min-w-[36px]"
+          className="hidden lg:inline-flex min-h-[44px] min-w-[44px]"
         >
           1:1
         </Button>
@@ -386,7 +386,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           }}
           title="Klavye Kısayolları (?)"
           aria-label="Klavye kısayolları listesini aç"
-          className="min-h-[36px] min-w-[36px]"
+          className="min-h-[44px] min-w-[44px]"
         >
           <Keyboard className="size-4" />
         </Button>

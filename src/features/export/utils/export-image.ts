@@ -4,21 +4,35 @@ import type { VideoExportQuality } from "@/shared/types";
 import { telemetry } from "@/core/utils/telemetry";
 
 export async function resizeImageFile(file: File): Promise<string> {
-  const bitmap = await createImageBitmap(file);
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-  const maxSize = isMobile ? 1600 : 2400;
-  const scale = Math.min(1, maxSize / Math.max(bitmap.width, bitmap.height));
-  const width = Math.round(bitmap.width * scale);
-  const height = Math.round(bitmap.height * scale);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+        const maxSize = isMobile ? 1600 : 2400;
+        const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+        const width = Math.round(img.width * scale);
+        const height = Math.round(img.height * scale);
 
-  const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Failed to get 2D context from canvas');
-  
-  ctx.drawImage(bitmap, 0, 0, width, height);
-  return canvas.toDataURL('image/jpeg', 0.92);
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get 2D context from canvas'));
+          return;
+        }
+        
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', 0.92));
+      };
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.src = e.target?.result as string;
+    };
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.readAsDataURL(file);
+  });
 }
 
 export function downloadCanvasImage(canvas: Canvas, filename?: string) {

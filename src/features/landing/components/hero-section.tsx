@@ -49,7 +49,7 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
-              className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance whitespace-pre-wrap"
+              className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance whitespace-pre-wrap"
               dangerouslySetInnerHTML={{ __html: title.replace(/(10 Kat Daha Hızlı Satın)/g, '<span class="text-gradient">$1</span>') }}
             />
 
