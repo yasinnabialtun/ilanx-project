@@ -119,11 +119,8 @@ export function PhotoEditor() {
     const verifyExistingToken = async () => {
       const token = localStorage.getItem("ilanx_license_token");
       if (!token) {
-        // No token, start a 7-second grace timer to display license modal
-        const timer = setTimeout(() => {
-          setLicenseModalOpen(true);
-        }, 7000);
-        return () => clearTimeout(timer);
+        // Sadece lisanssız olduğunu kaydediyoruz, kullanıcıyı rahatsız edecek otomatik pop-up KALDIRILDI.
+        setDemoMode(true);
       }
 
       try {

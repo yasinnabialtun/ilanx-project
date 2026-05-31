@@ -16,15 +16,9 @@ export function OnboardingTour() {
     // Check if the user has already seen the tour
     const hasSeenTour = localStorage.getItem("ilanx_tour_completed");
     
-    // We wait a bit before starting the tour so the UI fully loads
+    // Kullanıcı ilk defa girse bile turu otomatik başlatmıyoruz (Sessiz ve pürüzsüz UX için)
     if (!hasSeenTour) {
-      // Kullanıcı sayfayı yenilerse tekrar görmesin diye anında "görüldü" olarak işaretle.
       localStorage.setItem("ilanx_tour_completed", "true");
-      
-      const timer = setTimeout(() => {
-        setRun(true);
-      }, 1000);
-      return () => clearTimeout(timer);
     }
   }, []);
 

@@ -108,35 +108,11 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
 
   const handleExportWithDemoCheck = async (exportFn: () => Promise<void> | void) => {
     if (!hasBackground) {
-      alert("Önce bir fotoğraf yükleyin.");
+      // Eğer resim yüklenmemişse buton zaten pasif ama güvenlik amaçlı sessizce dönüyoruz.
       return;
     }
-    if (!isLicensed) {
-      const savedEmail = localStorage.getItem("ilanx_demo_email");
-      const emailPromptText = "🎁 Demo Modundasınız\n\nİndireceğiniz görselde İlanX filigranı yer alacaktır.\nDevam etmek için lütfen e-posta adresinizi girin:";
-      
-      let email = savedEmail;
-      if (!savedEmail) {
-        email = window.prompt(emailPromptText, "");
-        if (email === null) {
-          // İptal ederse, belki lisans almak istiyordur diye lisans penceresini aç
-          useEditorStore.getState().setLicenseModalOpen(true);
-          return;
-        }
-        if (email && email.trim() !== "") {
-          localStorage.setItem("ilanx_demo_email", email.trim());
-          // İleride bu e-posta adresi PostHog'a veya veritabanına gönderilebilir
-        }
-      } else {
-        const wantToBuy = window.confirm(
-          "🎁 Demo Modundasınız\n\nİndireceğiniz çıktıya İlanX filigranı eklenecektir.\nFiligransız profesyonel kullanım için Lisans Ekranına gitmek ister misiniz?\n\n[Tamam]: Lisans ekranını aç\n[İptal]: Filigranlı indirmeye devam et"
-        );
-        if (wantToBuy) {
-          useEditorStore.getState().setLicenseModalOpen(true);
-          return;
-        }
-      }
-    }
+    // Demo modunda ise (lisanssız), arka planda sisteme eklenmiş olan filigranla sessizce ve pürüzsüzce indirir.
+    // Kullanıcıyı window.prompt veya alert ile ASLA rahatsız etmeyiz.
     await exportFn();
   };
 
