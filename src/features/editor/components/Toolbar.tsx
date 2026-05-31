@@ -282,7 +282,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           type="button"
           size="sm"
           onClick={handleSave}
-          disabled={!hasBackground || isRecordingVideo || !isLicensed}
+          disabled={!hasBackground || isRecordingVideo}
           className="min-h-[44px] touch-manipulation"
           title="PNG olarak indir"
           aria-label="Tasarımı PNG görseli olarak indir"
@@ -295,7 +295,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           type="button"
           size="sm"
           onClick={handleSavePdf}
-          disabled={!hasBackground || isRecordingVideo || !isLicensed}
+          disabled={!hasBackground || isRecordingVideo}
           className="min-h-[44px] touch-manipulation"
           title="PDF olarak indir"
           aria-label="Tasarımı PDF belgesi olarak indir"
@@ -309,7 +309,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           size="sm"
           variant={isRecordingVideo ? "destructive" : "outline"}
           onClick={handleSaveVideo}
-          disabled={!hasBackground || isRecordingVideo || !isLicensed}
+          disabled={!hasBackground || isRecordingVideo}
           aria-label="Tasarımı canlandırmalı WebM videosu olarak indir"
           className={`min-h-[44px] touch-manipulation ${isRecordingVideo ? "animate-pulse" : ""}`}
         >

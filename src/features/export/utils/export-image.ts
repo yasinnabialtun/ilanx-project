@@ -2,6 +2,47 @@ import type { Canvas } from "fabric";
 import jsPDF from "jspdf";
 import type { VideoExportQuality } from "@/shared/types";
 import { telemetry } from "@/core/utils/telemetry";
+import { useEditorStore } from "@/features/editor/store/editorStore";
+import { IText, Rect } from "fabric";
+
+function addWatermark(canvas: Canvas) {
+  const isLicensed = useEditorStore.getState().isLicensed;
+  if (isLicensed) return null;
+  
+  const w = canvas.getWidth();
+  const h = canvas.getHeight();
+  const fontSize = Math.max(w * 0.05, 24);
+  
+  const bg = new Rect({
+    left: w / 2,
+    top: h / 2,
+    width: w,
+    height: fontSize * 3,
+    fill: "rgba(0,0,0,0.6)",
+    originX: "center",
+    originY: "center",
+  });
+  
+  const text = new IText("İlanX Demo - ilanx.com.tr", {
+    left: w / 2,
+    top: h / 2,
+    fontSize: fontSize,
+    fontFamily: "Montserrat, sans-serif",
+    fontWeight: "bold",
+    fill: "rgba(255,255,255,0.9)",
+    textAlign: "center",
+    originX: "center",
+    originY: "center",
+  });
+  
+  canvas.add(bg, text);
+  return { bg, text };
+}
+
+function removeWatermark(canvas: Canvas, watermark: { text: IText, bg: Rect } | null) {
+  if (!watermark) return;
+  canvas.remove(watermark.bg, watermark.text);
+}
 
 export async function resizeImageFile(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -43,6 +84,8 @@ export function downloadCanvasImage(canvas: Canvas, filename?: string) {
     canvas.discardActiveObject();
     canvas.requestRenderAll();
   }
+  const watermark = addWatermark(canvas);
+  canvas.requestRenderAll();
 
   let dataUrl: string;
   const img = canvas.backgroundImage;
@@ -81,6 +124,8 @@ export function downloadCanvasImage(canvas: Canvas, filename?: string) {
   }
 
 
+  removeWatermark(canvas, watermark);
+
   // Restore selection
   if (activeObject) {
     canvas.setActiveObject(activeObject);
@@ -101,6 +146,8 @@ export function downloadCanvasPdf(canvas: Canvas, filename?: string) {
     canvas.discardActiveObject();
     canvas.requestRenderAll();
   }
+  const watermark = addWatermark(canvas);
+  canvas.requestRenderAll();
 
   let dataUrl: string;
   const img = canvas.backgroundImage;
@@ -136,6 +183,7 @@ export function downloadCanvasPdf(canvas: Canvas, filename?: string) {
     dataUrl = canvas.toDataURL({ format: "jpeg", quality: 0.95, multiplier: 1 });
   }
 
+  removeWatermark(canvas, watermark);
   if (activeObject) {
     canvas.setActiveObject(activeObject);
     canvas.requestRenderAll();
@@ -171,6 +219,9 @@ export function downloadCanvasVideo(
       const ch = canvas.getHeight();
       const origVpt = (canvas.viewportTransform ? [...canvas.viewportTransform] : [1, 0, 0, 1, 0, 0]) as import("fabric").TMat2D;
       const origZoom = canvas.getZoom();
+
+      const watermark = addWatermark(canvas);
+      canvas.requestRenderAll();
 
       const img = canvas.backgroundImage;
       let scale = 1;
@@ -245,6 +296,7 @@ export function downloadCanvasVideo(
       };
 
       recorder.onstop = () => {
+        removeWatermark(canvas, watermark);
         // Restore original canvas size and zoom
         canvas.setDimensions({ width: cw, height: ch });
         canvas.setViewportTransform(origVpt);
