@@ -6,24 +6,24 @@ import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react"
 
 const faqs = [
   {
-    question: "Tasarım bilgisine sahip olmam veya ekibime eğitim vermem gerekiyor mu?",
-    answer: "Kesinlikle hayır. İlanX'i Word veya Paint kullanabilen herkesin ustalaşabileceği şekilde 'sıfır öğrenme eğrisiyle' tasarladık. Ofisinizdeki tüm danışmanlar sisteme girdikleri ilk 10 saniyede profesyonel tasarım yapmaya başlayabilir.",
+    question: "Tasarım bilmem gerekiyor mu?",
+    answer: "Hayır. Paint veya Word kullanabiliyorsanız İlanX'i de rahatça kullanırsınız. Her şey sürükle-bırak mantığıyla çalışır. Sisteme girer girmez hiçbir eğitim almadan ilk görselinizi hazırlayabilirsiniz.",
   },
   {
-    question: "Portföyün yanındayken mobilden yapabilir miyim?",
-    answer: "Evet! Kurulum veya indirme (Setup) süresi 0 saniyedir. Tamamen bulut tabanlıdır. İster bilgisayardan ister akıllı telefonunuzdan girin, saniyeler içinde çiziminizi yapıp WhatsApp'tan müşterinize gönderin.",
+    question: "Mülk ziyaretindeyken cepten halledebilir miyim?",
+    answer: "Evet, program indirmenize gerek yok. Telefondan sisteme girip mülkün fotoğrafını çeker çekmez sınırlarını çizebilir ve anında WhatsApp'tan müşterinize atabilirsiniz.",
   },
   {
-    question: "Tasarım ajansına göre avantajı nedir?",
-    answer: "Bir ajansla çalışmak hem yüksek bütçe gerektirir hem de günlerce revizyon beklemenize neden olur. İlanX ile ajans kalitesinde (3D tabelalar, neon sınırlar) çıktıyı 15 saniyede, dışarıda bir kahve içeceğiniz fiyata üretirsiniz. Zamanınız ve paranız size kalır.",
+    question: "Ajansla veya tasarımcıyla çalışmaktan farkı ne?",
+    answer: "Ajansa her ilan için ayrı para öder ve günlerce beklersiniz. İlanX ile saniyeler içinde kimseye muhtaç olmadan aynı kalitede profesyonel görseller hazırlarsınız. Paranız ve zamanınız cebinizde kalır.",
   },
   {
-    question: "Dışa aktardığım videoları hangi platformlarda paylaşabilirim?",
-    answer: "Çıktılarınızı yüksek çözünürlüklü görsel (PNG) veya dikkat çeken hareketli video (MP4) olarak anında indirebilirsiniz. Sahibinden, Emlakjet, Instagram Reels veya WhatsApp durumları için kusursuz optimize edilmiştir.",
+    question: "Çıktıları nerelerde kullanabilirim?",
+    answer: "Sahibinden, Emlakjet, Hepsiemlak gibi tüm ilan sitelerine direkt yükleyebilirsiniz. Ayrıca Instagram (Post/Reels) ve WhatsApp durumunuzda paylaşmanız için de formatlar her zaman hazırdır.",
   },
   {
-    question: "Kredi kartı girmem gerekiyor mu? Gizli maliyetler var mı?",
-    answer: "Kredi kartı bilgisine veya peşin ödemeye ihtiyacınız yok. Sistemi hemen şimdi ücretsiz test edebilirsiniz. Sonuçların satışlarınızı nasıl hızlandırdığını kendi gözlerinizle gördükten sonra sınırsız lisansa geçiş yapabilirsiniz.",
+    question: "Denemek ücretli mi? Kredi kartı girecek miyim?",
+    answer: "Hayır, kredi kartı gerekmez. Sisteme girip hemen ücretsiz deneyebilirsiniz. Sadece tüm özellikleri limitsiz ve filigransız kullanmak istediğinizde lisans almanız gerekir.",
   },
 ]
 

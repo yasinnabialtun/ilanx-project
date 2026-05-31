@@ -1,17 +1,17 @@
 {
   "hero": {
-    "title": "Portföylerinizi İlan Sitelerinde Haftalarca Bekletmeyin. 15 Saniyede Tasarlayın, Hızlıca Satın.",
-    "description": "Photoshop uzmanı olmanıza veya ajanslara binlerce lira ödemenize gerek yok. İlanX ile portföylerinize 3D fiyat tabelaları, neon sınırlar ve logonuzu ekleyerek rakiplerinizin arasından anında sıyrılın.",
-    "buttonPrimary": "Ücretsiz Dene (Kredi Kartı Gerekmez)",
-    "buttonSecondary": "30 Saniyede Nasıl Çalışır İzle"
+    "title": "Emlak İlanlarınızı 15 Saniyede Satış Mıknatısına Çevirin",
+    "description": "Photoshop öğrenmenize veya ajanslara para dökmenize gerek yok. Portföylerinize 3D fiyat etiketleri, logonuz ve neon çizgiler ekleyerek ilan sitelerinde hemen öne çıkın.",
+    "buttonPrimary": "Hemen Ücretsiz Dene",
+    "buttonSecondary": "Nasıl Çalışır?"
   },
   "features": {
-    "title": "Sizin İçin Tasarım Yapan 'Sanal Ajansınızla' Tanışın",
-    "subtitle": "Kurulum yok, öğrenme eğrisi yok. Ekrandan sürükle-bırak yapın ve ilanınızı zirveye taşıyın.",
+    "title": "Sizin İçin Tasarım Yapan 'Sanal Ajansınız'",
+    "subtitle": "Program indirmek yok, eğitim yok. Sadece fotoğrafı sürükleyin ve ilanınızı zirveye taşıyın.",
     "items": [
       {
-        "title": "Tıklanma Garantili Neon Sınırlar",
-        "description": "İlan sitelerinde kaydırmayı durdurtan %100 CTR (Tıklanma) odaklı Saber parlamalarıyla sınırları belirginleştirin."
+        "title": "Tıklamaları Artıran Neon Sınırlar",
+        "description": "İlan sitelerinde insanların durup bakmasını sağlayan göz alıcı parlak çizgilerle sınırları belirtin."
       },
       {
         "title": "Prestij Katan 3D Tabelalar",
