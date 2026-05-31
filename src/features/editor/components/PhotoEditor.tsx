@@ -20,7 +20,7 @@ import { EmptyState } from "./EmptyState";
 import { TimelineControls } from "./TimelineControls";
 import { useEditorStore } from "@/features/editor/store/editorStore";
 import { LicenseModal } from "./LicenseModal";
-import { OnboardingTour } from "./OnboardingTour";
+
 import { ReferralModal } from "./ReferralModal";
 
 export function PhotoEditor() {
@@ -304,7 +304,7 @@ export function PhotoEditor() {
     <div 
       className="relative flex h-[100dvh] w-full max-w-full flex-col overflow-hidden"
     >
-      <OnboardingTour />
+
       
       {/* Mobile Landscape Guidance bar */}
       {showLandscapeTip && (
