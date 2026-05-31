@@ -151,10 +151,10 @@ export function LicenseModal() {
 
           <button
             onClick={handleDemoMode}
-            className="flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-medium text-zinc-500 hover:text-zinc-300 transition-all cursor-pointer"
+            className="flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-medium text-cyan-400 hover:text-cyan-300 transition-all cursor-pointer border border-transparent hover:border-cyan-500/20 bg-cyan-500/5 hover:bg-cyan-500/10 mt-2"
           >
-            <Eye className="size-3.5" />
-            Demo Modunda İncele (Sadece İzleme)
+            <Sparkles className="size-3.5" />
+            Tüm Özellikleri Dene (Ücretsiz & Filigranlı)
           </button>
         </div>
 

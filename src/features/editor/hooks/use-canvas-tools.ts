@@ -304,33 +304,8 @@ export function useCanvasTools(
     setEditorCanvas(canvas);
 
     const onAfterRender = () => {
-      const isLicensed = useEditorStore.getState().isLicensed;
-      const isDemoMode = useEditorStore.getState().isDemoMode;
-
-      if (!isLicensed && isDemoMode) {
-        const ctx = canvas.getContext();
-        ctx.save();
-        ctx.font = "bold 22px Montserrat, sans-serif";
-        ctx.fillStyle = "rgba(244, 63, 94, 0.25)"; // rose-500 with low opacity
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-
-        const w = canvas.getWidth();
-        const h = canvas.getHeight();
-        const text = "İlanX Demo Modu";
-
-        // Draw diagonal pattern
-        for (let x = 120; x < w + 200; x += 280) {
-          for (let y = 80; y < h + 200; y += 180) {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(-Math.PI / 6); // -30 deg
-            ctx.fillText(text, 0, 0);
-            ctx.restore();
-          }
-        }
-        ctx.restore();
-      }
+      // Demo watermark is now applied ONLY during export (export-image.ts)
+      // to keep the drawing canvas clean and fully testable for demo users.
     };
     canvas.on("after:render", onAfterRender);
 
@@ -509,7 +484,6 @@ export function useCanvasTools(
 
     const onDblClick = async (opt: { target?: FabricObject }) => {
       const isLicensed = useEditorStore.getState().isLicensed;
-      if (!isLicensed) return;
 
       const target = opt.target;
       if (!target) return;
@@ -892,9 +866,9 @@ export function useCanvasTools(
     dragRef.current = { active: false, startX: 0, startY: 0, preview: null };
 
     const isLicensed = useEditorStore.getState().isLicensed;
-    const isSelect = (activeTool === "select" || activeTool === "logo") && isLicensed;
+    const isSelect = (activeTool === "select" || activeTool === "logo");
     const isPan = activeTool === "pan";
-    const isPencil = activeTool === "pencil" && isLicensed;
+    const isPencil = activeTool === "pencil";
 
     canvas.selection = isSelect;
     canvas.isDrawingMode = isPencil;
@@ -928,12 +902,7 @@ export function useCanvasTools(
         return;
       }
 
-      const isLicensed = useEditorStore.getState().isLicensed;
       const tool = useEditorStore.getState().activeTool;
-
-      if (!isLicensed && tool !== "pan") {
-        return; // Block drawing & object creation in demo mode
-      }
 
       const pointer = canvas.getScenePoint(opt.e);
 
@@ -1244,23 +1213,6 @@ export function useCanvasTools(
       const isMac = navigator.userAgent.toLowerCase().includes("mac");
       const cmdKey = isMac ? e.metaKey : e.ctrlKey;
       const isLicensed = useEditorStore.getState().isLicensed;
-
-      if (!isLicensed) {
-        // Block all editor keyboard commands in Demo mode
-        if (
-          e.key === "Delete" ||
-          e.key === "Backspace" ||
-          e.key === "Escape" ||
-          e.key === "Enter" ||
-          (cmdKey && e.key.toLowerCase() === "z") ||
-          (cmdKey && e.key.toLowerCase() === "y") ||
-          (cmdKey && e.key.toLowerCase() === "c") ||
-          (cmdKey && e.key.toLowerCase() === "v")
-        ) {
-          e.preventDefault();
-          return;
-        }
-      }
 
       const canvas = canvasRef.current;
       if (!canvas) return;

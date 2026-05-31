@@ -147,7 +147,6 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
         setMobileToolsOpen(false);
       }}
       disabled={
-        (!isLicensed && tool.id !== "select" && tool.id !== "pan") ||
         (!hasBackground && tool.id !== "select") ||
         isRecordingVideo
       }
@@ -196,7 +195,6 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           variant="outline"
           size="sm"
           onClick={() => fileRef.current?.click()}
-          disabled={!isLicensed}
           aria-label="Görsel Yükle"
           className="min-h-[44px] touch-manipulation"
         >
@@ -224,7 +222,6 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           variant={isSidePanelOpen ? "default" : "outline"}
           size="sm"
           onClick={() => setSidePanelOpen(!isSidePanelOpen)}
-          disabled={!isLicensed}
           className="min-h-[44px] touch-manipulation"
           title="Ayarlar/Özellikler Paneli"
           aria-label="Özellikler Panelini Aç veya Kapat"
@@ -241,7 +238,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           variant="outline"
           size="icon-sm"
           onClick={() => undoEditor()}
-          disabled={!canUndo || !isLicensed}
+          disabled={!canUndo}
           title="Geri al (Ctrl+Z)"
           aria-label="Son yapılan işlemi geri al"
           className="min-h-[44px] min-w-[44px] touch-manipulation"
@@ -253,7 +250,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           variant="outline"
           size="icon-sm"
           onClick={() => redoEditor()}
-          disabled={!canRedo || !isLicensed}
+          disabled={!canRedo}
           title="Yinele (Ctrl+Y)"
           aria-label="Geri alınan işlemi yinele"
           className="min-h-[44px] min-w-[44px] touch-manipulation"
@@ -267,7 +264,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           variant="secondary"
           size="sm"
           onClick={() => deleteEditorSelection()}
-          disabled={!hasBackground || !isLicensed}
+          disabled={!hasBackground}
           aria-label="Seçili nesneyi sil"
           className="min-h-[44px] touch-manipulation"
         >
@@ -400,7 +397,7 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
               clearCanvasAnnotations();
             }
           }}
-          disabled={!hasBackground || !isLicensed}
+          disabled={!hasBackground}
           aria-label="Tüm çizimleri temizle"
           className="hidden md:inline-flex"
         >
