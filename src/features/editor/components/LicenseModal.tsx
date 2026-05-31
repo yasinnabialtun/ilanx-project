@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { KeyRound, ShieldAlert, Sparkles, ShoppingBag, Check, Gift } from "lucide-react";
+import { KeyRound, ShieldAlert, Sparkles, ShoppingBag, Check, Gift, Users } from "lucide-react";
 import { useEditorStore } from "@/features/editor/store/editorStore";
 
 export function LicenseModal() {
@@ -194,15 +194,28 @@ export function LicenseModal() {
               </p>
             </div>
 
-            <a
-              href="https://wa.me/905421367056?text=Merhaba%2C%20%C4%B0lanX%20lisans%C4%B1%20sat%C4%B1n%20almak%20istiyorum.%20(Varsa%20Referans%20Kodunuz:%20)"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/30 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-900 hover:text-white transition-all mt-1"
-            >
-              <ShoppingBag className="size-3.5" />
-              Lisans Satın Al (WhatsApp)
-            </a>
+            <div className="grid grid-cols-2 gap-2 mt-1">
+              <a
+                href="https://wa.me/905421367056?text=Merhaba%2C%20Bireysel%20%C4%B0lanX%20lisans%C4%B1%20sat%C4%B1n%20almak%20istiyorum.%20(Varsa%20Referans%20Kodunuz:%20)"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/30 py-2.5 text-[11px] font-medium text-zinc-300 hover:bg-zinc-900 hover:text-white transition-all"
+              >
+                <ShoppingBag className="size-3.5 shrink-0" />
+                Bireysel Lisans Al
+              </a>
+
+              <a
+                href="https://wa.me/905421367056?text=Merhaba%2C%20T%C3%BCm%20ekibim%20i%C3%A7in%20Ofis%20Paketi%20sat%C4%B1n%20almak%20istiyorum."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 rounded-xl border border-purple-500/20 bg-purple-500/10 py-2.5 text-[11px] font-medium text-purple-400 hover:bg-purple-500/20 hover:text-purple-300 transition-all shadow-[0_0_15px_rgba(168,85,247,0.1)] relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]" />
+                <Users className="size-3.5 shrink-0" />
+                Ofis Paketi (İndirimli)
+              </a>
+            </div>
 
             <button
               onClick={handleDemoMode}
