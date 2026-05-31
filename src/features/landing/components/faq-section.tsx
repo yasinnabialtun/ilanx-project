@@ -6,24 +6,24 @@ import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react"
 
 const faqs = [
   {
-    question: "Tasarım veya teknik grafik bilgisine ihtiyacım var mı?",
-    answer: "Kesinlikle hayır! İlanX, gayrimenkul danışmanları için özel olarak sıfırdan tasarlandı. Sadece fotoğrafınızı yükleyin ve noktaları birleştirerek çizin. Kalan tüm parlatma, 3D derinlik ve tabela ekleme işlemlerini sürükle-bırak yöntemiyle saniyeler içinde yapabilirsiniz.",
+    question: "Tasarım bilgisine sahip olmam veya ekibime eğitim vermem gerekiyor mu?",
+    answer: "Kesinlikle hayır. İlanX'i Word veya Paint kullanabilen herkesin ustalaşabileceği şekilde 'sıfır öğrenme eğrisiyle' tasarladık. Ofisinizdeki tüm danışmanlar sisteme girdikleri ilk 10 saniyede profesyonel tasarım yapmaya başlayabilir.",
   },
   {
-    question: "Portföyümün fotoğrafını çeker çekmez arabadayken veya mülkün başındayken tasarımı yapabilir miyim?",
-    answer: "Evet! İlanX tamamen mobil uyumlu ve duyarlı (responsive) bir tasarıma sahiptir. Akıllı telefonunuzda veya tabletinizde mülkün başındayken bile saniyeler içinde tasarımınızı yapıp ilan sitelerine veya müşterinize WhatsApp'tan gönderebilirsiniz.",
+    question: "Portföyün yanındayken mobilden yapabilir miyim?",
+    answer: "Evet! Kurulum veya indirme (Setup) süresi 0 saniyedir. Tamamen bulut tabanlıdır. İster bilgisayardan ister akıllı telefonunuzdan girin, saniyeler içinde çiziminizi yapıp WhatsApp'tan müşterinize gönderin.",
+  },
+  {
+    question: "Tasarım ajansına göre avantajı nedir?",
+    answer: "Bir ajansla çalışmak hem yüksek bütçe gerektirir hem de günlerce revizyon beklemenize neden olur. İlanX ile ajans kalitesinde (3D tabelalar, neon sınırlar) çıktıyı 15 saniyede, dışarıda bir kahve içeceğiniz fiyata üretirsiniz. Zamanınız ve paranız size kalır.",
   },
   {
     question: "Dışa aktardığım videoları hangi platformlarda paylaşabilirim?",
-    answer: "Oluşturduğunuz animasyonlu gayrimenkul videolarını yüksek kalitede MP4 olarak indirebilirsiniz. Bu videoları Sahibinden, Emlakjet gibi ilan sitelerinde, Instagram Reels, YouTube Shorts veya doğrudan müşterilerinize WhatsApp üzerinden göndermek için mükemmel biçimde optimize edilmiştir.",
+    answer: "Çıktılarınızı yüksek çözünürlüklü görsel (PNG) veya dikkat çeken hareketli video (MP4) olarak anında indirebilirsiniz. Sahibinden, Emlakjet, Instagram Reels veya WhatsApp durumları için kusursuz optimize edilmiştir.",
   },
   {
-    question: "Kredi kartı bilgisi vermem gerekiyor mu? Gizli maliyetler var mı?",
-    answer: "Kesinlikle kredi kartı bilgisine ihtiyacınız yok! İlanX'i tüm gelişmiş özellikleriyle ücretsiz olarak test edebilirsiniz. Sadece ücretsiz sürümde indirdiğiniz görsellerde İlanX filigranı yer alacaktır. Filigranı kaldırmak ve profesyonel kullanıma geçmek için lisans satın almanız yeterlidir.",
-  },
-  {
-    question: "Projem yarıda kalırsa çizimlerim kaybolur mu?",
-    answer: "Hayır! İlanX gelişmiş bir bulut eşitleme ve yerel kurtarma sistemine sahiptir. Tarayıcıyı yanlışlıkla kapatsanız veya internetiniz kesilse bile, tarayıcıyı yeniden açtığınızda yarım kalan çalışmanızı tek tıkla geri yükleyebilirsiniz.",
+    question: "Kredi kartı girmem gerekiyor mu? Gizli maliyetler var mı?",
+    answer: "Kredi kartı bilgisine veya peşin ödemeye ihtiyacınız yok. Sistemi hemen şimdi ücretsiz test edebilirsiniz. Sonuçların satışlarınızı nasıl hızlandırdığını kendi gözlerinizle gördükten sonra sınırsız lisansa geçiş yapabilirsiniz.",
   },
 ]
 

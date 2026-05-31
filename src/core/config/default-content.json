@@ -1,62 +1,62 @@
 {
   "hero": {
-    "title": "Gayrimenkul İlanlarınızı Saniyeler İçinde Tasarlayın",
-    "description": "Daire, villa ve arazi fotoğraflarınıza 3D tabelalar, kurumsal logonuz ve neon çizgiler ekleyerek ilan sitelerinde fark yaratın. Tasarımcıya ihtiyaç duymadan kendi profesyonel stüdyonuzu kurun.",
-    "buttonPrimary": "Hemen Ücretsiz Dene",
-    "buttonSecondary": "Nasıl Çalışır?"
+    "title": "Portföylerinizi İlan Sitelerinde Haftalarca Bekletmeyin. 15 Saniyede Tasarlayın, Hızlıca Satın.",
+    "description": "Photoshop uzmanı olmanıza veya ajanslara binlerce lira ödemenize gerek yok. İlanX ile portföylerinize 3D fiyat tabelaları, neon sınırlar ve logonuzu ekleyerek rakiplerinizin arasından anında sıyrılın.",
+    "buttonPrimary": "Ücretsiz Dene (Kredi Kartı Gerekmez)",
+    "buttonSecondary": "30 Saniyede Nasıl Çalışır İzle"
   },
   "features": {
-    "title": "Kendi Tasarım Stüdyonuz",
-    "subtitle": "Gayrimenkul danışmanlığında profesyonel tasarımlar yapmak için ihtiyacınız olan her şey.",
+    "title": "Sizin İçin Tasarım Yapan 'Sanal Ajansınızla' Tanışın",
+    "subtitle": "Kurulum yok, öğrenme eğrisi yok. Ekrandan sürükle-bırak yapın ve ilanınızı zirveye taşıyın.",
     "items": [
       {
-        "title": "Portallarda Öne Çıkan Neon Çizgiler",
-        "description": "Saber, Neon ve Bloom parlamalarıyla mülkünüzün en çarpıcı yönlerini aydınlatın. Gözleri doğrudan ilanınıza çekin."
+        "title": "Tıklanma Garantili Neon Sınırlar",
+        "description": "İlan sitelerinde kaydırmayı durdurtan %100 CTR (Tıklanma) odaklı Saber parlamalarıyla sınırları belirginleştirin."
       },
       {
-        "title": "Değer Algısını Artıran 3D Tabelalar",
-        "description": "Derinlikli 3D yazılar, fiyat etiketleri ve 3D villa simgeleri yerleştirin. Konut ve arazi sunumlarınıza prestij katın."
+        "title": "Prestij Katan 3D Tabelalar",
+        "description": "Mülkünüzün fiyatını havada asılı duran altın rengi 3D yazılarla belirterek kurumsal imajınızı yükseltin."
       },
       {
-        "title": "Karmaşık Sınırları Saniyeler İçinde Çizin",
-        "description": "Çokgen çizim aracıyla site sınırlarını, balkon manzaralarını veya arsa parselasyonlarını hızlıca işaretleyin."
+        "title": "Çevredeki Fırsatları Vurgulayın",
+        "description": "Metro, okul, AVM gibi değer katan noktaları animasyonlu dalga (Pulse) pinleriyle göstererek alıcıları ikna edin."
       },
       {
-        "title": "Önemli Çevre Noktalarını Vurgulayın",
-        "description": "Yol, metro, okul veya AVM gibi konum pinleri yerleştirin ve pulsasyon (dalga) efektiyle mülkünüzü öne çıkarın."
+        "title": "Kendi Logonuzla Güven Verin",
+        "description": "Her görselinize ofis logonuzu ve filigranınızı ekleyerek markanızı koruyun ve otoritenizi artırın."
       },
       {
-        "title": "Kendi Logonuzla Portföyü Koruyun",
-        "description": "Logonuzu veya filigranınızı yerleştirerek emeğinizin çalınmasını önleyin. Kurumsal marka bilinirliğinizi artırın."
+        "title": "Zor Parselleri Hızlıca Çizin",
+        "description": "Karmaşık çokgen aracıyla sınırları belirsiz arsaları saniyeler içinde anlaşılır parsellere bölün."
       },
       {
-        "title": "WhatsApp, PDF ve MP4 Video Çıktısı",
-        "description": "Çalışmalarınızı PNG resim, profesyonel PDF veya ilan siteleri için MP4 animasyonlu video olarak indirin."
+        "title": "Tek Tıkla Video Çıktısı (MP4)",
+        "description": "Müşterilerinize WhatsApp'tan sadece resim değil, dikkat çeken hareketli bir video sunumu gönderin."
       }
     ]
   },
   "howItWorks": {
-    "title": "Sadece 3 Adımda Profesyonel İlanlar",
-    "subtitle": "Tasarım bilgisine veya karmaşık programlara ihtiyacınız yok.",
+    "title": "Sadece 3 Adımda Satış Odaklı İlanlar",
+    "subtitle": "Karmaşık paneller yok. Her şey sürükle ve bırak kadar kolay.",
     "steps": [
       {
-        "title": "Görseli Yükle",
-        "description": "Üzerinde çalışmak istediğiniz daire, dükkan veya arsa fotoğrafını sisteme yükleyin."
+        "title": "Adım 1: Sürükle",
+        "description": "Üzerinde çalışmak istediğiniz daire veya arsa fotoğrafını tarayıcıya sürükleyin."
       },
       {
-        "title": "Tasarımını Özelleştir",
-        "description": "Neon çizgiler, 3D fiyat etiketleri ve kendi logonuzla görseli profesyonel bir ilana dönüştürün."
+        "title": "Adım 2: Vurgula",
+        "description": "Tek tıkla sınırları çizin. Havada asılı duran 3D fiyat etiketini ve ofis logonuzu ekleyin."
       },
       {
-        "title": "Satışa Hazır Çıktı Al",
-        "description": "Tasarımınızı saniyeler içinde ister yüksek çözünürlüklü görsel ister video olarak indirin."
+        "title": "Adım 3: Sat",
+        "description": "Sahibinden, Emlakjet veya WhatsApp için optimize edilmiş yüksek çözünürlüklü görsel veya MP4 olarak indirin."
       }
     ]
   },
   "cta": {
-    "title": "Gayrimenkul Sunumlarınızı Bir Üst Seviyeye Taşıyın",
-    "subtitle": "İlanX ile rakiplerinizin bir adım önüne geçin, portföylerinizi daha hızlı satın.",
-    "buttonText": "Hemen Ücretsiz Dene"
+    "title": "Emlak Pazarlamasında Kuralları Siz Koyun",
+    "subtitle": "Aynı soluk fotoğraflarla farklı satış rekorları beklemeyin. Stüdyoya girin ve farkı görün.",
+    "buttonText": "Hemen Stüdyoya Gir (Ücretsiz Dene)"
   },
   "footer": {
     "copyright": "2026 İlanX. Tüm hakları saklıdır.",

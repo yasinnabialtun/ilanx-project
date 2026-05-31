@@ -6,18 +6,18 @@ import { AlertCircle, Clock, DollarSign, Ban } from "lucide-react"
 const problems = [
   {
     icon: Ban,
-    title: "Karmaşık Tasarım Araçlarıyla Vakit Kaybı",
-    description: "Genel tasarım programlarıyla uğraşmak emlakçılar için yorucudur. Her seferinde şablon aramak, boyut ayarlamak ve metinleri yerleştirmek saatlerinizi alır.",
+    title: "İlan Sitelerinde Kaybolmak",
+    description: "Satışa hazır muazzam bir portföy aldınız. Ancak fotoğrafı ilana koyduğunuzda, diğer 5.000 standart fotoğraf arasında kaybolup gidiyor. Tıklanma oranlarınız düşüyor.",
   },
   {
     icon: DollarSign,
-    title: "Tasarımcılara Servet Ödemek",
-    description: "Işıklı çizgiler veya 3D yazılar ekletmek için her ilan başına ajanslara veya serbest grafikerlere yüksek bütçeler ve günler harcarsınız.",
+    title: "Ajanslara Servet Ödemek",
+    description: "Dikkat çekmek için ajansa veya grafikere verseniz, 3 gününüzü ve yüzlerce liranızı alacak. Kar marjınız erirken ilanlarınız gecikecek.",
   },
   {
     icon: Clock,
-    title: "Dikkat Çekmeyen Sıradan İlanlar",
-    description: "Sadece düz bir fotoğraf yüklediğinizde ilanınız platformdaki binlerce mülk arasında kaybolup gider. Alıcı adayları tıklamadan geçer.",
+    title: "Kaçan Müşteriler ve Uzayan Süreç",
+    description: "Alıcılar kötü sunulmuş portföyleri hızla geçer. Uzayan satış süreleri, sinirlenen mülk sahipleri ve kaçan komisyon fırsatlarıyla baş başa kalırsınız.",
   },
 ]
 
@@ -37,13 +37,13 @@ export function ProblemSection() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-destructive/20 bg-destructive/10 px-4 py-1.5 text-sm text-destructive-foreground mb-4">
             <AlertCircle className="h-4 w-4 text-destructive" />
-            Büyük Sorun
+            Acı Gerçek
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
-            İlanlarınız Neden <span className="text-destructive">Gözden Kaçıyor?</span>
+            Sıradan İlanlarla <span className="text-destructive">Satışları Neden Kaybediyorsunuz?</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Gayrimenkul pazarında alıcıların %90'ı ilk 3 saniyede görsele bakarak karar verir. Sıradan görsellerle portföyünüzü satmak neredeyse imkansızdır.
+            Portföyünüz ne kadar değerli olursa olsun, alıcılar ilk 3 saniyede görsele bakarak karar verir. Kötü sunum satış süresini haftalarca uzatır.
           </p>
         </motion.div>
 

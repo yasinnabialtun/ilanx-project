@@ -12,24 +12,24 @@ const stats = [
 
 const testimonials = [
   {
-    name: "Ahmet Yılmaz",
-    role: "Gayrimenkul Danışmanı",
+    name: "Ahmet Y.",
+    role: "Broker / Ofis Kurucusu",
     company: "Century 21",
-    content: "İlanX ile portföylerime eklediğim villa ve dükkan ilanlarının tıklanma oranı 4 kat arttı. İlan sitelerinde müthiş bir fark yaratıyor!",
+    content: "İlanX'e geçmeden önce ayda 6.000 TL grafik tasarım bütçemiz vardı ve ilanlar hep gecikiyordu. Şu an 12 kişilik ekibimiz kendi bilgisayarlarından tüm ilanları saniyeler içinde tasarlıyor. Tıklanma oranlarımız %40 arttı, maliyetimiz sıfırlandı.",
     rating: 5,
   },
   {
     name: "Zeynep Kaya",
-    role: "Emlak Ofisi Sahibi",
-    company: "Kaya Emlak",
-    content: "Artık tasarımcılara ve ajanslara servet ödemeyi bıraktık. Ekibimiz kendi stüdyosundaymış gibi tüm ilanları saniyeler içinde tasarlıyor.",
+    role: "Lüks Konut Uzmanı",
+    company: "Keller Williams",
+    content: "Özellikle milyon dolarlık portföylerde kalite çok önemli. İlanX'in sunduğu 3D altın etiketler ve neon sınırlar, lüks portföylerimize inanılmaz bir prestij ve güven kattı. Sadece 15 saniyede ajans kalitesinde iş çıkarıyoruz.",
     rating: 5,
   },
   {
     name: "Mehmet Demir",
     role: "Senior Emlak Danışmanı",
     company: "Remax Türkiye",
-    content: "Müşteriler ilan görselinde kurumsal logomuzu, 3D fiyat etiketini ve site sınırlarını bir arada görünce güven duyuyor. Marka imajımız inanılmaz yükseldi.",
+    content: "Sahibinden'e dümdüz fotoğraf koyma devri bitti. Kurumsal logomuzu ve hareketli pinleri videolu (MP4) olarak WhatsApp'tan gönderdiğim an müşterilerin tepkisi inanılmaz oluyor. Dönüşüm oranım zirvede.",
     rating: 5,
   },
 ]
@@ -77,7 +77,7 @@ export function SocialProofSection() {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
-            Kullanıcılarımız Ne Diyor?
+            Başarılı Ofislerin Ortak Tercihi
           </h2>
         </motion.div>
 
