@@ -30,11 +30,10 @@ export function EmptyState({ setBackgroundDataUrl }: EmptyStateProps) {
           <ImagePlus className="h-8 w-8 text-primary" />
         </div>
         <h2 className="text-xl sm:text-2xl font-bold text-foreground">
-          Arsa İşaretleme
+          İlanX Tasarım Stüdyosu
         </h2>
         <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-          Plan veya arsa fotoğrafı yükleyin ya da buraya sürükleyin. Nokta ile parsel çizin, etiket
-          ve ok ekleyin.
+          Satışa sunacağınız daire, villa veya arazinin fotoğrafını yükleyin. 3D etiketler, logonuz ve neon çizgilerle satış hızınızı artırın.
         </p>
         
         <input
@@ -59,7 +58,7 @@ export function EmptyState({ setBackgroundDataUrl }: EmptyStateProps) {
           onClick={() => setBackgroundDataUrl?.("/sample-land.png")}
           className="mt-2.5 w-full rounded-lg border border-border bg-transparent hover:bg-muted/70 text-foreground px-4 py-3 text-sm font-semibold shadow-sm transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
         >
-          Örnek Görselle Dene
+          Örnek Görsel İle Hemen Dene
         </button>
       </div>
     </div>

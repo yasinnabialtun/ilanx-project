@@ -20,6 +20,8 @@ import { EmptyState } from "./EmptyState";
 import { TimelineControls } from "./TimelineControls";
 import { useEditorStore } from "@/features/editor/store/editorStore";
 import { LicenseModal } from "./LicenseModal";
+import { OnboardingTour } from "./OnboardingTour";
+import { ReferralModal } from "./ReferralModal";
 
 export function PhotoEditor() {
   const [backgroundDataUrl, setBackgroundDataUrl] = useState<string | null>(
@@ -318,6 +320,8 @@ export function PhotoEditor() {
     <div 
       className="relative flex h-[100dvh] w-full max-w-full flex-col overflow-hidden"
     >
+      <OnboardingTour />
+      
       {/* Mobile Landscape Guidance bar */}
       {showLandscapeTip && (
         <div className="z-40 flex items-center justify-between gap-2 bg-gradient-to-r from-cyan-600 to-purple-600 px-3 py-1.5 text-white animate-in slide-in-from-top-1 duration-300 shrink-0">
@@ -526,6 +530,9 @@ export function PhotoEditor() {
 
       {/* Licensing Modal */}
       <LicenseModal />
+
+      {/* Referral/Gift Modal */}
+      <ReferralModal />
 
       {/* Pano Metni Düzenleme Modalı */}
       {panoModal.open && (

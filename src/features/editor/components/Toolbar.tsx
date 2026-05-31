@@ -25,6 +25,7 @@ import {
   Menu,
   ImageIcon,
   Keyboard,
+  Gift,
 } from "lucide-react";
 import { useRef, useState } from "react";
 import Link from "next/link";
@@ -111,12 +112,29 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
       return;
     }
     if (!isLicensed) {
-      const wantToBuy = window.confirm(
-        "🎁 Demo Modundasınız\n\nİndireceğiniz çıktıya İlanX filigranı eklenecektir.\nFiligransız profesyonel kullanım için Lisans Ekranına gitmek ister misiniz?\n\n[Tamam]: Lisans ekranını aç\n[İptal]: Filigranlı indirmeye devam et"
-      );
-      if (wantToBuy) {
-        useEditorStore.getState().setLicenseModalOpen(true);
-        return;
+      const savedEmail = localStorage.getItem("ilanx_demo_email");
+      const emailPromptText = "🎁 Demo Modundasınız\n\nİndireceğiniz görselde İlanX filigranı yer alacaktır.\nDevam etmek için lütfen e-posta adresinizi girin:";
+      
+      let email = savedEmail;
+      if (!savedEmail) {
+        email = window.prompt(emailPromptText, "");
+        if (email === null) {
+          // İptal ederse, belki lisans almak istiyordur diye lisans penceresini aç
+          useEditorStore.getState().setLicenseModalOpen(true);
+          return;
+        }
+        if (email && email.trim() !== "") {
+          localStorage.setItem("ilanx_demo_email", email.trim());
+          // İleride bu e-posta adresi PostHog'a veya veritabanına gönderilebilir
+        }
+      } else {
+        const wantToBuy = window.confirm(
+          "🎁 Demo Modundasınız\n\nİndireceğiniz çıktıya İlanX filigranı eklenecektir.\nFiligransız profesyonel kullanım için Lisans Ekranına gitmek ister misiniz?\n\n[Tamam]: Lisans ekranını aç\n[İptal]: Filigranlı indirmeye devam et"
+        );
+        if (wantToBuy) {
+          useEditorStore.getState().setLicenseModalOpen(true);
+          return;
+        }
       }
     }
     await exportFn();
@@ -287,17 +305,18 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
           size="sm"
           onClick={handleSave}
           disabled={!hasBackground || isRecordingVideo}
-          className="min-h-[44px] touch-manipulation"
+          className="min-h-[44px] touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white shadow-md border-0"
           title="PNG olarak indir"
           aria-label="Tasarımı PNG görseli olarak indir"
         >
           <Download className="size-4" />
-          <span className="hidden sm:inline">PNG</span>
+          <span className="hidden sm:inline font-bold tracking-wide">İndir (PNG)</span>
         </Button>
 
         <Button
           type="button"
           size="sm"
+          variant="outline"
           onClick={handleSavePdf}
           disabled={!hasBackground || isRecordingVideo}
           className="min-h-[44px] touch-manipulation"
@@ -377,6 +396,30 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
 
         <div className="hidden sm:block sm:flex-1" />
         
+        {/* Referral System Button */}
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => useEditorStore.getState().setReferralModalOpen(true)}
+          title="Arkadaşını Getir, Hediye Kazan!"
+          className="min-h-[44px] hidden sm:flex items-center gap-1.5 border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 hover:text-emerald-400 hover:border-emerald-500 transition-colors"
+        >
+          <Gift className="size-4" />
+          <span className="font-medium">Hediye Kazan</span>
+        </Button>
+
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-sm"
+          onClick={() => useEditorStore.getState().setReferralModalOpen(true)}
+          title="Arkadaşını Getir, Hediye Kazan!"
+          className="min-h-[44px] min-w-[44px] sm:hidden flex items-center justify-center border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/10 transition-colors"
+        >
+          <Gift className="size-4" />
+        </Button>
+
         <ThemeToggle />
 
         <Button

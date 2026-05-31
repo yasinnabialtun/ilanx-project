@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { KeyRound, ShieldAlert, Sparkles, ShoppingBag, Eye } from "lucide-react";
+import { KeyRound, ShieldAlert, Sparkles, ShoppingBag, Check, Gift } from "lucide-react";
 import { useEditorStore } from "@/features/editor/store/editorStore";
 
 export function LicenseModal() {
@@ -92,75 +92,131 @@ export function LicenseModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md">
-      <div className="w-[90%] max-w-md rounded-2xl border border-white/10 bg-zinc-950 p-6 text-center shadow-2xl shadow-cyan-500/5 animate-in zoom-in-95 duration-200">
-        <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400">
-          <KeyRound className="h-7 w-7" />
+    <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+      <div className="w-full max-w-3xl rounded-2xl border border-white/10 bg-zinc-950 shadow-2xl shadow-cyan-500/5 animate-in zoom-in-95 duration-200 overflow-hidden flex flex-col md:flex-row">
+        
+        {/* Sol Kolon - Neden Almalısın? (Sadece Tablet/PC) */}
+        <div className="hidden md:flex md:w-5/12 bg-zinc-900/50 p-6 md:p-8 border-r border-white/5 flex-col justify-between">
+          <div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 text-cyan-400 mb-5">
+              <Sparkles className="h-6 w-6" />
+            </div>
+            <h3 className="text-lg font-bold text-white mb-2">Neden Lisans Almalısınız?</h3>
+            <p className="text-xs text-zinc-400 mb-6 leading-relaxed">
+              İlanX Tasarım Stüdyosu'nun tüm premium özelliklerini açın, vitrindeki ilanlarınızla fark yaratın.
+            </p>
+            
+            <ul className="space-y-4 text-xs text-zinc-300">
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 rounded-full bg-emerald-500/20 p-0.5 text-emerald-400 shrink-0">
+                  <Check className="h-3 w-3" />
+                </div>
+                <span>Filigransız Yüksek Çözünürlüklü Çıktı (PNG/PDF)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 rounded-full bg-emerald-500/20 p-0.5 text-emerald-400 shrink-0">
+                  <Check className="h-3 w-3" />
+                </div>
+                <span>Hareketli MP4 İlan Videoları Oluşturma</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 rounded-full bg-emerald-500/20 p-0.5 text-emerald-400 shrink-0">
+                  <Check className="h-3 w-3" />
+                </div>
+                <span>Premium 3D Tabelalar ve Özel Logolar</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="mt-0.5 rounded-full bg-emerald-500/20 p-0.5 text-emerald-400 shrink-0">
+                  <Check className="h-3 w-3" />
+                </div>
+                <span>Sınırsız İlan Görseli Tasarlama Hakkı</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="mt-8 rounded-xl bg-gradient-to-r from-cyan-500/10 to-transparent p-4 border border-cyan-500/20">
+            <p className="text-[11px] font-medium text-cyan-400 italic">
+              "İlanX sayesinde ajanslara para ödemeyi bıraktık. İlk aydan dönüşüm oranımız 4 kat arttı!"
+            </p>
+          </div>
         </div>
 
-        <h3 className="text-xl font-bold text-white flex items-center justify-center gap-2">
-          <Sparkles className="size-4 text-cyan-400 animate-pulse" />
-          İlanX Lisans Sistemi
-        </h3>
-        <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
-          İlanX Arsa İşaretleme Editörü'nü kullanmaya devam etmek için geçerli bir lisans anahtarı girmeniz gerekmektedir.
-        </p>
-
-        <form onSubmit={handleValidate} className="mt-6 space-y-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="ILX-XXXX-XXXX-XXXX"
-              value={keyInput}
-              onChange={(e) => handleKeyChange(e.target.value)}
-              className="w-full rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-center text-sm font-mono tracking-wider text-white placeholder-zinc-600 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
-              disabled={isLoading}
-            />
+        {/* Sağ Kolon - Lisans Doğrulama Formu */}
+        <div className="w-full md:w-7/12 p-6 md:p-8 flex flex-col justify-center text-center">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-400 md:hidden">
+            <KeyRound className="h-7 w-7" />
           </div>
 
-          {errorMsg && (
-            <div className="flex items-start gap-2 rounded-lg bg-red-500/10 p-3 text-left text-xs text-red-400 border border-red-500/20">
-              <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
-              <span>{errorMsg}</span>
+          <h3 className="text-xl font-bold text-white flex items-center justify-center gap-2">
+            İlanX Lisans Sistemi
+          </h3>
+          <p className="mt-2 text-xs text-zinc-400 leading-relaxed md:px-4">
+            Editörü tam kapasiteyle kullanmak için geçerli bir lisans anahtarı girin.
+          </p>
+
+          <form onSubmit={handleValidate} className="mt-6 space-y-4">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="ILX-XXXX-XXXX-XXXX"
+                value={keyInput}
+                onChange={(e) => handleKeyChange(e.target.value)}
+                className="w-full rounded-xl border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-center text-sm font-mono tracking-wider text-white placeholder-zinc-600 focus:border-cyan-500/50 focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
+                disabled={isLoading}
+              />
             </div>
-          )}
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-xl bg-cyan-500 py-3 text-sm font-semibold text-white shadow-md hover:bg-cyan-600 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
-          >
-            {isLoading ? (
-              <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-            ) : (
-              "Lisansı Doğrula"
+            {errorMsg && (
+              <div className="flex items-start gap-2 rounded-lg bg-red-500/10 p-3 text-left text-xs text-red-400 border border-red-500/20">
+                <ShieldAlert className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>{errorMsg}</span>
+              </div>
             )}
-          </button>
-        </form>
 
-        <div className="mt-6 flex flex-col gap-2">
-          <a
-            href="https://wa.me/905421367056?text=Merhaba%2C%20%C4%B0lanX%20lisans%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/30 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-900 hover:text-white transition-all"
-          >
-            <ShoppingBag className="size-3.5" />
-            Lisans Satın Al (WhatsApp)
-          </a>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full rounded-xl bg-cyan-500 py-3 text-sm font-semibold text-white shadow-md hover:bg-cyan-600 active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              {isLoading ? (
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+              ) : (
+                "Lisansı Doğrula"
+              )}
+            </button>
+          </form>
 
-          <button
-            onClick={handleDemoMode}
-            className="flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-medium text-cyan-400 hover:text-cyan-300 transition-all cursor-pointer border border-transparent hover:border-cyan-500/20 bg-cyan-500/5 hover:bg-cyan-500/10 mt-2"
-          >
-            <Sparkles className="size-3.5" />
-            Tüm Özellikleri Dene (Ücretsiz & Filigranlı)
-          </button>
+          <div className="mt-6 flex flex-col gap-2">
+            <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3 text-left">
+              <p className="text-[11px] text-emerald-400 font-medium flex items-start gap-1.5 leading-relaxed">
+                <Gift className="size-3.5 shrink-0 mt-0.5" />
+                Bir arkadaşınızın davet koduna (REF-XXX) sahipseniz, lisans alımı sırasında WhatsApp hattımıza ileterek +1 Ay hediye kullanım kazanabilirsiniz!
+              </p>
+            </div>
+
+            <a
+              href="https://wa.me/905421367056?text=Merhaba%2C%20%C4%B0lanX%20lisans%C4%B1%20sat%C4%B1n%20almak%20istiyorum.%20(Varsa%20Referans%20Kodunuz:%20)"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-1.5 rounded-xl border border-zinc-800 bg-zinc-900/30 py-2.5 text-xs font-medium text-zinc-300 hover:bg-zinc-900 hover:text-white transition-all mt-1"
+            >
+              <ShoppingBag className="size-3.5" />
+              Lisans Satın Al (WhatsApp)
+            </a>
+
+            <button
+              onClick={handleDemoMode}
+              className="flex items-center justify-center gap-1.5 rounded-xl py-2.5 text-xs font-medium text-cyan-400 hover:text-cyan-300 transition-all cursor-pointer border border-transparent hover:border-cyan-500/20 bg-cyan-500/5 hover:bg-cyan-500/10 mt-2"
+            >
+              <Sparkles className="size-3.5" />
+              Tüm Özellikleri Dene (Ücretsiz & Filigranlı)
+            </button>
+          </div>
+
+          <p className="mt-6 text-[9px] text-zinc-600">
+            * Bir lisans anahtarı en fazla 3 cihazda aktif edilebilir.
+          </p>
         </div>
-
-        <p className="mt-6 text-[9px] text-zinc-600">
-          * Bir lisans anahtarı en fazla 3 cihazda aktif edilebilir.
-        </p>
       </div>
     </div>
   );

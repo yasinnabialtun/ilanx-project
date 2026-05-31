@@ -5,43 +5,50 @@ import { telemetry } from "@/core/utils/telemetry";
 import { useEditorStore } from "@/features/editor/store/editorStore";
 import { IText, Rect } from "fabric";
 
-function addWatermark(canvas: Canvas) {
+function addWatermark(canvas: Canvas): import("fabric").FabricObject[] | null {
   const isLicensed = useEditorStore.getState().isLicensed;
   if (isLicensed) return null;
   
   const w = canvas.getWidth();
   const h = canvas.getHeight();
-  const fontSize = Math.max(w * 0.05, 24);
+  // Yazı boyutunu görselin genişliğine göre dinamik ayarla
+  const fontSize = Math.max(w * 0.04, 32);
   
-  const bg = new Rect({
-    left: w / 2,
-    top: h / 2,
-    width: w,
-    height: fontSize * 3,
-    fill: "rgba(0,0,0,0.6)",
-    originX: "center",
-    originY: "center",
-  });
+  const watermarks: import("fabric").FabricObject[] = [];
   
-  const text = new IText("İlanX Demo - ilanx.com.tr", {
-    left: w / 2,
-    top: h / 2,
-    fontSize: fontSize,
-    fontFamily: "Montserrat, sans-serif",
-    fontWeight: "bold",
-    fill: "rgba(255,255,255,0.9)",
-    textAlign: "center",
-    originX: "center",
-    originY: "center",
-  });
+  // Şeritleri sık yerleştirmek için adımları belirle
+  const stepY = h / 4;
+  const stepX = w / 2;
   
-  canvas.add(bg, text);
-  return { bg, text };
+  for (let y = -h/2; y < h * 1.5; y += stepY) {
+    for (let x = -w/2; x < w * 1.5; x += stepX) {
+      const text = new IText("İLANX İLE TASARLANDI - DEMO", {
+        left: x,
+        top: y,
+        fontSize: fontSize,
+        fontFamily: "Montserrat, sans-serif",
+        fontWeight: "900",
+        fill: "rgba(255, 255, 255, 0.45)", // Yarı saydam beyaz
+        stroke: "rgba(0, 0, 0, 0.7)",      // Siyah kalın dış çizgi
+        strokeWidth: Math.max(1, fontSize * 0.05),
+        textAlign: "center",
+        originX: "center",
+        originY: "center",
+        angle: -35,                        // Çapraz yerleşim
+        selectable: false,
+        evented: false,
+      });
+      watermarks.push(text);
+      canvas.add(text);
+    }
+  }
+  
+  return watermarks;
 }
 
-function removeWatermark(canvas: Canvas, watermark: { text: IText, bg: Rect } | null) {
-  if (!watermark) return;
-  canvas.remove(watermark.bg, watermark.text);
+function removeWatermark(canvas: Canvas, watermarks: import("fabric").FabricObject[] | null) {
+  if (!watermarks) return;
+  watermarks.forEach((w) => canvas.remove(w));
 }
 
 export async function resizeImageFile(file: File): Promise<string> {

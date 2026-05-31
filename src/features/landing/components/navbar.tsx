@@ -56,12 +56,16 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:flex md:items-center md:gap-4">
-            <Button variant="ghost" size="sm">
-              Giriş Yap
-            </Button>
-            <Button size="sm" className="glow-primary">
-              Başla
-            </Button>
+            <Link href="/editor">
+              <Button variant="ghost" size="sm">
+                Zaten Lisansım Var
+              </Button>
+            </Link>
+            <Link href="/editor">
+              <Button size="sm" className="glow-primary">
+                Stüdyoya Git
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -94,12 +98,16 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
-                <Button variant="ghost" size="sm">
-                  Giriş Yap
-                </Button>
-                <Button size="sm" className="glow-primary">
-                  Başla
-                </Button>
+                <Link href="/editor" onClick={() => setIsOpen(false)}>
+                  <Button variant="ghost" size="sm" className="w-full">
+                    Zaten Lisansım Var
+                  </Button>
+                </Link>
+                <Link href="/editor" onClick={() => setIsOpen(false)}>
+                  <Button size="sm" className="glow-primary w-full">
+                    Stüdyoya Git
+                  </Button>
+                </Link>
               </div>
             </div>
           </motion.div>

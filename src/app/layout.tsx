@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/core/providers/theme-provider";
+import { CSPostHogProvider } from "@/core/providers/posthog-provider";
 
 const siteUrl = "https://ilanx.com.tr";
 
@@ -107,14 +108,16 @@ export default function RootLayout({
   return (
     <html lang="tr" suppressHydrationWarning className="h-full antialiased">
       <body className="min-h-full font-sans">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <CSPostHogProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </CSPostHogProvider>
       </body>
     </html>
   );

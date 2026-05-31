@@ -10,7 +10,7 @@ const pricingPlans = [
     id: "weekly",
     name: "Haftalık Lisans",
     image: "/pricing-1.png",
-    description: "7 Gün Boyunca Geçerli Tam Sürüm",
+    description: "Günde Sadece Bir Kahve Parasına",
     features: [
       "Tüm parsel ve neon çizim araçları",
       "3D tabela ve konum pinleri",
@@ -23,7 +23,7 @@ const pricingPlans = [
     id: "monthly",
     name: "Aylık Lisans",
     image: "/pricing-2.png",
-    description: "30 Gün Boyunca Geçerli Tam Sürüm",
+    description: "Günde Sadece 16 TL'ye Denk",
     features: [
       "Haftalık paketteki tüm özellikler",
       "30 gün boyunca kesintisiz kullanım",
@@ -37,7 +37,7 @@ const pricingPlans = [
     id: "annual",
     name: "Yıllık Lisans",
     image: "/pricing-3.png",
-    description: "365 Gün Boyunca Geçerli En Avantajlı Sürüm",
+    description: "Günde Sadece 8 TL'ye Denk (En Kârlı)",
     features: [
       "Aylık paketteki tüm özellikler",
       "365 gün boyunca kesintisiz kullanım",
@@ -124,7 +124,7 @@ export function PricingSection() {
               {/* Card Info */}
               <div className="flex-1 flex flex-col">
                 <h3 className="text-lg font-bold text-white mb-1">{plan.name}</h3>
-                <p className="text-xs text-zinc-400 mb-6">{plan.description}</p>
+                <p className="text-xs font-medium text-cyan-400 mb-6 bg-cyan-500/10 self-start px-2.5 py-1 rounded-md border border-cyan-500/20">{plan.description}</p>
 
                 <ul className="space-y-3.5 mb-8 flex-1">
                   {plan.features.map((feature, fIdx) => (

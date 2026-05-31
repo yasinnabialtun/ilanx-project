@@ -114,9 +114,11 @@ export function WhatsAppChatbot() {
       {/* Floating Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
+        animate={!isOpen ? { y: [0, -8, 0] } : {}}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/30 hover:bg-emerald-400 transition-colors cursor-pointer"
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:bg-emerald-400 transition-colors cursor-pointer"
       >
         <AnimatePresence mode="wait">
           {isOpen ? (
@@ -134,7 +136,7 @@ export function WhatsAppChatbot() {
 
         {/* Pulse animation when closed */}
         {!isOpen && (
-          <span className="absolute inset-0 rounded-full bg-emerald-500 animate-ping opacity-20" />
+          <span className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-40 duration-1000" />
         )}
       </motion.button>
     </div>

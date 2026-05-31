@@ -65,8 +65,7 @@ export function Footer({ content }: FooterProps) {
               <span className="text-xl font-bold text-foreground">ilanx</span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground max-w-xs leading-relaxed">
-              Arazi görselleri üzerinde interaktif çizim ve ölçüm yapabileceğiniz 
-              modern planlama platformu.
+              Gayrimenkul profesyonelleri için saniyeler içinde göz alıcı ilan görselleri ve portföy sunumları hazırlayabileceğiniz yeni nesil tasarım stüdyosu.
             </p>
             {/* Social links */}
             <div className="mt-6 flex gap-4">

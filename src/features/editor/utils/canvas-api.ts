@@ -91,6 +91,16 @@ export function exportEditorImage(filename?: string) {
   const canvas = getEditorCanvas();
   if (!canvas) return false;
   downloadCanvasImage(canvas, filename);
+
+  setTimeout(() => {
+    if (typeof window !== "undefined") {
+      const share = window.confirm("✅ Tasarım başarıyla indirildi!\n\nBu tasarımı hemen müşterinize veya ofis grubunuza WhatsApp üzerinden göndermek ister misiniz?");
+      if (share) {
+        window.open("https://wa.me/?text=" + encodeURIComponent("Merhaba, hazırladığım yeni gayrimenkul portföyünü inceleyebilirsiniz."), "_blank");
+      }
+    }
+  }, 1500);
+
   return true;
 }
 
@@ -98,6 +108,16 @@ export function exportEditorPdf(filename?: string) {
   const canvas = getEditorCanvas();
   if (!canvas) return false;
   downloadCanvasPdf(canvas, filename);
+
+  setTimeout(() => {
+    if (typeof window !== "undefined") {
+      const share = window.confirm("✅ PDF belgesi başarıyla indirildi!\n\nMüşterinize WhatsApp üzerinden göndermek ister misiniz?");
+      if (share) {
+        window.open("https://wa.me/?text=" + encodeURIComponent("Merhaba, hazırladığım gayrimenkul sunum dosyasını (PDF) ekte görebilirsiniz."), "_blank");
+      }
+    }
+  }, 1500);
+
   return true;
 }
 

@@ -14,8 +14,8 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
   // Use provided content or fallback to hardcoded text during development if missing
   const title = content?.title || "Gayrimenkul İlanlarınızı Saniyeler İçinde Tasarlayın";
   const description = content?.description || "Daire, villa ve arazi fotoğraflarınıza 3D tabelalar, kurumsal logonuz ve neon çizgiler ekleyerek ilan sitelerinde fark yaratın. Tasarımcıya ihtiyaç duymadan kendi profesyonel stüdyonuzu kurun.";
-  const btn1 = content?.buttonPrimary || "Ücretsiz Dene (Filigranlı)";
-  const btn2 = content?.buttonSecondary || "Lisans Paketleri";
+  const btn1 = content?.buttonPrimary || "Hemen Ücretsiz Dene";
+  const btn2 = content?.buttonSecondary || "Nasıl Çalışır?";
 
   return (
     <section className="relative min-h-screen overflow-hidden pt-24 pb-16">
@@ -70,14 +70,14 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
             >
               <LandingButton size="lg" className="glow-primary group" asChild>
                 <Link href="/editor">
-                  <Play className="mr-2 h-4 w-4" />
                   {btn1}
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </LandingButton>
               <LandingButton size="lg" variant="outline" className="group" asChild>
-                <Link href="#pricing">
+                <Link href="#features">
+                  <Play className="mr-2 h-4 w-4 text-muted-foreground" />
                   {btn2}
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Link>
               </LandingButton>
             </motion.div>
