@@ -105,32 +105,39 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
     e.target.value = "";
   };
 
-  const handleSave = () => {
+  const handleExportWithDemoCheck = async (exportFn: () => Promise<void> | void) => {
     if (!hasBackground) {
       alert("Önce bir fotoğraf yükleyin.");
       return;
     }
-    exportEditorImage(
-      `arsa-isaretleme-${new Date().toISOString().slice(0, 10)}.png`,
-    );
+    if (!isLicensed) {
+      const wantToBuy = window.confirm(
+        "🎁 Demo Modundasınız\n\nİndireceğiniz çıktıya İlanX filigranı eklenecektir.\nFiligransız profesyonel kullanım için Lisans Ekranına gitmek ister misiniz?\n\n[Tamam]: Lisans ekranını aç\n[İptal]: Filigranlı indirmeye devam et"
+      );
+      if (wantToBuy) {
+        useEditorStore.getState().setLicenseModalOpen(true);
+        return;
+      }
+    }
+    await exportFn();
+  };
+
+  const handleSave = () => {
+    handleExportWithDemoCheck(() => {
+      exportEditorImage(`ilanx-tasarim-${new Date().toISOString().slice(0, 10)}.png`);
+    });
   };
 
   const handleSavePdf = () => {
-    if (!hasBackground) {
-      alert("Önce bir fotoğraf yükleyin.");
-      return;
-    }
-    exportEditorPdf(
-      `arsa-isaretleme-${new Date().toISOString().slice(0, 10)}.pdf`,
-    );
+    handleExportWithDemoCheck(() => {
+      exportEditorPdf(`ilanx-tasarim-${new Date().toISOString().slice(0, 10)}.pdf`);
+    });
   };
 
-  const handleSaveVideo = async () => {
-    if (!hasBackground) {
-      alert("Önce bir fotoğraf yükleyin.");
-      return;
-    }
-    await exportEditorVideo();
+  const handleSaveVideo = () => {
+    handleExportWithDemoCheck(async () => {
+      await exportEditorVideo();
+    });
   };
 
   const renderTool = (tool: ToolDef) => (
