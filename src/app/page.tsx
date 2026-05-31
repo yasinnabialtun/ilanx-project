@@ -20,7 +20,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "İlanX | Gayrimenkul İlan Görseli Hazırlama Aracı - Emlak Danışmanları İçin",
   description:
-    "Arazi ve gayrimenkul fotoğrafları üzerine parsel çizin, metrekare ve fiyat etiketi ekleyin. Emlak danışmanları için profesyonel ilan görseli hazırlama platformu. Instagram, Sahibinden ve Hepsiemlak için optimize edilmiş çıktılar.",
+    "Gayrimenkul ve arazi fotoğraflarınızı saniyeler içinde profesyonel ilanlara dönüştürün. 3D fiyat etiketleri, kurumsal logonuz ve neon çizgilerle dikkat çekici görseller hazırlayın.",
   alternates: {
     canonical: "https://ilanx.com.tr",
   },
@@ -42,7 +42,7 @@ const jsonLd = {
         description: "Tüm özellikleri ücretsiz test edin. Filigransız çıktılar için lisans edinin.",
       },
       description:
-        "Emlak danışmanları için geliştirilmiş gayrimenkul ilan görseli hazırlama platformu. Arazi sınırlarını çizin, fiyat etiketleri ekleyin ve profesyonel görseller oluşturun.",
+        "Emlak danışmanları için profesyonel tasarım ve ilan hazırlama stüdyosu. Daire, villa ve arazi fotoğraflarınızı saniyeler içinde 3D etiketler ve neon sınırlarla dikkat çekici hale getirin.",
       inLanguage: "tr-TR",
       audience: {
         "@type": "Audience",
@@ -89,7 +89,7 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text:
-              "Gayrimenkul veya arazi görselinizi sisteme yükleyin, akıllı çizim araçlarıyla sınırları belirleyin, metrekare ve fiyat gibi etiketler ekleyin ve yüksek çözünürlüklü görselinizi indirin.",
+              "Konut, villa veya arazi görselinizi sisteme yükleyin; 3D tabelalar, kurumsal logonuz ve neon sınırlarla saniyeler içinde tasarlayıp yüksek çözünürlüklü olarak indirin.",
           },
         },
         {

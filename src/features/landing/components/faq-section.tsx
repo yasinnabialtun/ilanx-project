@@ -10,12 +10,12 @@ const faqs = [
     answer: "Kesinlikle hayır! İlanX, gayrimenkul danışmanları için özel olarak sıfırdan tasarlandı. Sadece fotoğrafınızı yükleyin ve noktaları birleştirerek çizin. Kalan tüm parlatma, 3D derinlik ve tabela ekleme işlemlerini sürükle-bırak yöntemiyle saniyeler içinde yapabilirsiniz.",
   },
   {
-    question: "Mobil cihazlardan veya tabletten arsa başında kullanabilir miyim?",
-    answer: "Evet! İlanX tamamen duyarlı (responsive) bir tasarıma sahiptir. Akıllı telefonunuzda veya tabletinizde cihazı yatay çevirerek, arazinin başındayken bile saniyeler içinde çizimlerinizi yapıp müşterinize WhatsApp'tan gönderebilirsiniz.",
+    question: "Portföyümün fotoğrafını çeker çekmez arabadayken veya mülkün başındayken tasarımı yapabilir miyim?",
+    answer: "Evet! İlanX tamamen mobil uyumlu ve duyarlı (responsive) bir tasarıma sahiptir. Akıllı telefonunuzda veya tabletinizde mülkün başındayken bile saniyeler içinde tasarımınızı yapıp ilan sitelerine veya müşterinize WhatsApp'tan gönderebilirsiniz.",
   },
   {
     question: "Dışa aktardığım videoları hangi platformlarda paylaşabilirim?",
-    answer: "Oluşturduğunuz animasyonlu arsa videolarını yüksek kalitede MP4 olarak indirebilirsiniz. Bu videoları sahibinden.com, emlakjet gibi ilan sitelerinde, Instagram Reels, YouTube Shorts veya doğrudan müşterilerinize WhatsApp üzerinden göndermek için mükemmel biçimde optimize edilmiştir.",
+    answer: "Oluşturduğunuz animasyonlu gayrimenkul videolarını yüksek kalitede MP4 olarak indirebilirsiniz. Bu videoları Sahibinden, Emlakjet gibi ilan sitelerinde, Instagram Reels, YouTube Shorts veya doğrudan müşterilerinize WhatsApp üzerinden göndermek için mükemmel biçimde optimize edilmiştir.",
   },
   {
     question: "Kredi kartı bilgisi vermem gerekiyor mu? Gizli maliyetler var mı?",

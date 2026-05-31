@@ -6,8 +6,8 @@ import { AlertCircle, Clock, DollarSign, Ban } from "lucide-react"
 const problems = [
   {
     icon: Ban,
-    title: "Müşteriler Sınırları Anlamıyor",
-    description: "Sıradan arazi fotoğraflarında müşteriler arsanın tam olarak nerede başlayıp nerede bittiğini, yola olan cephesini görselleştiremez.",
+    title: "Karmaşık Tasarım Araçlarıyla Vakit Kaybı",
+    description: "Genel tasarım programlarıyla uğraşmak emlakçılar için yorucudur. Her seferinde şablon aramak, boyut ayarlamak ve metinleri yerleştirmek saatlerinizi alır.",
   },
   {
     icon: DollarSign,
@@ -16,8 +16,8 @@ const problems = [
   },
   {
     icon: Clock,
-    title: "Yavaşlayan İlan Satış Süreçleri",
-    description: "Profesyonel görünmeyen, dikkat çekmeyen ilanlar dijital platformlarda kaybolup gider. Alıcı adayları tıklamadan geçer.",
+    title: "Dikkat Çekmeyen Sıradan İlanlar",
+    description: "Sadece düz bir fotoğraf yüklediğinizde ilanınız platformdaki binlerce mülk arasında kaybolup gider. Alıcı adayları tıklamadan geçer.",
   },
 ]
 
@@ -40,7 +40,7 @@ export function ProblemSection() {
             Büyük Sorun
           </span>
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
-            Arsa İlanlarınız Neden <span className="text-destructive">İlgi Çekmiyor?</span>
+            İlanlarınız Neden <span className="text-destructive">Gözden Kaçıyor?</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
             Gayrimenkul pazarında alıcıların %90'ı ilk 3 saniyede görsele bakarak karar verir. Sıradan görsellerle portföyünüzü satmak neredeyse imkansızdır.

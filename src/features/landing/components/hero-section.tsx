@@ -12,8 +12,8 @@ import type { ContentData } from "@/core/db/content-db"
 
 export function HeroSection({ content }: { content?: ContentData["hero"] }) {
   // Use provided content or fallback to hardcoded text during development if missing
-  const title = content?.title || "Arsa İlanlarınızı 10 Kat Daha Hızlı Satın";
-  const description = content?.description || "Tasarımcı tutmadan, sadece 2 dakikada dikkat çeken neon sınırlar, 3D satılık tabelaları ve animasyonlu video sunumları hazırlayın. Sıradan görsellerle ilan sitelerinde kaybolmayın.";
+  const title = content?.title || "Gayrimenkul İlanlarınızı Saniyeler İçinde Tasarlayın";
+  const description = content?.description || "Daire, villa ve arazi fotoğraflarınıza 3D tabelalar, kurumsal logonuz ve neon çizgiler ekleyerek ilan sitelerinde fark yaratın. Tasarımcıya ihtiyaç duymadan kendi profesyonel stüdyonuzu kurun.";
   const btn1 = content?.buttonPrimary || "Ücretsiz Dene (Filigranlı)";
   const btn2 = content?.buttonSecondary || "Lisans Paketleri";
 
@@ -50,7 +50,7 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: title.replace(/(10 Kat Daha Hızlı Satın)/g, '<span class="text-gradient">$1</span>') }}
+              dangerouslySetInnerHTML={{ __html: title.replace(/(Saniyeler İçinde Tasarlayın)/g, '<span class="text-gradient">$1</span>') }}
             />
 
             <motion.p

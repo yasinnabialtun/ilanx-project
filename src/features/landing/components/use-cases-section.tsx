@@ -6,22 +6,22 @@ import { Home, Building2, MapPin, Users } from "lucide-react"
 const useCases = [
   {
     icon: Home,
-    title: "Konut Arsaları",
-    description: "Müşterilerinize konut arsalarının sınırlarını, 3D konumlarını ve neon sınır çizgilerini net bir şekilde gösterin.",
+    title: "Daire & Villa",
+    description: "Balkon manzaralarını işaretleyin, 3D fiyat etiketleri ekleyin ve site sınırlarını belirginleştirin.",
     bgColor: "bg-chart-4/10",
     textColor: "text-chart-4",
   },
   {
     icon: Building2,
     title: "Ticari Gayrimenkul",
-    description: "İş yeri ve ticari alanlar için 3D ev, para ikonları ve cam/ahşap tabelalarla profesyonel sunumlar hazırlayın.",
+    description: "Vitrin özelliklerini öne çıkarın, metrekare bilgilerini 3D tabelalar ve logonuzla zenginleştirin.",
     bgColor: "bg-chart-2/10",
     textColor: "text-chart-2",
   },
   {
     icon: MapPin,
     title: "Arazi Satışları",
-    description: "Tarla ve bahçe gibi geniş arazilerde polygon çizimleri ve özel markalama (logo) ile güven verin.",
+    description: "Büyük parsellerde veya küçük tarla yatırımlarında neon sınır çizgileri ve konum pinleri ile güven verin.",
     bgColor: "bg-primary/10",
     textColor: "text-primary",
   },
@@ -68,7 +68,7 @@ export function UseCasesSection() {
             Kullanım Alanları
           </h2>
           <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-            Her türlü gayrimenkul için profesyonel arsa çizim çözümleri.
+            Her türlü gayrimenkul portföyünüz için profesyonel tasarım çözümleri.
           </p>
         </motion.div>
 

@@ -15,22 +15,22 @@ const features = [
   {
     icon: Palette,
     title: "Portallarda Öne Çıkan Neon Çizgiler",
-    description: "Saber, Neon ve Bloom parlamalarıyla arsa sınırlarını aydınlatın. Alıcıların gözünü doğrudan ilanınıza çekerek tıklanma oranınızı artırın.",
+    description: "Saber, Neon ve Bloom parlamalarıyla mülkünüzün en çarpıcı yönlerini, vitrinlerini veya sınırlarını aydınlatın. Gözleri doğrudan ilanınıza çekin.",
   },
   {
     icon: Box,
     title: "Değer Algısını Artıran 3D Tabelalar",
-    description: "Derinlikli 3D yazılar, cam veya ahşap tabelalar ve 3D villa simgeleri yerleştirin. Arazi sunumlarınıza profesyonellik ve prestij katın.",
+    description: "Derinlikli 3D yazılar, fiyat etiketleri ve 3D villa simgeleri yerleştirin. Konut ve arazi sunumlarınıza prestij katın.",
   },
   {
     icon: Pencil,
     title: "Karmaşık Sınırları Saniyeler İçinde Çizin",
-    description: "Çokgen çizim aracıyla sınırları hızlıca işaretleyin. Düz veya kesik çizgilerle imar planlarını ve bölmeleri anında anlaşılır kılın.",
+    description: "Çokgen çizim aracıyla site sınırlarını, balkon manzaralarını veya arsa parselasyonlarını hızlıca işaretleyin ve anında anlaşılır kılın.",
   },
   {
     icon: MapPin,
     title: "Önemli Çevre Noktalarını Vurgulayın",
-    description: "Yol, metro, villa, ağaç veya fiyat gibi konum pinleri yerleştirin ve pulsasyon (dalga) efektiyle arazinin prim yapacak noktalarını öne çıkarın.",
+    description: "Yol, metro, okul veya AVM gibi konum pinleri yerleştirin ve pulsasyon (dalga) efektiyle mülkünüzün değer katan noktalarını öne çıkarın.",
   },
   {
     icon: ImageIcon,
@@ -60,8 +60,8 @@ const item = {
 }
 
 export function FeaturesSection({ content }: { content?: ContentData["features"] }) {
-  const title = content?.title || "Profesyonel Çizim Araçları";
-  const subtitle = content?.subtitle || "Gayrimenkul danışmanlığında fark yaratmak için ihtiyacınız olan tüm araçlar.";
+  const title = content?.title || "Kendi Tasarım Stüdyonuz";
+  const subtitle = content?.subtitle || "Gayrimenkul danışmanlığında profesyonel tasarımlar yapmak için ihtiyacınız olan her şey.";
   
   // Merge dynamic text with static icons
   const displayFeatures = features.map((f, i) => {
