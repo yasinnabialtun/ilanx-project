@@ -18,7 +18,7 @@ if (fs.existsSync(serverJsPath)) {
   );
   fs.writeFileSync(serverJsPath, serverJs, 'utf8');
 } else {
-  console.error('❌ Standalone server.js bulunamadı! Önce npm run build yapmalısınız.');
+  console.error('❌ Standalone server.js bulunamadı!');
   process.exit(1);
 }
 

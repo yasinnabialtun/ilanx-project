@@ -5,46 +5,50 @@ import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import { LandingButton } from "@/shared/components/ui/landing-button";
 
-const pricingPlans = [
+const tiers = [
   {
-    id: "weekly",
-    name: "Haftalık Lisans",
-    image: "/pricing-1.png",
-    description: "Günde Sadece Bir Kahve Parasına",
+    name: "10 Video",
+    id: "pkg_10",
+    price: "₺200",
+    description: "Denemek veya az sayıda ilanı olan emlakçılar için ideal paket.",
     features: [
-      "Tüm parsel ve neon çizim araçları",
-      "3D tabela ve konum pinleri",
-      "Kendi logonuzu ekleme",
-      "Video (MP4) ve PDF çıktısı",
-      "3 Cihaz sınırı",
+      "10 Yüksek Çözünürlüklü (HD) Video",
+      "Tüm Sinematik Geçiş Efektleri",
+      "Yapay Zeka Metin Vurgusu",
+      "Logo ve Filigran Ekleme",
+      "7/24 Destek",
     ],
+    mostPopular: false,
   },
   {
-    id: "monthly",
-    name: "Aylık Lisans",
-    image: "/pricing-2.png",
-    description: "Günde Sadece 16 TL'ye Denk",
+    name: "50 Video",
+    id: "pkg_50",
+    price: "₺750",
+    description: "Aktif çalışan ve her ilanı için Reels üreten profesyoneller için.",
     features: [
-      "Haftalık paketteki tüm özellikler",
-      "30 gün boyunca kesintisiz kullanım",
-      "Hızlı teknik destek",
-      "Öncelikli yeni özellik güncellemeleri",
-      "3 Cihaz sınırı",
+      "50 Yüksek Çözünürlüklü (HD) Video",
+      "Tüm Sinematik Geçiş Efektleri",
+      "Yapay Zeka Metin Vurgusu",
+      "Logo ve Filigran Ekleme",
+      "Öncelikli (Hızlı) Render Sırası",
+      "7/24 Öncelikli Destek",
     ],
-    popular: true,
+    mostPopular: true,
   },
   {
-    id: "annual",
-    name: "Yıllık Lisans",
-    image: "/pricing-3.png",
-    description: "Günde Sadece 8 TL'ye Denk (En Kârlı)",
+    name: "100 Video",
+    id: "pkg_100",
+    price: "₺1200",
+    description: "Kurumsal ofisler ve çok sayıda portföyü olan ekipler için tasarlandı.",
     features: [
-      "Aylık paketteki tüm özellikler",
-      "365 gün boyunca kesintisiz kullanım",
-      "Yarı fiyatına gelen yıllık fiyat avantajı",
-      "Kişiye özel kurumsal marka entegrasyonu",
-      "3 Cihaz sınırı",
+      "100 Yüksek Çözünürlüklü (HD) Video",
+      "Tüm Şablonlara Sınırsız Erişim",
+      "Yapay Zeka Metin Vurgusu",
+      "Logo ve Filigran Ekleme",
+      "En Hızlı Render Sırası",
+      "Özel Müşteri Temsilcisi",
     ],
+    mostPopular: false,
   },
 ];
 
@@ -74,7 +78,7 @@ export function PricingSection() {
             transition={{ delay: 0.1, duration: 0.5 }}
             className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"
           >
-            Size En Uygun Planı Seçin
+            İhtiyacınıza Göre Kredi Paketleri
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -83,53 +87,38 @@ export function PricingSection() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="mt-4 text-lg text-zinc-400"
           >
-            Kredi kartı gerekmeden tüm özellikleri ücretsiz test edin. İndirdiğiniz görsellerdeki İlanX filigranını kaldırmak için size uygun lisansı seçin.
+            Aylık üyelik yok, taahhüt yok. Yalnızca üreteceğiniz videolar kadar kredi satın alın ve portföyünüzü hemen parlatın.
           </motion.p>
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3 items-stretch max-w-5xl mx-auto">
-          {pricingPlans.map((plan, index) => (
+          {tiers.map((plan, index) => (
             <motion.div
               key={plan.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.6 }}
-              className={`flex flex-col rounded-2xl border bg-zinc-900/25 p-5 backdrop-blur-md relative transition-all duration-300 hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(6,182,212,0.05)] ${
-                plan.popular ? "border-cyan-500/30 ring-1 ring-cyan-500/20" : "border-zinc-900 bg-zinc-900/10"
+              className={`flex flex-col rounded-3xl border bg-zinc-900/40 p-8 backdrop-blur-xl relative transition-all duration-300 hover:-translate-y-2 ${
+                plan.mostPopular ? "border-indigo-500 shadow-[0_0_40px_rgba(99,102,241,0.2)]" : "border-white/10 hover:border-white/20"
               }`}
             >
-              {plan.popular && (
-                <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-cyan-500 px-4 py-1 text-[10px] font-bold uppercase tracking-wider text-black shadow-md">
-                  En Popüler
+              {plan.mostPopular && (
+                <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-1 text-xs font-bold uppercase tracking-wider text-white shadow-md">
+                  En Çok Tercih Edilen
                 </span>
               )}
 
-              {/* Card Image Display */}
-              <div className="relative aspect-[3/4] w-full overflow-hidden rounded-xl bg-zinc-950 mb-6 group cursor-pointer shadow-lg border border-zinc-900">
-                <a href="https://www.shopier.com/ilanx" target="_blank" rel="noopener noreferrer" className="block w-full h-full">
-                  <img
-                    src={plan.image}
-                    alt={plan.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="rounded-xl bg-white text-black text-xs font-semibold px-4 py-2.5 shadow-xl flex items-center gap-1.5 active:scale-95 transition-transform">
-                      Satın Al <ArrowUpRight className="size-4" />
-                    </span>
-                  </div>
-                </a>
-              </div>
-
               {/* Card Info */}
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-lg font-bold text-white mb-1">{plan.name}</h3>
-                <p className="text-xs font-medium text-cyan-400 mb-6 bg-cyan-500/10 self-start px-2.5 py-1 rounded-md border border-cyan-500/20">{plan.description}</p>
+              <div className="flex-1 flex flex-col mt-2">
+                <h3 className="text-xl font-bold text-white mb-2">{plan.name}</h3>
+                <div className="text-4xl font-black text-white mb-6">{plan.price}</div>
+                <p className="text-sm font-medium text-indigo-400 mb-8">{plan.description}</p>
 
-                <ul className="space-y-3.5 mb-8 flex-1">
+                <ul className="space-y-4 mb-10 flex-1">
                   {plan.features.map((feature, fIdx) => (
-                    <li key={fIdx} className="flex items-start gap-2.5 text-xs text-zinc-300">
-                      <CheckCircle2 className="size-4 text-cyan-400 shrink-0 mt-0.5" />
+                    <li key={fIdx} className="flex items-start gap-3 text-sm text-zinc-300">
+                      <CheckCircle2 className="size-5 text-indigo-400 shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}
@@ -137,12 +126,12 @@ export function PricingSection() {
 
                 <LandingButton 
                   size="default" 
-                  variant={plan.popular ? "default" : "outline"} 
-                  className={`w-full ${plan.popular ? "glow-primary bg-cyan-500 text-black hover:bg-cyan-600" : ""}`}
+                  variant={plan.mostPopular ? "default" : "outline"} 
+                  className={`w-full h-12 text-base font-bold rounded-xl ${plan.mostPopular ? "bg-indigo-500 text-white hover:bg-indigo-600" : "bg-white/5 text-white border-white/10 hover:bg-white/10"}`}
                   asChild
                 >
-                  <a href="https://www.shopier.com/ilanx" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-1.5">
-                    Lisans Satın Al <ArrowUpRight className="size-4" />
+                  <a href="/ai-video" className="flex items-center justify-center gap-2">
+                    Kredi Satın Al <ArrowUpRight className="size-4" />
                   </a>
                 </LandingButton>
               </div>

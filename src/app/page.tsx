@@ -14,6 +14,7 @@ import { FAQSection } from "@/features/landing/components/faq-section";
 import { contentDb } from "@/core/db/content-db";
 import { WhatsAppChatbot } from "@/features/landing/components/whatsapp-chatbot";
 import { PricingSection } from "@/features/landing/components/pricing-section";
+import { BeforeAfterShowcase } from "@/features/landing/components/before-after-showcase";
 
 export const dynamic = "force-dynamic";
 
@@ -136,6 +137,7 @@ export default function Home() {
       <main className="relative min-h-screen overflow-x-hidden">
         <Navbar />
         <HeroSection content={content.hero} />
+        <BeforeAfterShowcase />
         <ProblemSection />
         <InteractiveDemoSection />
         <FeaturesSection content={content.features} />

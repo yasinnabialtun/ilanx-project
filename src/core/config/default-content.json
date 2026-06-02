@@ -1,61 +1,61 @@
 {
   "hero": {
-    "title": "Emlak İlanlarınızı 15 Saniyede Satış Mıknatısına Çevirin",
-    "description": "Photoshop öğrenmenize veya ajanslara para dökmenize gerek yok. Portföylerinize 3D fiyat etiketleri, logonuz ve neon çizgiler ekleyerek ilan sitelerinde hemen öne çıkın.",
+    "title": "Emlak Fotoğraflarınızı 15 Saniyede Viral Videolara Çevirin",
+    "description": "Sıkıcı slayt gösterilerini unutun. Sadece bir fotoğraf yükleyin, yapay zeka onu müzikli, hareketli ve sinematik bir reels videosuna dönüştürsün.",
     "buttonPrimary": "Hemen Ücretsiz Dene",
     "buttonSecondary": "Nasıl Çalışır?"
   },
   "features": {
-    "title": "Sizin İçin Tasarım Yapan 'Sanal Ajansınız'",
-    "subtitle": "Program indirmek yok, eğitim yok. Sadece fotoğrafı sürükleyin ve ilanınızı zirveye taşıyın.",
+    "title": "Sizin İçin Video Kurgulayan 'Sanal Ajansınız'",
+    "subtitle": "Program indirmek yok, saatlerce video editlemek yok. Yapay zeka ile statik ilanlarınızı tıklanma rekorları kıran viral videolara çevirin.",
     "items": [
       {
-        "title": "Tıklamaları Artıran Neon Sınırlar",
-        "description": "İlan sitelerinde insanların durup bakmasını sağlayan göz alıcı parlak çizgilerle sınırları belirtin."
+        "title": "Gerçek Yapay Zeka Hareketi",
+        "description": "Fotoğrafınıza sadece zoom yapmaz, Minimax altyapısıyla mekana derinlik, kamera açısı ve gerçekçi 3D hareket katar."
       },
       {
-        "title": "Prestij Katan 3D Tabelalar",
-        "description": "Mülkünüzün fiyatını havada asılı duran altın rengi 3D yazılarla belirterek kurumsal imajınızı yükseltin."
+        "title": "Akıllı Müzik Senkronizasyonu",
+        "description": "Trend Reels müziklerini videonuza otomatik olarak senkronize eder. Lüks emlak, enerjik veya kurumsal müziklerle tarzınızı belirleyin."
       },
       {
-        "title": "Çevredeki Fırsatları Vurgulayın",
-        "description": "Metro, okul, AVM gibi değer katan noktaları animasyonlu dalga (Pulse) pinleriyle göstererek alıcıları ikna edin."
+        "title": "Yapay Zeka Destekli Metin",
+        "description": "'Acil Satılık' veya 'Fırsat Daire' gibi yazıları yapay zeka analiz eder ve videonun en can alıcı noktasına yerleştirir."
+      },
+      {
+        "title": "Sinematik Geçişler (Transitions)",
+        "description": "Kareler arasına stüdyo kalitesinde sinematik geçiş efektleri (zoom, pan, slide) uygulayarak müşteriyi büyüler."
       },
       {
         "title": "Kendi Logonuzla Güven Verin",
-        "description": "Her görselinize ofis logonuzu ve filigranınızı ekleyerek markanızı koruyun ve otoritenizi artırın."
+        "description": "Her videonuza ofis logonuzu ve filigranınızı otomatik olarak basarak markanızı korur ve otoritenizi artırır."
       },
       {
-        "title": "Zor Parselleri Hızlıca Çizin",
-        "description": "Karmaşık çokgen aracıyla sınırları belirsiz arsaları saniyeler içinde anlaşılır parsellere bölün."
-      },
-      {
-        "title": "Tek Tıkla Video Çıktısı (MP4)",
-        "description": "Müşterilerinize WhatsApp'tan sadece resim değil, dikkat çeken hareketli bir video sunumu gönderin."
+        "title": "Sosyal Medya Formatları",
+        "description": "Instagram Reels, TikTok veya YouTube için optimize edilmiş dikey (9:16) ve yatay (16:9) formatlarda saniyeler içinde çıktı alırsınız."
       }
     ]
   },
   "howItWorks": {
-    "title": "Sadece 3 Adımda Satış Odaklı İlanlar",
-    "subtitle": "Karmaşık paneller yok. Her şey sürükle ve bırak kadar kolay.",
+    "title": "Sadece 3 Adımda Sinematik Videolar",
+    "subtitle": "Video düzenleme programlarına para ve vakit harcamayın.",
     "steps": [
       {
-        "title": "Adım 1: Sürükle",
-        "description": "Üzerinde çalışmak istediğiniz daire veya arsa fotoğrafını tarayıcıya sürükleyin."
+        "title": "Adım 1: Fotoğraf Yükle",
+        "description": "Portföyünüzün en iyi fotoğrafını veya render görüntüsünü stüdyoya yükleyin."
       },
       {
-        "title": "Adım 2: Vurgula",
-        "description": "Tek tıkla sınırları çizin. Havada asılı duran 3D fiyat etiketini ve ofis logonuzu ekleyin."
+        "title": "Adım 2: Tarzını Seç",
+        "description": "Lüks, dinamik veya kurumsal... Hedef kitlenize uygun temayı ve videonun formatını belirleyin."
       },
       {
-        "title": "Adım 3: Sat",
-        "description": "Sahibinden, Emlakjet veya WhatsApp için optimize edilmiş yüksek çözünürlüklü görsel veya MP4 olarak indirin."
+        "title": "Adım 3: İndir ve Paylaş",
+        "description": "Yapay zeka 2 dakika içinde videonuzu hazırlasın. Hemen telefonunuza indirip viral olmaya başlayın."
       }
     ]
   },
   "cta": {
     "title": "Emlak Pazarlamasında Kuralları Siz Koyun",
-    "subtitle": "Aynı soluk fotoğraflarla farklı satış rekorları beklemeyin. Stüdyoya girin ve farkı görün.",
+    "subtitle": "Aynı soluk fotoğraflarla farklı satış rekorları beklemeyin. Yapay zeka gücüyle rakiplerinizi geride bırakın.",
     "buttonText": "Hemen Stüdyoya Gir (Ücretsiz Dene)"
   },
   "footer": {

@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion"
-import { Play, ArrowRight } from "lucide-react"
+import { Play, ArrowRight, Sparkles } from "lucide-react"
 import Link from "next/link"
+import { Button } from "@/shared/components/ui/button"
 
 import { LandingButton } from "@/shared/components/ui/landing-button"
 
@@ -50,36 +51,40 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance whitespace-pre-wrap"
-              dangerouslySetInnerHTML={{ __html: title.replace(/(Saniyeler İçinde Tasarlayın)/g, '<span class="text-gradient">$1</span>') }}
-            />
+            >
+              Emlak Fotoğraflarınızı Saniyeler İçinde
+              <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 animate-gradient-x">
+                Yapay Zeka Videolarına Çevirin
+              </span>
+            </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-xl"
             >
-              {description}
+              Statik ilan fotoğraflarınızı yükleyin, saniyeler içinde lüks geçiş efektleri, müzik senkronizasyonu ve yapay zeka destekli metinlerle donatılmış profesyonel Reels ve TikTok videolarına dönüştürün.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-              className="mt-8 flex flex-wrap gap-4"
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="mt-8 flex flex-col sm:flex-row gap-4"
             >
-              <LandingButton size="lg" className="glow-primary group" asChild>
-                <Link href="/editor">
-                  {btn1}
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </LandingButton>
-              <LandingButton size="lg" variant="outline" className="group" asChild>
-                <Link href="#features">
-                  <Play className="mr-2 h-4 w-4 text-muted-foreground" />
-                  {btn2}
-                </Link>
-              </LandingButton>
+              <Link href="/ai-video">
+                <Button size="lg" className="w-full sm:w-auto text-lg h-14 px-8 glow-primary rounded-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700">
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Ücretsiz Video Oluştur
+                </Button>
+              </Link>
+              <Link href="/dashboard">
+                <Button size="lg" variant="outline" className="w-full sm:w-auto text-lg h-14 px-8 rounded-xl border-white/20 hover:bg-white/10">
+                  Panelime Git
+                </Button>
+              </Link>
             </motion.div>
 
             <motion.div

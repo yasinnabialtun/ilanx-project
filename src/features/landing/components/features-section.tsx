@@ -7,20 +7,33 @@ import {
   Box, 
   Image as ImageIcon,
   MapPin, 
-  Video 
+  Video,
+  Sparkles,
+  Zap,
+  Layout
 } from "lucide-react"
 import type { ContentData } from "@/core/db/content-db"
 
 const features = [
   {
-    icon: Palette,
-    title: "Portallarda Öne Çıkan Neon Çizgiler",
-    description: "Saber, Neon ve Bloom parlamalarıyla mülkünüzün en çarpıcı yönlerini, vitrinlerini veya sınırlarını aydınlatın. Gözleri doğrudan ilanınıza çekin.",
+    title: "Akıllı Müzik Senkronizasyonu",
+    description: "Trend Reels müziklerini videonuza otomatik olarak senkronize eder. Lüks emlak, enerjik veya kurumsal müziklerle tarzınızı belirleyin.",
+    icon: Sparkles,
   },
   {
-    icon: Box,
-    title: "Değer Algısını Artıran 3D Tabelalar",
-    description: "Derinlikli 3D yazılar, fiyat etiketleri ve 3D villa simgeleri yerleştirin. Konut ve arazi sunumlarınıza prestij katın.",
+    title: "Yapay Zeka Destekli Metin",
+    description: "Prompt (talimat) kutusuna yazdığınız 'Acil Satılık' veya 'Fırsat Daire' gibi yazıları yapay zeka analiz eder ve videonun en can alıcı noktasına estetik bir fontla yerleştirir.",
+    icon: Zap,
+  },
+  {
+    title: "Sinematik Geçişler (Transitions)",
+    description: "Statik fotoğraflarınızı alır ve aralarına stüdyo kalitesinde sinematik geçiş (zoom, pan, slide) efektleri ekler.",
+    icon: Layout,
+  },
+  {
+    title: "Sosyal Medya Formatları",
+    description: "Instagram Reels (9:16), YouTube (16:9) veya Kare (1:1) formatlarında, hiçbir kalite kaybı yaşamadan yüksek çözünürlüklü (HD) çıktılar alırsınız.",
+    icon: Palette,
   },
   {
     icon: Pencil,
@@ -31,16 +44,6 @@ const features = [
     icon: MapPin,
     title: "Önemli Çevre Noktalarını Vurgulayın",
     description: "Yol, metro, okul veya AVM gibi konum pinleri yerleştirin ve pulsasyon (dalga) efektiyle mülkünüzün değer katan noktalarını öne çıkarın.",
-  },
-  {
-    icon: ImageIcon,
-    title: "Kendi Logonuzla Portföyü Koruyun",
-    description: "Logonuzu veya filigranınızı yerleştirerek emeğinizin çalınmasını önleyin. Her paylaşımda kurumsal marka bilinirliğinizi artırın.",
-  },
-  {
-    icon: Video,
-    title: "WhatsApp, PDF ve MP4 Video Çıktısı",
-    description: "Çalışmalarınızı yüksek çözünürlüklü PNG resim, sunum için profesyonel PDF veya ilan siteleri için hareketli MP4 videosu olarak indirin.",
   },
 ]
 
@@ -60,8 +63,8 @@ const item = {
 }
 
 export function FeaturesSection({ content }: { content?: ContentData["features"] }) {
-  const title = content?.title || "Kendi Tasarım Stüdyonuz";
-  const subtitle = content?.subtitle || "Gayrimenkul danışmanlığında profesyonel tasarımlar yapmak için ihtiyacınız olan her şey.";
+  const title = content?.title || "Neden İlanX Yapay Zeka Stüdyosu?";
+  const subtitle = content?.subtitle || "Basit slayt gösterilerini unutun. Yapay zeka ile statik ilanlarınızı tıklanma rekorları kıran viral videolara çevirin.";
   
   // Merge dynamic text with static icons
   const displayFeatures = features.map((f, i) => {
@@ -89,7 +92,7 @@ export function FeaturesSection({ content }: { content?: ContentData["features"]
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance">
             {title}
           </h2>
-          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-muted-foreground text-balance max-w-2xl mx-auto">
             {subtitle}
           </p>
         </motion.div>

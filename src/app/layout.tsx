@@ -1,18 +1,23 @@
+import { Providers } from "@/providers";
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/core/providers/theme-provider";
 import { CSPostHogProvider } from "@/core/providers/posthog-provider";
+import { Inter } from "next/font/google";
+import { cn } from "@/shared/utils/cn";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const siteUrl = "https://siteniz.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "İlanX | Gayrimenkul İlan Görseli Hazırlama Aracı",
+    default: "İlanX | Yapay Zeka Emlak Video Stüdyosu",
     template: "%s | İlanX",
   },
   description:
-    "Emlak danışmanları için geliştirilmiş arazi ve gayrimenkul işaretleme platformu. Harita görseli üzerine parsel çizin, metrekare ve fiyat etiketi ekleyin, Instagram ve ilan sitelerine uygun profesyonel görseller üretin.",
+    "Emlak fotoğraflarınızı saniyeler içinde müzikli, sinematik ve profesyonel videolara dönüştürün. İlanX ile portföyünüzü parlatın.",
   keywords: [
     "gayrimenkul ilan görseli",
     "emlak ilan hazırlama",
@@ -61,25 +66,25 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: siteUrl,
     siteName: "İlanX",
-    title: "İlanX | Gayrimenkul İlan Görseli Hazırlama Aracı",
+    title: "İlanX | Yapay Zeka Emlak Video Stüdyosu",
     description:
-      "Emlak danışmanları için geliştirilmiş arazi ve gayrimenkul işaretleme platformu. Profesyonel ilan görselleri saniyeler içinde hazır.",
+      "Sıradan ilan fotoğraflarınızı tek tıkla müzikli, sinematik ve büyüleyici videolara dönüştürün. Emlakçılar için özel geliştirildi.",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
         width: 1200,
         height: 630,
-        alt: "İlanX - Gayrimenkul İlan Görseli Hazırlama Aracı",
+        alt: "İlanX Yapay Zeka Video Stüdyosu",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "İlanX | Gayrimenkul İlan Görseli Hazırlama Aracı",
+    title: "İlanX | Yapay Zeka Emlak Video Stüdyosu",
     description:
-      "Emlak danışmanları için geliştirilmiş arazi ve gayrimenkul işaretleme platformu. Profesyonel ilan görselleri saniyeler içinde hazır.",
-    images: ["/og-image.png"],
-    creator: "@ilanxapp",
+      "Sıradan ilan fotoğraflarınızı tek tıkla büyüleyici videolara dönüştürün.",
+    images: ["https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200"],
+    creator: "@ilanx",
   },
   icons: {
     icon: "/favicon.ico",
@@ -107,17 +112,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="tr" suppressHydrationWarning className="h-full antialiased">
-      <body className="min-h-full font-sans">
-        <CSPostHogProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-        </CSPostHogProvider>
+      <body className={cn("min-h-full font-sans", inter.variable)}>
+        <Providers>
+          <CSPostHogProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </CSPostHogProvider>
+        </Providers>
       </body>
     </html>
   );
