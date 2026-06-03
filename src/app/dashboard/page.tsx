@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { Navbar } from "@/features/landing/components/navbar";
-import { Video, CreditCard, PlayCircle, Download, ArrowRight, Gift, Copy, Sparkles, Loader2, Play } from "lucide-react";
+import { Video, CreditCard, PlayCircle, Download, ArrowRight, Gift, Copy, Sparkles, Loader2, Play, VideoIcon } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 import { PaywallModal } from "@/features/ai-video/components/paywall-modal";
