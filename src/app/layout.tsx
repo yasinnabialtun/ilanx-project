@@ -8,7 +8,7 @@ import { cn } from "@/shared/utils/cn";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
-const siteUrl = "https://siteniz.com";
+const siteUrl = "https://www.tsukodesign.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

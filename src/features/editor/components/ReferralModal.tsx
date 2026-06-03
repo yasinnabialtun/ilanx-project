@@ -33,7 +33,7 @@ export function ReferralModal() {
 
   if (!isOpen) return null;
 
-  const shareText = `Merhaba! Emlak ilan görsellerimi artık saniyeler içinde hazırlıyorum. Sen de benim davet kodumla ( ${refCode} ) lisans satın alırsan, ikimiz de +1 Ay Ücretsiz kullanım kazanacağız! İncelemek için: https://siteniz.com`;
+  const shareText = `Merhaba! Emlak ilan görsellerimi artık saniyeler içinde hazırlıyorum. Sen de benim davet kodumla ( ${refCode} ) lisans satın alırsan, ikimiz de +1 Ay Ücretsiz kullanım kazanacağız! İncelemek için: https://www.tsukodesign.com`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(refCode);

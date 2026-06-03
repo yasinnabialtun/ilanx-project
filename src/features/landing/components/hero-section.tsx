@@ -40,10 +40,13 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
               transition={{ delay: 0.2, duration: 0.6 }}
               className="mb-6"
             >
-              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm text-muted-foreground">
+              <Link
+                href="/ai-video"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm text-muted-foreground"
+              >
                 <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
                 Gayrimenkul danışmanları için
-              </span>
+              </Link>
             </motion.div>
 
             <motion.h1

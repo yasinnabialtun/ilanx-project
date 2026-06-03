@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   description:
     "Gayrimenkul ve arazi fotoğraflarınızı saniyeler içinde profesyonel ilanlara dönüştürün. 3D fiyat etiketleri, kurumsal logonuz ve neon çizgilerle dikkat çekici görseller hazırlayın.",
   alternates: {
-    canonical: "https://siteniz.com",
+    canonical: "https://www.tsukodesign.com",
   },
 };
 
@@ -32,9 +32,9 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "WebApplication",
-      "@id": "https://siteniz.com/#webapp",
+      "@id": "https://www.tsukodesign.com/#webapp",
       name: "İlanX - Gayrimenkul Tasarım Stüdyosu",
-      url: "https://siteniz.com",
+      url: "https://www.tsukodesign.com",
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web Browser",
       offers: {
@@ -52,12 +52,12 @@ const jsonLd = {
     },
     {
       "@type": "Organization",
-      "@id": "https://siteniz.com/#organization",
+      "@id": "https://www.tsukodesign.com/#organization",
       name: "İlanX",
-      url: "https://siteniz.com",
+      url: "https://www.tsukodesign.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://siteniz.com/og-image.png",
+        url: "https://www.tsukodesign.com/og-image.png",
       },
       contactPoint: {
         "@type": "ContactPoint",
@@ -67,16 +67,16 @@ const jsonLd = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://siteniz.com/#website",
-      url: "https://siteniz.com",
+      "@id": "https://www.tsukodesign.com/#website",
+      url: "https://www.tsukodesign.com",
       name: "İlanX",
-      publisher: { "@id": "https://siteniz.com/#organization" },
+      publisher: { "@id": "https://www.tsukodesign.com/#organization" },
       inLanguage: "tr-TR",
       potentialAction: {
         "@type": "SearchAction",
         target: {
           "@type": "EntryPoint",
-          urlTemplate: "https://siteniz.com/editor",
+          urlTemplate: "https://www.tsukodesign.com/editor",
         },
         "query-input": "required name=search_term_string",
       },

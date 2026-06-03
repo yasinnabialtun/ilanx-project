@@ -20,8 +20,8 @@ const server = createServer((req, res) => {
 server.listen(port, () => {
   console.log('Install server listening on', port);
   
-  // Run installation commands sequentially
-  const cmd = 'npm install --no-audit --no-fund && npx prisma db push --accept-data-loss && npx --node-options="--max-old-space-size=1024" next build';
+  // Run installation commands sequentially (skipping build as we upload .next directly)
+  const cmd = 'npm install --no-audit --no-fund && npx prisma db push --accept-data-loss';
   
   const child = exec(cmd, { maxBuffer: 1024 * 1024 * 10 }); // 10MB buffer for build logs
   

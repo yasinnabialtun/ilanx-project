@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/admin", "/api/"],
       },
     ],
-    sitemap: "https://siteniz.com/sitemap.xml",
-    host: "https://siteniz.com",
+    sitemap: "https://www.tsukodesign.com/sitemap.xml",
+    host: "https://www.tsukodesign.com",
   };
 }
