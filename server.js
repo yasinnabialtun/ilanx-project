@@ -8,13 +8,33 @@ const port = process.env.PORT || 3000;
 
 // Check if a valid Next.js build exists
 const buildIdPath = path.join(__dirname, '.next', 'BUILD_ID');
+const forceBuildPath = path.join(__dirname, 'force-build.txt');
 const hasBuild = fs.existsSync(buildIdPath);
+const forceBuild = fs.existsSync(forceBuildPath);
 
-if (!hasBuild) {
+if (!hasBuild || forceBuild) {
   // ============================================================
-  // NO BUILD FOUND — serve a "Building..." page while compiling
+  // NO BUILD FOUND or FORCE BUILD — serve a "Building..." page while compiling
   // ============================================================
-  console.log('> No Next.js build found. Starting auto-build...');
+  console.log(`> Starting auto-build (hasBuild: ${hasBuild}, forceBuild: ${forceBuild})...`);
+  
+  if (forceBuild) {
+    try {
+      const nextDir = path.join(__dirname, '.next');
+      if (fs.existsSync(nextDir)) {
+        fs.rmSync(nextDir, { recursive: true, force: true });
+        console.log('> Deleted old .next directory for clean forced build.');
+      }
+    } catch (err) {
+      console.error('> Error deleting .next directory:', err.message);
+    }
+    try {
+      fs.unlinkSync(forceBuildPath);
+      console.log('> Deleted force-build.txt');
+    } catch (err) {
+      console.error('> Error deleting force-build.txt:', err.message);
+    }
+  }
   
   let logs = ['🚀 IlanX Auto-Build Started...', ''];
   let buildDone = false;
