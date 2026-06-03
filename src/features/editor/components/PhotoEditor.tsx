@@ -119,8 +119,10 @@ export function PhotoEditor() {
     const verifyExistingToken = async () => {
       const token = localStorage.getItem("ilanx_license_token");
       if (!token) {
-        // Sadece lisanssız olduğunu kaydediyoruz, kullanıcıyı rahatsız edecek otomatik pop-up KALDIRILDI.
+        // No token — user is in demo mode, skip API call entirely (avoids 401 console errors)
         setDemoMode(true);
+        setLicensed(false);
+        return;
       }
 
       try {
