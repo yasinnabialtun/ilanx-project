@@ -66,7 +66,7 @@ if (!hasBuild || forceBuild) {
       { name: '📦 npm install', cmd: 'npm install --no-audit --no-fund' },
       { name: '🔧 prisma generate', cmd: 'npx prisma generate' },
       { name: '🗄️ prisma db push', cmd: 'npx prisma db push --accept-data-loss' },
-      { name: '🏗️ next build', cmd: 'npx next build' },
+      { name: '🏗️ next build', cmd: 'npx next build --webpack' },
     ];
 
     let i = 0;
