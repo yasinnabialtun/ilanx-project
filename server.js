@@ -90,7 +90,7 @@ if (!hasBuild || forceBuild) {
       const child = exec(step.cmd, {
         maxBuffer: 1024 * 1024 * 50,
         cwd: __dirname,
-        env: { ...process.env, NODE_ENV: 'production' }
+        env: { ...process.env, NODE_ENV: 'production', NEXT_DISABLE_TURBOPACK: '1' }
       });
 
       child.stdout.on('data', (d) => { 
