@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Upload, X, Film, Image as ImageIcon, Sparkles, LayoutTemplate, Clock, MessageSquare, Play, Music, Settings2, GripVertical, ChevronDown, ChevronUp } from "lucide-react";
+import { Upload, X, Film, Image as ImageIcon, Sparkles, LayoutTemplate, Clock, MessageSquare, Play, Music, Settings2, GripVertical, ChevronDown, ChevronUp, Link2, Loader2 } from "lucide-react";
 import { useAIVideoStore, VideoFormat, VideoDuration, VideoTemplate, VideoMusic, SubtitleStyle } from "../store/use-ai-video-store";
 import { cn } from "@/shared/utils/cn";
 import { Button } from "@/shared/components/ui/button";
@@ -14,6 +14,10 @@ export const AIVideoSidebar = () => {
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  
+  const [importUrl, setImportUrl] = useState("");
+  const [isImporting, setIsImporting] = useState(false);
+  const [importMessage, setImportMessage] = useState<string | null>(null);
   
   const { data: session } = useSession();
   const dbCredits = session?.user ? (session.user as any).credits : 0;
@@ -39,8 +43,60 @@ export const AIVideoSidebar = () => {
     setSubtitleStyle,
     startGeneration,
     setGenerationProgress,
-    setResultVideoUrl
+    setResultVideoUrl,
+    reset
   } = useAIVideoStore();
+
+  const handleImportListing = async () => {
+    if (!importUrl) {
+      alert("Lütfen bir ilan linki girin.");
+      return;
+    }
+    
+    setIsImporting(true);
+    setImportMessage("İlan analiz ediliyor...");
+    
+    try {
+      const response = await fetch("/api/video/import-listing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: importUrl }),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || "İçe aktarım sırasında bir hata oluştu.");
+      }
+      
+      setImportMessage("Görseller ve yapay zeka talimatı yerleştiriliyor...");
+      
+      // Clear previous states
+      reset();
+      
+      if (data.images && data.images.length > 0) {
+        addImages(data.images);
+      }
+      
+      if (data.prompt) {
+        setPrompt(data.prompt);
+      }
+      
+      setImportMessage(data.simulated ? "İlan başarıyla simüle edilerek aktarıldı!" : "İlan başarıyla aktarıldı!");
+      setImportUrl("");
+      
+      setTimeout(() => {
+        setImportMessage(null);
+      }, 4000);
+      
+    } catch (error: any) {
+      console.error("Listing Import Client Error:", error);
+      alert(error.message || "İlan aktarılırken bir hata oluştu.");
+      setImportMessage(null);
+    } finally {
+      setIsImporting(false);
+    }
+  };
 
   const compressImage = (file: File): Promise<string> => {
     return new Promise((resolve) => {
@@ -196,6 +252,54 @@ export const AIVideoSidebar = () => {
           Yapay Zeka Stüdyosu
         </h2>
         <p className="text-xs text-white/50 mt-1">İlan görsellerinizi saniyeler içinde dinamik videolara dönüştürün.</p>
+      </div>
+
+      {/* Akıllı İlan İçe Aktarımı */}
+      <div className="relative group bg-neutral-900/60 backdrop-blur-md p-5 rounded-2xl border border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] transition-all duration-300 hover:border-indigo-500/30">
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl blur opacity-0 group-hover:opacity-10 transition duration-500"></div>
+        <div className="relative space-y-3">
+          <label className="text-sm font-semibold flex items-center gap-2 text-indigo-300">
+            <Link2 className="w-4 h-4" />
+            🔗 Akıllı İlan Aktarımı (EmlakçıGPT)
+          </label>
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <input
+                type="text"
+                placeholder="Sahibinden veya Hepsiemlak linki..."
+                value={importUrl}
+                onChange={(e) => setImportUrl(e.target.value)}
+                disabled={isImporting}
+                className="w-full bg-black/40 border border-white/10 rounded-xl py-2.5 pl-3 pr-8 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-indigo-500 transition duration-200"
+              />
+              {isImporting && (
+                <Loader2 className="absolute right-2.5 top-3 w-4 h-4 text-indigo-400 animate-spin" />
+              )}
+            </div>
+            <Button
+              onClick={handleImportListing}
+              disabled={isImporting || !importUrl}
+              className="bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold px-4 rounded-xl transition duration-200 shadow-md flex items-center gap-1.5"
+            >
+              {isImporting ? "Aktarılıyor" : "Aktar"}
+            </Button>
+          </div>
+          {importMessage && (
+            <p className={cn(
+              "text-[11px] font-medium transition-all duration-300 animate-pulse",
+              importMessage.includes("Hata") || importMessage.includes("başarısız") 
+                ? "text-red-400" 
+                : importMessage.includes("Başarıyla") 
+                ? "text-emerald-400" 
+                : "text-indigo-300"
+            )}>
+              {importMessage}
+            </p>
+          )}
+          <p className="text-[10px] text-white/40 leading-relaxed">
+            Desteklenenler: Sahibinden, Hepsiemlak, Emlakjet, Emlak acente siteleri vb.
+          </p>
+        </div>
       </div>
 
       {/* 1. Görsel Yükleme (Storyboard) */}
