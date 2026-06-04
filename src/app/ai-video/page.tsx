@@ -5,21 +5,73 @@ import { AIVideoSidebar } from "@/features/ai-video/components/ai-video-sidebar"
 import { AIVideoPlayer } from "@/features/ai-video/components/ai-video-player";
 import { Navbar } from "@/features/landing/components/navbar";
 import { useSession, signIn } from "next-auth/react";
-import { Sparkles, Lock } from "lucide-react";
+import { Sparkles, Lock, Loader2 } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 
 export default function AIVideoPage() {
   const [mounted, setMounted] = useState(false);
   const { data: session, status } = useSession();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
+  useEffect(() => {
+    if (!mounted) return;
+
+    const params = new URLSearchParams(window.location.search);
+    const buyPkg = params.get("buy");
+
+    if (buyPkg) {
+      if (status === "authenticated") {
+        const handleAutoPurchase = async () => {
+          setCheckoutLoading(true);
+          try {
+            const response = await fetch("/api/shopier/checkout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ packageId: buyPkg })
+            });
+            const data = await response.json();
+            if (data.success && data.action && data.inputs) {
+              const form = document.createElement("form");
+              form.method = "POST";
+              form.action = data.action;
+              Object.entries(data.inputs).forEach(([key, val]) => {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = val as string;
+                form.appendChild(input);
+              });
+              document.body.appendChild(form);
+              form.submit();
+            } else {
+              alert(data.message || "Ödeme altyapısına bağlanırken bir sorun oluştu.");
+              setCheckoutLoading(false);
+            }
+          } catch (err) {
+            console.error("Auto purchase error:", err);
+            alert("Bir hata oluştu.");
+            setCheckoutLoading(false);
+          }
+        };
+        handleAutoPurchase();
+      } else if (status === "unauthenticated") {
+        // Automatically redirect to google login and preserve search query
+        signIn("google", { callbackUrl: window.location.href });
+      }
+    }
+  }, [status, mounted]);
+
+  if (!mounted || status === "loading" || checkoutLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-neutral-950">
-        <div className="w-8 h-8 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex flex-col items-center justify-center h-screen bg-neutral-950 gap-4">
+        <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+        {checkoutLoading && (
+          <p className="text-white/60 text-sm animate-pulse">Ödeme sayfasına güvenli bir şekilde yönlendiriliyorsunuz...</p>
+        )}
       </div>
     );
   }

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Menu, X, Sparkles, LogOut, User } from "lucide-react"
+import { Menu, X, Sparkles, LogOut, User, PenTool } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/shared/components/ui/button"
 import { signIn, signOut, useSession } from "next-auth/react"
@@ -58,6 +58,12 @@ export function Navbar() {
           </div>
 
           <div className="hidden md:flex md:items-center md:gap-4">
+            <Link href="/editor">
+              <Button variant="outline" size="sm" className="border-cyan-500/50 text-cyan-400 hover:bg-cyan-500/10">
+                <PenTool className="w-4 h-4 mr-2" />
+                Arsa İşaretleme
+              </Button>
+            </Link>
             <Link href="/ai-video">
               <Button variant="outline" size="sm" className="border-indigo-500/50 text-indigo-400 hover:bg-indigo-500/10">
                 <Sparkles className="w-4 h-4 mr-2" />
@@ -121,6 +127,12 @@ export function Navbar() {
                 </Link>
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-border">
+                <Link href="/editor" onClick={() => setIsOpen(false)}>
+                  <Button variant="outline" size="sm" className="w-full border-cyan-500/50 text-cyan-400">
+                    <PenTool className="w-4 h-4 mr-2" />
+                    Arsa İşaretleme
+                  </Button>
+                </Link>
                 <Link href="/ai-video" onClick={() => setIsOpen(false)}>
                   <Button variant="outline" size="sm" className="w-full border-indigo-500/50 text-indigo-400">
                     <Sparkles className="w-4 h-4 mr-2" />

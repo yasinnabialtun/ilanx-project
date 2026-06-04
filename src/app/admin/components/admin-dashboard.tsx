@@ -37,12 +37,22 @@ interface AdminDashboardProps {
     totalCreditsInSystem: number;
   };
   initialUsers: UserData[];
+  isGoogleAdmin: boolean;
+  dbError: boolean;
 }
 
-export function AdminDashboard({ initialStats, initialUsers }: AdminDashboardProps) {
+export function AdminDashboard({ initialStats, initialUsers, isGoogleAdmin, dbError }: AdminDashboardProps) {
   const [activeTab, setActiveTab] = useState<"stats" | "credits" | "licenses" | "cms">("stats");
   const [adminSecret, setAdminSecret] = useState("");
   
+  // Custom states for DB resilience & Client login
+  const [stats, setStats] = useState(initialStats);
+  const [users, setUsers] = useState(initialUsers);
+  const [isUnlocked, setIsUnlocked] = useState(isGoogleAdmin);
+  const [unlockSecret, setUnlockSecret] = useState("");
+  const [unlocking, setUnlocking] = useState(false);
+  const [unlockError, setUnlockError] = useState<string | null>(null);
+
   // License Tab States
   const [licenses, setLicenses] = useState<any[]>([]);
   const [loadingLicenses, setLoadingLicenses] = useState(false);
@@ -56,13 +66,66 @@ export function AdminDashboard({ initialStats, initialUsers }: AdminDashboardPro
   const [newlyCreatedKey, setNewlyCreatedKey] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
 
+  // Verification and Dynamic Data Loading
+  const verifyAndFetch = async (secret: string) => {
+    if (!secret) return;
+    setUnlocking(true);
+    setUnlockError(null);
+    try {
+      // 1. Verify adminSecret using licenses API (which uses JSON file and works even if MySQL is down)
+      const verifyRes = await fetch("/api/license/revoke", {
+        method: "GET",
+        headers: {
+          "x-admin-secret": secret,
+        }
+      });
+      
+      if (!verifyRes.ok) {
+        const data = await verifyRes.json();
+        setUnlockError(data.error || "Hatalı yönetici şifresi (ADMIN_SECRET).");
+        setIsUnlocked(false);
+        return;
+      }
+
+      // Secret is valid! Unlock Dashboard.
+      setIsUnlocked(true);
+      setAdminSecret(secret);
+      localStorage.setItem("ilanx_admin_secret", secret);
+
+      // 2. Try to fetch stats/users from DB. If it fails, it will just show database error but dashboard remains unlocked!
+      try {
+        const res = await fetch("/api/admin/users/update-credits", {
+          method: "GET",
+          headers: {
+            "x-admin-secret": secret,
+          }
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          setStats(data.stats);
+          setUsers(data.users);
+        }
+      } catch (dbErr) {
+        console.warn("Could not load users/stats due to DB failure", dbErr);
+      }
+
+    } catch (err: any) {
+      setUnlockError("Sunucuya bağlanılamadı.");
+      setIsUnlocked(false);
+    } finally {
+      setUnlocking(false);
+    }
+  };
+
   // Load adminSecret from localStorage on mount
   useEffect(() => {
     const savedSecret = localStorage.getItem("ilanx_admin_secret");
-    if (savedSecret) {
+    if (savedSecret && !isGoogleAdmin) {
+      verifyAndFetch(savedSecret);
+    } else if (savedSecret) {
       setAdminSecret(savedSecret);
     }
-  }, []);
+  }, [isGoogleAdmin]);
 
   // Save adminSecret to localStorage when changed
   const handleSecretChange = (val: string) => {
@@ -138,7 +201,7 @@ export function AdminDashboard({ initialStats, initialUsers }: AdminDashboardPro
       } else {
         alert("Hata: " + (data.error || "Lisans üretilemedi."));
       }
-    } catch {
+    } catch (err) {
       alert("Lisans üretilirken bağlantı hatası oluştu.");
     } finally {
       setGenerating(false);
@@ -164,7 +227,7 @@ export function AdminDashboard({ initialStats, initialUsers }: AdminDashboardPro
       } else {
         alert("Hata: " + (data.error || "Lisans iptal edilemedi."));
       }
-    } catch {
+    } catch (err) {
       alert("Lisans iptal edilirken hata oluştu.");
     }
   };
@@ -188,7 +251,7 @@ export function AdminDashboard({ initialStats, initialUsers }: AdminDashboardPro
       } else {
         alert("Hata: " + (data.error || "Cihazlar sıfırlanamadı."));
       }
-    } catch {
+    } catch (err) {
       alert("Cihazlar sıfırlanırken hata oluştu.");
     }
   };
@@ -211,10 +274,52 @@ export function AdminDashboard({ initialStats, initialUsers }: AdminDashboardPro
       } else {
         alert("Hata: " + (data.error || "Süre uzatılamadı."));
       }
-    } catch {
+    } catch (err) {
       alert("Lisans süresi uzatılırken hata oluştu.");
     }
   };
+
+  // If client-side secret is not verified and user is not a Google Admin, render a sleek password lock screen
+  if (!isUnlocked) {
+    return (
+      <div className="bg-neutral-900 border border-white/10 rounded-3xl p-8 max-w-md mx-auto text-center space-y-6 shadow-2xl relative overflow-hidden my-12">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500" />
+        <div className="w-16 h-16 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 rotate-3">
+          <Key className="w-8 h-8 text-indigo-400 -rotate-3" />
+        </div>
+        <h2 className="text-xl font-bold text-white">Yönetici Girişi</h2>
+        <p className="text-sm text-white/60">
+          İlanX yönetim paneline erişmek için lütfen Yönetici Şifresini (ADMIN_SECRET) girin.
+        </p>
+        <form 
+          onSubmit={(e) => {
+            e.preventDefault();
+            verifyAndFetch(unlockSecret);
+          }}
+          className="space-y-4"
+        >
+          <input
+            type="password"
+            required
+            value={unlockSecret}
+            onChange={(e) => setUnlockSecret(e.target.value)}
+            placeholder="Yönetici şifresini girin..."
+            className="w-full bg-black/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500 font-mono text-center"
+          />
+          {unlockError && (
+            <p className="text-xs text-red-400 font-semibold">{unlockError}</p>
+          )}
+          <Button 
+            type="submit" 
+            disabled={unlocking}
+            className="w-full h-12 bg-white text-black hover:bg-white/90 font-bold rounded-xl"
+          >
+            {unlocking ? <RefreshCw className="w-5 h-5 animate-spin mx-auto" /> : "Giriş Yap"}
+          </Button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">
@@ -292,45 +397,63 @@ export function AdminDashboard({ initialStats, initialUsers }: AdminDashboardPro
       <div className="pt-2">
         {/* STATS TAB */}
         {activeTab === "stats" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-indigo-500/10 rounded-full flex items-center justify-center border border-indigo-500/20">
-                  <Users className="w-6 h-6 text-indigo-400" />
-                </div>
-                <h3 className="text-white/60 text-sm font-medium">Toplam Kullanıcı</h3>
-              </div>
-              <div className="text-4xl font-black text-white">{initialStats.userCount}</div>
+          dbError ? (
+            <div className="py-8 text-center text-white/40 border border-white/10 rounded-2xl bg-neutral-900">
+              <ShieldAlert className="w-10 h-10 text-red-500 mx-auto animate-pulse mb-3" />
+              <h4 className="font-bold text-white text-base">İstatistikler Yüklenemedi</h4>
+              <p className="text-xs max-w-sm mx-auto mt-1">Veritabanı bağlantı hatası oluştuğu için bu istatistikler alınamıyor.</p>
             </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-indigo-500/10 rounded-full flex items-center justify-center border border-indigo-500/20">
+                    <Users className="w-6 h-6 text-indigo-400" />
+                  </div>
+                  <h3 className="text-white/60 text-sm font-medium">Toplam Kullanıcı</h3>
+                </div>
+                <div className="text-4xl font-black text-white">{stats.userCount}</div>
+              </div>
 
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center border border-purple-500/20">
-                  <Video className="w-6 h-6 text-purple-400" />
+              <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center border border-purple-500/20">
+                    <Video className="w-6 h-6 text-purple-400" />
+                  </div>
+                  <h3 className="text-white/60 text-sm font-medium">Üretilen Video</h3>
                 </div>
-                <h3 className="text-white/60 text-sm font-medium">Üretilen Video</h3>
+                <div className="text-4xl font-black text-white">{stats.videoCount}</div>
               </div>
-              <div className="text-4xl font-black text-white">{initialStats.videoCount}</div>
-            </div>
 
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20">
-                  <CreditCard className="w-6 h-6 text-emerald-400" />
+              <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
+                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20">
+                    <CreditCard className="w-6 h-6 text-emerald-400" />
+                  </div>
+                  <h3 className="text-white/60 text-sm font-medium">Piyasadaki Toplam Kredi</h3>
                 </div>
-                <h3 className="text-white/60 text-sm font-medium">Piyasadaki Toplam Kredi</h3>
+                <div className="text-4xl font-black text-white">{stats.totalCreditsInSystem}</div>
               </div>
-              <div className="text-4xl font-black text-white">{initialStats.totalCreditsInSystem}</div>
             </div>
-          </div>
+          )
         )}
 
         {/* CREDITS TAB */}
         {activeTab === "credits" && (
-          <UserTable initialUsers={initialUsers} />
+          dbError ? (
+            <div className="py-12 text-center text-white/40 space-y-4 border border-white/10 rounded-2xl bg-neutral-900">
+              <ShieldAlert className="w-12 h-12 text-red-500 mx-auto animate-pulse" />
+              <h4 className="font-bold text-white text-lg">Veritabanı Bağlantısı Bulunmuyor</h4>
+              <p className="text-sm max-w-md mx-auto">
+                Kullanıcı listesi ve kredi yönetimi için aktif bir veritabanı bağlantısı gereklidir. Lütfen sunucudaki .env dosyasında DATABASE_URL değişkeninin doğru yapılandırıldığından emin olun.
+              </p>
+            </div>
+          ) : (
+            <UserTable initialUsers={users} />
+          )
         )}
 
         {/* LICENSES TAB */}

@@ -8,7 +8,7 @@ import { LandingButton } from "@/shared/components/ui/landing-button";
 const tiers = [
   {
     name: "10 Video",
-    id: "pkg_10",
+    id: "pkg_1",
     price: "₺200",
     description: "Denemek veya az sayıda ilanı olan emlakçılar için ideal paket.",
     features: [
@@ -22,7 +22,7 @@ const tiers = [
   },
   {
     name: "50 Video",
-    id: "pkg_50",
+    id: "pkg_2",
     price: "₺750",
     description: "Aktif çalışan ve her ilanı için Reels üreten profesyoneller için.",
     features: [
@@ -37,7 +37,7 @@ const tiers = [
   },
   {
     name: "100 Video",
-    id: "pkg_100",
+    id: "pkg_3",
     price: "₺1200",
     description: "Kurumsal ofisler ve çok sayıda portföyü olan ekipler için tasarlandı.",
     features: [
@@ -130,7 +130,7 @@ export function PricingSection() {
                   className={`w-full h-12 text-base font-bold rounded-xl ${plan.mostPopular ? "bg-indigo-500 text-white hover:bg-indigo-600" : "bg-white/5 text-white border-white/10 hover:bg-white/10"}`}
                   asChild
                 >
-                  <a href="/ai-video" className="flex items-center justify-center gap-2">
+                  <a href={`/dashboard?buy=${plan.id}`} className="flex items-center justify-center gap-2">
                     Kredi Satın Al <ArrowUpRight className="size-4" />
                   </a>
                 </LandingButton>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion"
-import { Play, ArrowRight, Sparkles } from "lucide-react"
+import { Play, ArrowRight, Sparkles, PenTool } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/shared/components/ui/button"
 
@@ -45,7 +45,7 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
                 className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm text-muted-foreground"
               >
                 <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-                Gayrimenkul danışmanları için
+                Gayrimenkul danışmanları için akıllı stüdyo
               </Link>
             </motion.div>
 
@@ -55,10 +55,10 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="text-3xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl text-balance whitespace-pre-wrap"
             >
-              Emlak Fotoğraflarınızı Saniyeler İçinde
+              Emlak İlanlarınızı Saniyeler İçinde
               <br className="hidden sm:inline" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-indigo-400 animate-gradient-x">
-                Yapay Zeka Videolarına Çevirin
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 animate-gradient-x">
+                Tasarlayın ve Videolaştırın
               </span>
             </motion.h1>
 
@@ -68,7 +68,7 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="mt-6 text-lg text-muted-foreground leading-relaxed max-w-xl"
             >
-              Statik ilan fotoğraflarınızı yükleyin, saniyeler içinde lüks geçiş efektleri, müzik senkronizasyonu ve yapay zeka destekli metinlerle donatılmış profesyonel Reels ve TikTok videolarına dönüştürün.
+              İlanX ile arsa ve gayrimenkul fotoğraflarınızın sınırlarını 3D etiketlerle çizin veya tek tıkla trend müzikli, geçiş efektli yapay zeka videolarına dönüştürün.
             </motion.p>
 
             <motion.div
@@ -77,15 +77,16 @@ export function HeroSection({ content }: { content?: ContentData["hero"] }) {
               transition={{ duration: 0.5, delay: 0.4 }}
               className="mt-8 flex flex-col sm:flex-row gap-4"
             >
+              <Link href="/editor">
+                <Button size="lg" className="w-full sm:w-auto text-lg h-14 px-8 rounded-xl font-bold bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-700 hover:to-teal-700 glow-cyan border-none text-white">
+                  <PenTool className="w-5 h-5 mr-2" />
+                  Arsa İşaretleme
+                </Button>
+              </Link>
               <Link href="/ai-video">
                 <Button size="lg" className="w-full sm:w-auto text-lg h-14 px-8 glow-primary rounded-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700">
                   <Sparkles className="w-5 h-5 mr-2" />
-                  Ücretsiz Video Oluştur
-                </Button>
-              </Link>
-              <Link href="/dashboard">
-                <Button size="lg" variant="outline" className="w-full sm:w-auto text-lg h-14 px-8 rounded-xl border-white/20 hover:bg-white/10">
-                  Panelime Git
+                  AI Video Stüdyosu
                 </Button>
               </Link>
             </motion.div>

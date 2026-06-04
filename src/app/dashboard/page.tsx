@@ -13,10 +13,59 @@ export default function DashboardPage() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [videos, setVideos] = useState<any[]>([]);
   const [loadingVideos, setLoadingVideos] = useState(true);
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
       fetchVideos();
+    }
+  }, [status]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const params = new URLSearchParams(window.location.search);
+    const buyPkg = params.get("buy");
+
+    if (buyPkg) {
+      if (status === "authenticated") {
+        const handleAutoPurchase = async () => {
+          setCheckoutLoading(true);
+          try {
+            const response = await fetch("/api/shopier/checkout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ packageId: buyPkg })
+            });
+            const data = await response.json();
+            if (data.success && data.action && data.inputs) {
+              const form = document.createElement("form");
+              form.method = "POST";
+              form.action = data.action;
+              Object.entries(data.inputs).forEach(([key, val]) => {
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = key;
+                input.value = val as string;
+                form.appendChild(input);
+              });
+              document.body.appendChild(form);
+              form.submit();
+            } else {
+              alert(data.message || "Ödeme altyapısına bağlanırken bir sorun oluştu.");
+              setCheckoutLoading(false);
+            }
+          } catch (err) {
+            console.error("Auto purchase error:", err);
+            alert("Bir hata oluştu.");
+            setCheckoutLoading(false);
+          }
+        };
+        handleAutoPurchase();
+      } else if (status === "unauthenticated") {
+        // Automatically redirect to google login and preserve search query
+        signIn("google", { callbackUrl: window.location.href });
+      }
     }
   }, [status]);
 
@@ -35,10 +84,13 @@ export default function DashboardPage() {
     }
   };
 
-  if (status === "loading") {
+  if (status === "loading" || checkoutLoading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-neutral-950">
+      <div className="flex flex-col items-center justify-center h-screen bg-neutral-950 gap-4">
         <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
+        {checkoutLoading && (
+          <p className="text-white/60 text-sm animate-pulse">Ödeme sayfasına güvenli bir şekilde yönlendiriliyorsunuz...</p>
+        )}
       </div>
     );
   }
