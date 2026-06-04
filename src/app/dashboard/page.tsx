@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { Navbar } from "@/features/landing/components/navbar";
 import { Video, CreditCard, PlayCircle, Download, ArrowRight, Gift, Copy, Sparkles, Loader2, Play, VideoIcon } from "lucide-react";
@@ -8,15 +8,32 @@ import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 import { PaywallModal } from "@/features/ai-video/components/paywall-modal";
 
-// Dummy data since we don't have real videos yet
-const MOCK_VIDEOS = [
-  { id: "1", prompt: "Acil satılık, deniz manzaralı lüks villa", date: "Bugün 14:30", url: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" },
-  { id: "2", prompt: "Modern mimari, 3+1 akıllı ev sistemi", date: "Dün 09:15", url: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4" },
-];
-
 export default function DashboardPage() {
   const { data: session, status } = useSession();
   const [showPaywall, setShowPaywall] = useState(false);
+  const [videos, setVideos] = useState<any[]>([]);
+  const [loadingVideos, setLoadingVideos] = useState(true);
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      fetchVideos();
+    }
+  }, [status]);
+
+  const fetchVideos = async () => {
+    setLoadingVideos(true);
+    try {
+      const res = await fetch("/api/video/list");
+      const data = await res.json();
+      if (data.success) {
+        setVideos(data.videos || []);
+      }
+    } catch (err) {
+      console.error("Videolar yüklenirken hata oluştu:", err);
+    } finally {
+      setLoadingVideos(false);
+    }
+  };
 
   if (status === "loading") {
     return (
@@ -137,7 +154,12 @@ export default function DashboardPage() {
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {MOCK_VIDEOS.map((video) => (
+            {loadingVideos ? (
+              <div className="col-span-full py-12 flex flex-col items-center justify-center text-white/50">
+                <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-3" />
+                <span>Videolarınız yükleniyor...</span>
+              </div>
+            ) : videos.map((video) => (
               <div key={video.id} className="bg-black/40 border border-white/10 rounded-2xl overflow-hidden group">
                 <div className="aspect-[9/16] relative bg-neutral-900">
                   <video 
@@ -159,16 +181,26 @@ export default function DashboardPage() {
                 </div>
                 <div className="p-4">
                   <p className="text-sm font-medium text-white line-clamp-2 mb-2">"{video.prompt}"</p>
-                  <p className="text-xs text-white/40">{video.date}</p>
+                  <p className="text-xs text-white/40">
+                    {new Date(video.createdAt).toLocaleDateString("tr-TR", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                      hour: "2-digit",
+                      minute: "2-digit"
+                    })}
+                  </p>
                 </div>
               </div>
             ))}
             
-            {/* Empty State placeholder */}
-            <div className="aspect-[9/16] border-2 border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center p-6 text-center bg-white/[0.02]">
-              <VideoIcon className="w-8 h-8 text-white/20 mb-3" />
-              <p className="text-sm text-white/50">Daha fazla video ürettikçe burada listelenecektir.</p>
-            </div>
+            {!loadingVideos && videos.length === 0 && (
+              /* Empty State placeholder */
+              <div className="col-span-full aspect-[9/16] max-w-sm mx-auto border-2 border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center p-6 text-center bg-white/[0.02]">
+                <VideoIcon className="w-8 h-8 text-white/20 mb-3" />
+                <p className="text-sm text-white/50">Daha fazla video ürettikçe burada listelenecektir.</p>
+              </div>
+            )}
           </div>
         </div>
 

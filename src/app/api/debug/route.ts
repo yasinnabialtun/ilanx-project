@@ -50,6 +50,42 @@ export async function GET(request: Request) {
       report.serverJsSnippet = serverJsContent.substring(0, 300);
     }
 
+    // Prisma DB Connection Check
+    try {
+      const { prisma } = await import('@/shared/lib/prisma');
+      const testCount = await prisma.user.count();
+      report.databaseConnection = 'SUCCESS';
+      report.databaseUserCount = testCount;
+    } catch (dbErr: any) {
+      report.databaseConnection = 'FAILED';
+      report.databaseError = dbErr.message;
+    }
+
+    // Check important environment variables (without revealing their actual secrets)
+    report.envCheck = {
+      DATABASE_URL: process.env.DATABASE_URL ? (process.env.DATABASE_URL.includes('veritabani_kullanicisi') ? 'PLACEHOLDER' : 'CONFIGURED') : 'MISSING',
+      GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID ? (process.env.GOOGLE_CLIENT_ID.includes('mock_') ? 'PLACEHOLDER' : 'CONFIGURED') : 'MISSING',
+      GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET ? (process.env.GOOGLE_CLIENT_SECRET.includes('mock_') ? 'PLACEHOLDER' : 'CONFIGURED') : 'MISSING',
+      NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ? (process.env.NEXTAUTH_SECRET.includes('auth_key_') ? 'PLACEHOLDER' : 'CONFIGURED') : 'MISSING',
+      NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'MISSING',
+      REPLICATE_API_TOKEN: process.env.REPLICATE_API_TOKEN ? 'CONFIGURED' : 'MISSING',
+      SMTP_PASS: process.env.SMTP_PASS ? (process.env.SMTP_PASS.includes('email_password') ? 'PLACEHOLDER' : 'CONFIGURED') : 'MISSING',
+      SHOPIER_API_SECRET: process.env.SHOPIER_API_SECRET ? 'CONFIGURED' : 'MISSING',
+    };
+
+    // Read stderr.log if exists
+    try {
+      const logPath = path.join(process.cwd(), 'stderr.log');
+      if (fs.existsSync(logPath)) {
+        const logContent = fs.readFileSync(logPath, 'utf8');
+        report.stderrLog = logContent.split('\n').slice(-25).join('\n'); // Last 25 lines
+      } else {
+        report.stderrLog = 'No stderr.log found';
+      }
+    } catch (err: any) {
+      report.stderrLog = 'Error reading log: ' + err.message;
+    }
+
     // Node & Environment info
     report.nodeVersion = process.version;
     report.env = {
@@ -63,3 +99,4 @@ export async function GET(request: Request) {
 
   return NextResponse.json(report);
 }
+

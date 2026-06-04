@@ -7,7 +7,18 @@ const SHOPIER_API_SECRET = process.env.SHOPIER_API_SECRET || "MOCK_SECRET";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    let body: any = {};
+    const contentType = req.headers.get("content-type") || "";
+
+    if (contentType.includes("application/json")) {
+      body = await req.json();
+    } else {
+      // Shopier webhook istekleri genellikle application/x-www-form-urlencoded gelir
+      const formData = await req.formData();
+      formData.forEach((value, key) => {
+        body[key] = value;
+      });
+    }
 
     // Shopier'den gelen standart webhook parametreleri
     const { 
@@ -47,11 +58,20 @@ export async function POST(req: Request) {
     }
 
     // 3. Kullanıcıyı Bul ve Kredi Ekle
-    // custom_params içerisinden satın alınan paket miktarını veya e-posta adresini alıyoruz
-    // Şimdilik demo olduğu için varsayılan bir paket (örneğin 50 kredi) ekliyoruz.
-    const creditsToAdd = parseInt(custom_params?.packageCredits || "50", 10);
+    // custom_params string (JSON) olarak gelirse parse edip alıyoruz
+    let customParamsObj: any = {};
+    if (typeof custom_params === "string") {
+      try {
+        customParamsObj = JSON.parse(custom_params);
+      } catch (err) {
+        console.warn("[SHOPIER WEBHOOK] custom_params parse edilemedi:", err);
+      }
+    } else if (custom_params && typeof custom_params === "object") {
+      customParamsObj = custom_params;
+    }
 
-    const userEmail = custom_params?.email || buyer_email;
+    const creditsToAdd = parseInt(customParamsObj.packageCredits || "50", 10);
+    const userEmail = customParamsObj.email || buyer_email;
 
     if (!userEmail) {
       return NextResponse.json({ message: 'User email not found in webhook payload' }, { status: 400 });

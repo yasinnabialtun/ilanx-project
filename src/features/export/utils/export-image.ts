@@ -22,7 +22,7 @@ function addWatermark(canvas: Canvas): import("fabric").FabricObject[] | null {
   
   for (let y = -h/2; y < h * 1.5; y += stepY) {
     for (let x = -w/2; x < w * 1.5; x += stepX) {
-      const text = new IText("İLANX İLE TASARLANDI - DEMO", {
+      const text = new IText("ilanx.com.tr ile tasarlandı", {
         left: x,
         top: y,
         fontSize: fontSize,

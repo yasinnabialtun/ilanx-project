@@ -52,11 +52,24 @@ export const PaywallModal = ({ isOpen, onClose }: PaywallModalProps) => {
       
       const data = await response.json();
       
-      if (data.checkoutUrl) {
-        // Redirect to Shopier payment page
-        window.location.href = data.checkoutUrl;
+      if (data.success && data.action && data.inputs) {
+        // Shopier expects a form POST to redirect to checkout page
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = data.action;
+        
+        Object.entries(data.inputs).forEach(([key, val]) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = val as string;
+          form.appendChild(input);
+        });
+        
+        document.body.appendChild(form);
+        form.submit();
       } else {
-        alert("Ödeme altyapısına bağlanırken bir sorun oluştu.");
+        alert(data.message || "Ödeme altyapısına bağlanırken bir sorun oluştu.");
         setLoadingPkg(null);
       }
     } catch (error) {

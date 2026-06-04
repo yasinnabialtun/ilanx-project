@@ -48,3 +48,10 @@ next-env.d.ts
 
 # Safe Data Storage
 .data/*.json
+
+# Exclude local temp / chat history files
+tum_sohbetler.md
+current-screen.png
+.chrome-profile/
+.continue/
+
