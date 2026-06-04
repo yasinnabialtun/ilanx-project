@@ -44,7 +44,6 @@ export async function POST(req: Request) {
 
     // Create a prediction using minimax/video-01 model
     const prediction = await replicate.predictions.create({
-      version: "10b809a7b9736fdb354978ab7c0eec7ce1dd427a149a4f4dcfbc00d720b0051e", // Minimax/video-01 current version ID (or use model name if supported directly)
       model: "minimax/video-01",
       input: {
         prompt: prompt || "Luxury real estate, cinematic camera pan, beautiful lighting",
