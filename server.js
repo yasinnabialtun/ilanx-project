@@ -18,6 +18,17 @@ if (!hasBuild || forceBuild) {
   // ============================================================
   console.log(`> Starting auto-build (hasBuild: ${hasBuild}, forceBuild: ${forceBuild})...`);
   
+  // Clean old build folders and node_modules for clean installation
+  try {
+    const nodeModulesDir = path.join(__dirname, 'node_modules');
+    if (fs.existsSync(nodeModulesDir)) {
+      fs.rmSync(nodeModulesDir, { recursive: true, force: true });
+      console.log('> Deleted old node_modules directory for clean installation.');
+    }
+  } catch (err) {
+    console.error('> Error deleting node_modules directory:', err.message);
+  }
+
   if (forceBuild) {
     try {
       const nextDir = path.join(__dirname, '.next');
@@ -87,10 +98,17 @@ if (!hasBuild || forceBuild) {
       const step = steps[i];
       logs.push(`--- ${step.name} ---`);
 
+      const stepEnv = { ...process.env, NEXT_DISABLE_TURBOPACK: '1' };
+      if (step.name.includes('npm install')) {
+        stepEnv.NODE_ENV = 'development';
+      } else {
+        stepEnv.NODE_ENV = 'production';
+      }
+
       const child = exec(step.cmd, {
         maxBuffer: 1024 * 1024 * 50,
         cwd: __dirname,
-        env: { ...process.env, NODE_ENV: 'production', NEXT_DISABLE_TURBOPACK: '1' }
+        env: stepEnv
       });
 
       child.stdout.on('data', (d) => { 
