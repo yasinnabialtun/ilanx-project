@@ -73,8 +73,10 @@ if (!hasBuild || forceBuild) {
     console.log(`> Build status page on http://localhost:${port}`);
 
     // Run build steps sequentially
+    const maxPollTime = 15 * 60 * 1000;
     const steps = [
       { name: '📦 npm install', cmd: 'npm install --no-audit --no-fund' },
+      { name: '🔧 prisma generate', cmd: 'npx prisma generate' },
       { name: '🏗️ next build', cmd: 'npx next build --webpack' },
     ];
 
