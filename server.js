@@ -77,6 +77,7 @@ if (!hasBuild || forceBuild) {
     const steps = [
       { name: '📦 npm install', cmd: 'npm install --no-audit --no-fund' },
       { name: '🔧 prisma generate', cmd: 'npx prisma generate' },
+      { name: '🗄️ prisma db push', cmd: 'npx prisma db push' },
       { name: '🏗️ next build', cmd: 'npx next build --webpack' },
     ];
 
