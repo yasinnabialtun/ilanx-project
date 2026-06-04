@@ -9,6 +9,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "mock_client_id",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "mock_client_secret",
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
   session: {
