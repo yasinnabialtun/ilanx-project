@@ -2,10 +2,9 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { Menu, X, Sparkles, LogOut, User, PenTool } from "lucide-react"
+import { Menu, X, Sparkles, PenTool, BadgeCheck } from "lucide-react"
 import { useState } from "react"
 import { Button } from "@/shared/components/ui/button"
-import { signIn, signOut, useSession } from "next-auth/react"
 
 const navLinks = [
   { href: "#features", label: "Özellikler" },
@@ -16,7 +15,6 @@ const navLinks = [
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
-  const { data: session } = useSession()
 
   return (
     <motion.header
@@ -41,6 +39,10 @@ export function Navbar() {
             </div>
             <span className="text-xl font-bold text-white">
               İlanX
+            </span>
+            <span className="hidden sm:inline-flex items-center gap-1 ml-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 text-[10px] font-bold text-emerald-400 uppercase tracking-wider">
+              <BadgeCheck className="w-3 h-3" />
+              Ücretsiz
             </span>
           </Link>
 
@@ -70,30 +72,11 @@ export function Navbar() {
                 AI Video (Yeni)
               </Button>
             </Link>
-            
-            {session?.user ? (
-              <div className="flex items-center gap-4 border-l border-white/10 pl-4">
-                <div className="flex items-center gap-2">
-                  {session.user.image ? (
-                    <img src={session.user.image} alt="Profile" className="w-8 h-8 rounded-full border border-white/20" />
-                  ) : (
-                    <div className="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center border border-indigo-500/50">
-                      <User className="w-4 h-4 text-indigo-400" />
-                    </div>
-                  )}
-                  <div className="flex flex-col text-xs">
-                    <span className="text-white font-medium line-clamp-1 max-w-[100px]">{session.user.name}</span>
-                  </div>
-                </div>
-                <button onClick={() => signOut()} className="text-white/50 hover:text-white transition">
-                  <LogOut className="w-4 h-4" />
-                </button>
-              </div>
-            ) : (
-              <Button onClick={() => signIn("google")} size="sm" className="bg-white text-black hover:bg-white/90 font-medium">
-                Google ile Giriş
+            <Link href="/dashboard">
+              <Button size="sm" className="bg-white text-black hover:bg-white/90 font-medium">
+                Hemen Başla
               </Button>
-            )}
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -138,20 +121,11 @@ export function Navbar() {
                     AI Video (Yeni)
                   </Button>
                 </Link>
-                {session?.user ? (
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10 mt-2">
-                    <div className="flex items-center gap-2 text-sm text-white">
-                      <span>{session.user.name}</span>
-                    </div>
-                    <button onClick={() => signOut()} className="text-white/50 hover:text-white p-2">
-                      <LogOut className="w-4 h-4" />
-                    </button>
-                  </div>
-                ) : (
-                  <Button onClick={() => signIn("google")} size="sm" className="w-full bg-white text-black hover:bg-white/90 mt-2">
-                    Google ile Giriş
+                <Link href="/dashboard" onClick={() => setIsOpen(false)}>
+                  <Button size="sm" className="w-full bg-white text-black hover:bg-white/90 font-medium">
+                    Hemen Başla
                   </Button>
-                )}
+                </Link>
               </div>
             </div>
           </motion.div>

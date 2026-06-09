@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { prisma } from "@/shared/lib/prisma";
 import Replicate from "replicate";
 import nodemailer from "nodemailer";
@@ -45,13 +43,23 @@ async function sendVideoEmail(toEmail: string, videoUrl: string) {
   }
 }
 
+// Ensure anonymous (guest) user exists for video attribution
+async function getOrCreateGuestUser(): Promise<string> {
+  const guestEmail = "guest@ilanx.local";
+  let user = await prisma.user.findUnique({ where: { email: guestEmail } });
+  if (!user) {
+    user = await prisma.user.create({
+      data: {
+        email: guestEmail,
+        name: "Misafir Kullanıcı",
+      },
+    });
+  }
+  return user.id;
+}
+
 export async function GET(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session || !session.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
     const { searchParams } = new URL(req.url);
     const jobId = searchParams.get("jobId");
     const prompt = searchParams.get("prompt") || "Yapay Zeka Videosu";
@@ -79,7 +87,6 @@ export async function GET(req: Request) {
       });
 
       if (existingVideo) {
-        // Already processed, just return the data
         return NextResponse.json({
           success: true,
           status: "succeeded",
@@ -88,62 +95,40 @@ export async function GET(req: Request) {
         });
       }
 
-      // First time seeing this succeed -> Save to DB and Send Email
-      const user = await prisma.user.findUnique({
-        where: { email: session.user.email as string },
+      // First time seeing this succeed -> Save to DB as guest user
+      const userId = await getOrCreateGuestUser();
+      const localVideoUrl = await downloadAndSaveVideo(videoUrl as string, jobId);
+
+      const video = await prisma.video.create({
+        data: {
+          userId,
+          url: localVideoUrl,
+          prompt,
+          replicateId: jobId,
+        },
       });
 
-      if (user) {
-        // Download the video to our own server to prevent link expiration
-        const localVideoUrl = await downloadAndSaveVideo(videoUrl as string, jobId);
-
-        const video = await prisma.video.create({
-          data: {
-            userId: user.id,
-            url: localVideoUrl,
-            prompt: prompt,
-            replicateId: jobId, // Mark as processed
-          },
-        });
-
-        // Fire and forget email
-        if (user.email) {
-          sendVideoEmail(user.email, localVideoUrl);
-        }
-
-        return NextResponse.json({
-          success: true,
-          status: "succeeded",
-          videoUrl: localVideoUrl,
-          videoId: video.id,
-        });
-      }
+      return NextResponse.json({
+        success: true,
+        status: "succeeded",
+        videoUrl: localVideoUrl,
+        videoId: video.id,
+      });
     } else if (prediction.status === "failed" || prediction.status === "canceled") {
-      
-      // We also need to make sure we only refund ONCE. 
-      // If the job isn't in our DB, we can't easily track refund state without a new table or flag.
-      // For simplicity, we assume client only triggers this once on failure, or we add a "FailedJob" table.
-      // A quick fix is to write a dummy video record with url="failed" to track it.
-      
       const existingFailed = await prisma.video.findUnique({
         where: { replicateId: jobId }
       });
 
       if (!existingFailed) {
-        const user = await prisma.user.findUnique({
-          where: { email: session.user.email as string },
+        const userId = await getOrCreateGuestUser();
+        await prisma.video.create({
+          data: {
+            userId,
+            url: "FAILED",
+            prompt,
+            replicateId: jobId,
+          },
         });
-        if (user) {
-          // Mark as processed (failed)
-          await prisma.video.create({
-            data: {
-              userId: user.id,
-              url: "FAILED",
-              prompt: prompt,
-              replicateId: jobId,
-            },
-          });
-        }
       }
 
       return NextResponse.json({
@@ -156,7 +141,7 @@ export async function GET(req: Request) {
     // Still processing
     return NextResponse.json({
       success: true,
-      status: prediction.status, // "starting" | "processing"
+      status: prediction.status,
     });
 
   } catch (error) {

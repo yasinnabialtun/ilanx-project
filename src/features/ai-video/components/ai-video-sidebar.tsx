@@ -5,20 +5,15 @@ import { Upload, X, Film, Image as ImageIcon, Sparkles, LayoutTemplate, Clock, M
 import { useAIVideoStore, VideoFormat, VideoDuration, VideoTemplate, VideoMusic, SubtitleStyle } from "../store/use-ai-video-store";
 import { cn } from "@/shared/utils/cn";
 import { Button } from "@/shared/components/ui/button";
-import { LoginModal } from "@/features/auth/components/login-modal";
-import { useSession, signIn } from "next-auth/react";
 
 export const AIVideoSidebar = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
-   
+
   const [importUrl, setImportUrl] = useState("");
   const [isImporting, setIsImporting] = useState(false);
   const [importMessage, setImportMessage] = useState<string | null>(null);
-  
-  const { data: session } = useSession();
-  
+
   const {
     images,
     format,
@@ -149,11 +144,6 @@ export const AIVideoSidebar = () => {
   };
 
   const handleGenerate = async () => {
-    if (!session) {
-      setShowLogin(true);
-      return;
-    }
-
     if (images.length === 0) {
       alert("Lütfen en az 1 görsel yükleyin.");
       return;
@@ -501,11 +491,8 @@ export const AIVideoSidebar = () => {
               Yapay Zeka ile Video Üret
             </>
           )}
-        </Button>
+      </Button>
       </div>
-
-      {/* Modals */}
-      <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
 
     </div>
   );
