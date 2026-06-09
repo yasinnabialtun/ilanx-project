@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Standalone output kaldırıldı - Render build pipeline kullanıyor
 };
 
 export default nextConfig;
