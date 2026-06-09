@@ -15,7 +15,6 @@ export interface AIVideoState {
   prompt: string;
   showLogo: boolean;
   subtitleStyle: SubtitleStyle;
-  credits: number;
   isGenerating: boolean;
   generationProgress: number;
   generationStep: string;
@@ -31,7 +30,6 @@ export interface AIVideoState {
   setPrompt: (prompt: string) => void;
   setShowLogo: (show: boolean) => void;
   setSubtitleStyle: (style: SubtitleStyle) => void;
-  setCredits: (credits: number) => void;
   startGeneration: () => void;
   setGenerationProgress: (progress: number, step: string) => void;
   setResultVideoUrl: (url: string) => void;
@@ -47,7 +45,6 @@ export const useAIVideoStore = create<AIVideoState>((set) => ({
   prompt: '',
   showLogo: true,
   subtitleStyle: 'dynamic',
-  credits: 0, // Start with 0 to trigger paywall
   isGenerating: false,
   generationProgress: 0,
   generationStep: '',
@@ -68,7 +65,6 @@ export const useAIVideoStore = create<AIVideoState>((set) => ({
   setPrompt: (prompt) => set({ prompt }),
   setShowLogo: (showLogo) => set({ showLogo }),
   setSubtitleStyle: (subtitleStyle) => set({ subtitleStyle }),
-  setCredits: (credits) => set({ credits }),
 
   startGeneration: () =>
     set({

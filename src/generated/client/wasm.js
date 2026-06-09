@@ -149,8 +149,7 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   email: 'email',
   emailVerified: 'emailVerified',
-  image: 'image',
-  credits: 'credits'
+  image: 'image'
 };
 
 exports.Prisma.VideoScalarFieldEnum = {
