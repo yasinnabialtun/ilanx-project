@@ -39,7 +39,7 @@ const jsonLd = {
       offers: {
         "@type": "Offer",
         price: "0",
-        description: "Tüm özellikleri ücretsiz test edin. Filigransız çıktılar için lisans edinin.",
+        description: "Tüm özellikler tamamen ücretsizdir. Sınırsız kullanım, hiçbir ücretlendirme yok.",
       },
       description:
         "Emlak danışmanları için profesyonel tasarım ve ilan hazırlama stüdyosu. Daire, villa ve arazi fotoğraflarınızı saniyeler içinde 3D etiketler ve neon sınırlarla dikkat çekici hale getirin.",
@@ -98,7 +98,7 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text:
-              "Evet, sistemi tüm özellikleriyle tamamen ücretsiz test edebilirsiniz. Sadece ücretsiz sürümde indirdiğiniz çıktılarda İlanX filigranı bulunur. Filigransız profesyonel kullanım için lisans satın alabilirsiniz.",
+              "Evet, tamamen ücretsizdir! Hiçbir ücretlendirme yoktur, kredi kartı bilgisi gerekmez, taahhüt yoktur. Tüm özellikleri sınırsız ve ücretsiz kullanabilirsiniz.",
           },
         },
         {
@@ -116,7 +116,7 @@ const jsonLd = {
           acceptedAnswer: {
             "@type": "Answer",
             text:
-              "Lisans türünüze göre belirlenen cihaz limitine kadar farklı cihazlarda kullanabilirsiniz.",
+              "Evet, tüm cihazlarınızda ücretsiz olarak kullanabilirsiniz. Telefon, tablet veya bilgisayar fark etmez, sınırsız cihazda çalışır.",
           },
         },
       ],
