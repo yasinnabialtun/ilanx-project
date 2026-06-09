@@ -74,19 +74,7 @@ interface EditorStore {
   autosaveStatus: "idle" | "saving" | "saved";
   setAutosaveStatus: (status: "idle" | "saving" | "saved") => void;
   updateParcelLabel: (id: string, label: string) => void;
-  
-  // Licensing states
-  isLicensed: boolean;
-  licenseToken: string | null;
-  licenseStatus: "active" | "expired" | "revoked" | null;
-  licenseModalOpen: boolean;
-  isDemoMode: boolean;
-  setLicensed: (isLicensed: boolean) => void;
-  setLicenseToken: (token: string | null) => void;
-  setLicenseStatus: (status: "active" | "expired" | "revoked" | null) => void;
-  setLicenseModalOpen: (isOpen: boolean) => void;
-  setDemoMode: (isDemo: boolean) => void;
-  
+
   // Referral System
   referralModalOpen: boolean;
   setReferralModalOpen: (isOpen: boolean) => void;
@@ -206,17 +194,6 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
         parcel.id === id ? { ...parcel, label } : parcel,
       ),
     })),
-  isLicensed: false,
-  licenseToken: null,
-  licenseStatus: null,
-  licenseModalOpen: false,
-  isDemoMode: true,
-  setLicensed: (isLicensed) => set({ isLicensed }),
-  setLicenseToken: (licenseToken) => set({ licenseToken }),
-  setLicenseStatus: (licenseStatus) => set({ licenseStatus }),
-  setLicenseModalOpen: (licenseModalOpen) => set({ licenseModalOpen }),
-  setDemoMode: (isDemoMode) => set({ isDemoMode }),
-  
   referralModalOpen: false,
   setReferralModalOpen: (referralModalOpen) => set({ referralModalOpen }),
 }));

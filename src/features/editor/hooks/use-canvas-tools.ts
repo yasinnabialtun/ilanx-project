@@ -304,8 +304,6 @@ export function useCanvasTools(
     setEditorCanvas(canvas);
 
     const onAfterRender = () => {
-      // Demo watermark is now applied ONLY during export (export-image.ts)
-      // to keep the drawing canvas clean and fully testable for demo users.
     };
     canvas.on("after:render", onAfterRender);
 
@@ -483,8 +481,6 @@ export function useCanvasTools(
     };
 
     const onDblClick = async (opt: { target?: FabricObject }) => {
-      const isLicensed = useEditorStore.getState().isLicensed;
-
       const target = opt.target;
       if (!target) return;
       const data = target.get?.("data") as { type?: string; label?: string; id?: string; text3dSettings?: any } | null;
@@ -865,7 +861,6 @@ export function useCanvasTools(
     clearPolygonPreview(canvas);
     dragRef.current = { active: false, startX: 0, startY: 0, preview: null };
 
-    const isLicensed = useEditorStore.getState().isLicensed;
     const isSelect = (activeTool === "select" || activeTool === "logo");
     const isPan = activeTool === "pan";
     const isPencil = activeTool === "pencil";
@@ -1212,7 +1207,6 @@ export function useCanvasTools(
 
       const isMac = navigator.userAgent.toLowerCase().includes("mac");
       const cmdKey = isMac ? e.metaKey : e.ctrlKey;
-      const isLicensed = useEditorStore.getState().isLicensed;
 
       const canvas = canvasRef.current;
       if (!canvas) return;

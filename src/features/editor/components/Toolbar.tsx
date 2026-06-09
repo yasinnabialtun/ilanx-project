@@ -84,7 +84,6 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
   const setTool = useEditorStore((s) => s.setTool);
   const isSidePanelOpen = useEditorStore((s) => s.isSidePanelOpen);
   const setSidePanelOpen = useEditorStore((s) => s.setSidePanelOpen);
-  const isLicensed = useEditorStore((s) => s.isLicensed);
   const [mobileToolsOpen, setMobileToolsOpen] = useState(false);
 
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,30 +105,25 @@ export function Toolbar({ onImageLoaded }: ToolbarProps) {
     e.target.value = "";
   };
 
-  const handleExportWithDemoCheck = async (exportFn: () => Promise<void> | void) => {
-    if (!hasBackground) {
-      // Eğer resim yüklenmemişse buton zaten pasif ama güvenlik amaçlı sessizce dönüyoruz.
-      return;
-    }
-    // Demo modunda ise (lisanssız), arka planda sisteme eklenmiş olan filigranla sessizce ve pürüzsüzce indirir.
-    // Kullanıcıyı window.prompt veya alert ile ASLA rahatsız etmeyiz.
+  const handleExport = async (exportFn: () => Promise<void> | void) => {
+    if (!hasBackground) return;
     await exportFn();
   };
 
   const handleSave = () => {
-    handleExportWithDemoCheck(() => {
+    handleExport(() => {
       exportEditorImage(`ilanx-tasarim-${new Date().toISOString().slice(0, 10)}.png`);
     });
   };
 
   const handleSavePdf = () => {
-    handleExportWithDemoCheck(() => {
+    handleExport(() => {
       exportEditorPdf(`ilanx-tasarim-${new Date().toISOString().slice(0, 10)}.pdf`);
     });
   };
 
   const handleSaveVideo = () => {
-    handleExportWithDemoCheck(async () => {
+    handleExport(async () => {
       await exportEditorVideo();
     });
   };

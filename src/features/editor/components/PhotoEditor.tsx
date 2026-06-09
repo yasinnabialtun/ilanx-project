@@ -19,7 +19,6 @@ import { Toolbar } from "./Toolbar";
 import { EmptyState } from "./EmptyState";
 import { TimelineControls } from "./TimelineControls";
 import { useEditorStore } from "@/features/editor/store/editorStore";
-import { LicenseModal } from "./LicenseModal";
 
 import { ReferralModal } from "./ReferralModal";
 
@@ -61,139 +60,6 @@ export function PhotoEditor() {
 
     return () => clearInterval(interval);
   }, [isRecordingVideo, exportOptions.duration]);
-
-  // License state from Zustand
-  const isLicensed = useEditorStore((s) => s.isLicensed);
-  const setLicensed = useEditorStore((s) => s.setLicensed);
-  const setLicenseToken = useEditorStore((s) => s.setLicenseToken);
-  const setLicenseStatus = useEditorStore((s) => s.setLicenseStatus);
-  const setDemoMode = useEditorStore((s) => s.setDemoMode);
-  const setLicenseModalOpen = useEditorStore((s) => s.setLicenseModalOpen);
-
-  // Security Guard: Domain Lock & Anti-Debugging (DevTools Prevention)
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const hostname = window.location.hostname;
-    // Alan adı kilit mekanizması devre dışı bırakıldı. İstediğiniz her domaine kurabilirsiniz.
-    const isAllowed = true;
-    if (!isAllowed) {
-      document.body.innerHTML = `
-        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background-color:#09090b;color:#ffffff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;text-align:center;padding:20px;">
-          <div style="margin-bottom:20px;padding:15px;background-color:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.2);border-radius:16px;color:#ef4444;font-size:32px;font-weight:bold;">⚠️</div>
-          <h1 style="color:#ef4444;font-size:24px;margin-bottom:10px;font-weight:700;">Yetkisiz Alan Adı Kullanımı</h1>
-          <p style="color:#a1a1aa;font-size:14px;max-width:420px;line-height:1.6;margin:0 auto 24px auto;">
-            Bu yazılımın lisanssız bir kopyasını kullanıyorsunuz. İlanX editörü bu alan adında çalıştırılmak üzere yetkilendirilmemiştir.
-          </p>
-          <a href="/" style="display:inline-block;padding:12px 24px;background-color:#06b6d4;color:white;text-decoration:none;border-radius:12px;font-weight:600;font-size:14px;transition:all 0.2s;">
-            Ana Sayfaya Git
-          </a>
-        </div>
-      `;
-      return;
-    }
-
-    // 2. Anti-Debugging: Detect DevTools and auto-lock in production
-    if (hostname !== "localhost" && hostname !== "127.0.0.1") {
-      const interval = setInterval(() => {
-        const startTime = performance.now();
-        debugger; // Halts browser if developer tools are open
-        const endTime = performance.now();
-        
-        // If execution paused longer than 100ms, DevTools is active
-        if (endTime - startTime > 100) {
-          useEditorStore.getState().setLicensed(false);
-          useEditorStore.getState().setDemoMode(true);
-          useEditorStore.getState().setLicenseModalOpen(true);
-        }
-      }, 1500);
-
-      return () => clearInterval(interval);
-    }
-  }, []);
-
-  // App startup & verification logic
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const verifyExistingToken = async () => {
-      const token = localStorage.getItem("ilanx_license_token");
-      if (!token) {
-        // No token — user is in demo mode, skip API call entirely (avoids 401 console errors)
-        setDemoMode(true);
-        setLicensed(false);
-        return;
-      }
-
-      try {
-        const res = await fetch("/api/license/status", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await res.json();
-        if (res.ok && data.valid) {
-          setLicensed(true);
-          setLicenseToken(token);
-          setLicenseStatus("active");
-          setDemoMode(false);
-        } else {
-          // Token expired or invalid
-          localStorage.removeItem("ilanx_license_token");
-          localStorage.removeItem("ilanx_license_status");
-          setLicensed(false);
-          setDemoMode(true);
-          setLicenseModalOpen(true);
-        }
-      } catch {
-        // Network error, load cached values with 24h grace period
-        const cachedStatus = localStorage.getItem("ilanx_license_status");
-        if (cachedStatus === "active") {
-          setLicensed(true);
-          setDemoMode(false);
-        } else {
-          setLicenseModalOpen(true);
-        }
-      }
-    };
-
-    verifyExistingToken();
-  }, [setLicensed, setLicenseToken, setLicenseStatus, setDemoMode, setLicenseModalOpen]);
-
-  // Hourly re-validation interval (auto background check)
-  useEffect(() => {
-    if (!isLicensed) return;
-
-    const interval = setInterval(async () => {
-      const token = localStorage.getItem("ilanx_license_token");
-      if (!token) {
-        setLicensed(false);
-        setDemoMode(true);
-        setLicenseModalOpen(true);
-        return;
-      }
-
-      try {
-        const res = await fetch("/api/license/status", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const data = await res.json();
-        if (!res.ok || !data.valid) {
-          localStorage.removeItem("ilanx_license_token");
-          localStorage.removeItem("ilanx_license_status");
-          setLicensed(false);
-          setDemoMode(true);
-          setLicenseModalOpen(true);
-        }
-      } catch {
-        // Ignore temporary network errors during background check
-      }
-    }, 3600000); // 1 hour
-
-    return () => clearInterval(interval);
-  }, [isLicensed, setLicensed, setDemoMode, setLicenseModalOpen]);
 
   // Check orientation for landscape advisor on mobile
   useEffect(() => {
@@ -513,9 +379,6 @@ export function PhotoEditor() {
           </div>
         </div>
       )}
-
-      {/* Licensing Modal */}
-      <LicenseModal />
 
       {/* Referral/Gift Modal */}
       <ReferralModal />

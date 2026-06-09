@@ -74,7 +74,6 @@ export function SidePanel() {
   const isSidePanelOpen = useEditorStore((s) => s.isSidePanelOpen);
   const setSidePanelOpen = useEditorStore((s) => s.setSidePanelOpen);
   const canvasLayers = useEditorStore((s) => s.canvasLayers);
-  const isLicensed = useEditorStore((s) => s.isLicensed);
 
   const drawSettings = useEditorStore((s) => s.drawSettings);
   const setDrawSettings = useEditorStore((s) => s.setDrawSettings);
@@ -148,25 +147,6 @@ export function SidePanel() {
           lg:relative lg:inset-auto lg:z-0 lg:bg-card lg:shadow-none
         `}
       >
-        {!isLicensed && (
-          <div className="mx-0 mb-3 rounded-xl border border-cyan-500/20 bg-cyan-500/10 p-3 text-center flex flex-col items-center">
-            <div className="flex items-center justify-center gap-2 mb-1">
-              <Sparkles className="size-4 text-cyan-400 animate-pulse" />
-              <p className="text-xs text-cyan-400 font-bold">🎁 Demo Modu Aktif</p>
-            </div>
-            <p className="text-[10px] text-zinc-300 leading-tight">
-              Tüm özellikleri ücretsiz test edebilirsiniz. İndirilen çıktılarda filigran yer alacaktır.
-            </p>
-            <button
-              type="button"
-              onClick={() => useEditorStore.getState().setLicenseModalOpen(true)}
-              className="mt-2 rounded-lg bg-cyan-500/20 px-3 py-1 text-[10px] font-semibold text-cyan-300 hover:bg-cyan-500/30 transition-colors w-full cursor-pointer border border-cyan-500/30"
-            >
-              Lisansı Etkinleştir / Kaldır
-            </button>
-          </div>
-        )}
-
         <div className="flex items-center justify-between border-b border-border pb-2 mb-1">
           <span className="text-sm font-semibold text-foreground flex items-center gap-2">
             <Sparkles className="size-4 text-primary animate-pulse" />

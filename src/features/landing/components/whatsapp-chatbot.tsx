@@ -5,9 +5,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send } from "lucide-react";
 
 const quickMessages = [
-  { label: "📋 Lisans fiyat bilgisi", message: "Merhaba, İlanX lisans fiyatı hakkında bilgi almak istiyorum." },
-  { label: "🎯 Demo desteği", message: "Merhaba, İlanX demo modunda yardıma ihtiyacım var." },
-  { label: "🔑 Lisans aktivasyonu", message: "Merhaba, İlanX lisans anahtarımı aktifleştirmek istiyorum." },
+  { label: "🚀 Yeni özellik önerisi", message: "Merhaba, İlanX için yeni bir özellik önermek istiyorum." },
+  { label: "🎨 Editör kullanımı", message: "Merhaba, İlanX editörünü nasıl kullanacağım hakkında yardım istiyorum." },
+  { label: "🐛 Hata bildirimi", message: "Merhaba, İlanX kullanırken bir hata ile karşılaştım." },
   { label: "💬 Genel soru", message: "Merhaba, İlanX hakkında bir sorum var." },
 ];
 

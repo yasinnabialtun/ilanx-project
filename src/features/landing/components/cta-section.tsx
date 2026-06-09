@@ -89,7 +89,7 @@ export function CTASection({ content }: CTAProps) {
             transition={{ delay: 0.6 }}
             className="mt-6 text-sm text-muted-foreground"
           >
-            ✓ Tüm özellikleri ücretsiz test et &nbsp;&nbsp; ✓ Filigransız kullanım için lisans al &nbsp;&nbsp; ✓ Kurulum yok, tarayıcıda çalışır
+            ✓ Tamamen ücretsiz &nbsp;&nbsp; ✓ Limitsiz tüm özellikler &nbsp;&nbsp; ✓ Kurulum yok, tarayıcıda çalışır
           </motion.p>
         </motion.div>
       </div>

@@ -2,54 +2,6 @@ import type { Canvas } from "fabric";
 import jsPDF from "jspdf";
 import type { VideoExportQuality } from "@/shared/types";
 import { telemetry } from "@/core/utils/telemetry";
-import { useEditorStore } from "@/features/editor/store/editorStore";
-import { IText, Rect } from "fabric";
-
-function addWatermark(canvas: Canvas): import("fabric").FabricObject[] | null {
-  const isLicensed = useEditorStore.getState().isLicensed;
-  if (isLicensed) return null;
-  
-  const w = canvas.getWidth();
-  const h = canvas.getHeight();
-  // Yazı boyutunu görselin genişliğine göre dinamik ayarla
-  const fontSize = Math.max(w * 0.04, 32);
-  
-  const watermarks: import("fabric").FabricObject[] = [];
-  
-  // Şeritleri sık yerleştirmek için adımları belirle
-  const stepY = h / 4;
-  const stepX = w / 2;
-  
-  for (let y = -h/2; y < h * 1.5; y += stepY) {
-    for (let x = -w/2; x < w * 1.5; x += stepX) {
-      const text = new IText("ilanx.com.tr ile tasarlandı", {
-        left: x,
-        top: y,
-        fontSize: fontSize,
-        fontFamily: "Montserrat, sans-serif",
-        fontWeight: "900",
-        fill: "rgba(255, 255, 255, 0.45)", // Yarı saydam beyaz
-        stroke: "rgba(0, 0, 0, 0.7)",      // Siyah kalın dış çizgi
-        strokeWidth: Math.max(1, fontSize * 0.05),
-        textAlign: "center",
-        originX: "center",
-        originY: "center",
-        angle: -35,                        // Çapraz yerleşim
-        selectable: false,
-        evented: false,
-      });
-      watermarks.push(text);
-      canvas.add(text);
-    }
-  }
-  
-  return watermarks;
-}
-
-function removeWatermark(canvas: Canvas, watermarks: import("fabric").FabricObject[] | null) {
-  if (!watermarks) return;
-  watermarks.forEach((w) => canvas.remove(w));
-}
 
 export async function resizeImageFile(file: File): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -71,7 +23,7 @@ export async function resizeImageFile(file: File): Promise<string> {
           reject(new Error('Failed to get 2D context from canvas'));
           return;
         }
-        
+
         ctx.drawImage(img, 0, 0, width, height);
         resolve(canvas.toDataURL('image/jpeg', 0.92));
       };
@@ -91,8 +43,6 @@ export function downloadCanvasImage(canvas: Canvas, filename?: string) {
     canvas.discardActiveObject();
     canvas.requestRenderAll();
   }
-  const watermark = addWatermark(canvas);
-  canvas.requestRenderAll();
 
   let dataUrl: string;
   const img = canvas.backgroundImage;
@@ -130,9 +80,6 @@ export function downloadCanvasImage(canvas: Canvas, filename?: string) {
     dataUrl = canvas.toDataURL({ format: "png", quality: 1.0, multiplier: 1 });
   }
 
-
-  removeWatermark(canvas, watermark);
-
   // Restore selection
   if (activeObject) {
     canvas.setActiveObject(activeObject);
@@ -141,7 +88,7 @@ export function downloadCanvasImage(canvas: Canvas, filename?: string) {
 
   const a = document.createElement("a");
   a.href = dataUrl;
-  a.download = filename ?? `arsa-isaretleme-${Date.now()}.png`;
+  a.download = filename ?? `ilanx-tasarim-${Date.now()}.png`;
   a.click();
   stopTimer();
 }
@@ -153,8 +100,6 @@ export function downloadCanvasPdf(canvas: Canvas, filename?: string) {
     canvas.discardActiveObject();
     canvas.requestRenderAll();
   }
-  const watermark = addWatermark(canvas);
-  canvas.requestRenderAll();
 
   let dataUrl: string;
   const img = canvas.backgroundImage;
@@ -190,7 +135,6 @@ export function downloadCanvasPdf(canvas: Canvas, filename?: string) {
     dataUrl = canvas.toDataURL({ format: "jpeg", quality: 0.95, multiplier: 1 });
   }
 
-  removeWatermark(canvas, watermark);
   if (activeObject) {
     canvas.setActiveObject(activeObject);
     canvas.requestRenderAll();
@@ -199,7 +143,7 @@ export function downloadCanvasPdf(canvas: Canvas, filename?: string) {
   const orientation = width > height ? 'l' : 'p';
   const doc = new jsPDF(orientation, 'px', [width, height]);
   doc.addImage(dataUrl, 'JPEG', 0, 0, width, height);
-  doc.save(filename ?? `arsa-isaretleme-${Date.now()}.pdf`);
+  doc.save(filename ?? `ilanx-tasarim-${Date.now()}.pdf`);
   stopTimer();
 }
 
@@ -227,9 +171,6 @@ export function downloadCanvasVideo(
       const origVpt = (canvas.viewportTransform ? [...canvas.viewportTransform] : [1, 0, 0, 1, 0, 0]) as import("fabric").TMat2D;
       const origZoom = canvas.getZoom();
 
-      const watermark = addWatermark(canvas);
-      canvas.requestRenderAll();
-
       const img = canvas.backgroundImage;
       let scale = 1;
 
@@ -237,7 +178,7 @@ export function downloadCanvasVideo(
       if (img && typeof img !== 'string') {
         let targetWidth = img.width ?? 1;
         let targetHeight = img.height ?? 1;
-        
+
         let maxSize = 1280; // default medium (720p)
         if (quality === "low") maxSize = 854;
         if (quality === "high") maxSize = 1920;
@@ -254,11 +195,11 @@ export function downloadCanvasVideo(
           targetWidth = Math.round(targetWidth * scale);
           targetHeight = Math.round(targetHeight * scale);
         }
-        
+
         // Force even dimensions to ensure encoder compatibility on all browsers
         if (targetWidth % 2 !== 0) targetWidth += 1;
         if (targetHeight % 2 !== 0) targetHeight += 1;
-        
+
         canvas.setDimensions({ width: targetWidth, height: targetHeight });
         canvas.setViewportTransform([scale, 0, 0, scale, 0, 0]);
         canvas.setZoom(scale);
@@ -303,7 +244,6 @@ export function downloadCanvasVideo(
       };
 
       recorder.onstop = () => {
-        removeWatermark(canvas, watermark);
         // Restore original canvas size and zoom
         canvas.setDimensions({ width: cw, height: ch });
         canvas.setViewportTransform(origVpt);
@@ -315,7 +255,7 @@ export function downloadCanvasVideo(
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `arsa-plan-${Date.now()}.${extension}`;
+        a.download = `ilanx-tasarim-${Date.now()}.${extension}`;
         a.click();
         URL.revokeObjectURL(url);
         stopTimer();
