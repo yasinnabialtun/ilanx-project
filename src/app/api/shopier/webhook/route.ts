@@ -70,26 +70,15 @@ export async function POST(req: Request) {
       customParamsObj = custom_params;
     }
 
-    const creditsToAdd = parseInt(customParamsObj.packageCredits || "50", 10);
     const userEmail = customParamsObj.email || buyer_email;
 
     if (!userEmail) {
       return NextResponse.json({ message: 'User email not found in webhook payload' }, { status: 400 });
     }
 
-    // Krediyi güncelle
-    const updatedUser = await prisma.user.update({
-      where: { email: userEmail },
-      data: {
-        credits: {
-          increment: creditsToAdd
-        }
-      }
-    });
+    console.log(`[SHOPIER WEBHOOK] Payment received: ${userEmail}`);
 
-    console.log(`[SHOPIER WEBHOOK] Başarılı: ${userEmail} kullanıcısına ${creditsToAdd} kredi eklendi.`);
-
-    return NextResponse.json({ success: true, message: 'Credits updated successfully' });
+    return NextResponse.json({ success: true, message: 'Payment processed successfully' });
 
   } catch (error) {
     console.error('[SHOPIER WEBHOOK ERROR]', error);

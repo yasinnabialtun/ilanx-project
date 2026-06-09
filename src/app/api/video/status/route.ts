@@ -134,12 +134,6 @@ export async function GET(req: Request) {
           where: { email: session.user.email as string },
         });
         if (user) {
-          // Refund 1 credit
-          await prisma.user.update({
-            where: { email: user.email! },
-            data: { credits: user.credits + 1 }, 
-          });
-
           // Mark as processed (failed)
           await prisma.video.create({
             data: {
