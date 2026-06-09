@@ -17,7 +17,6 @@ export default async function AdminPage() {
 
   let userCount = 0;
   let videoCount = 0;
-  let totalCreditsInSystem = 0;
   let allUsers: any[] = [];
   let dbError: string | null = null;
 
@@ -25,11 +24,6 @@ export default async function AdminPage() {
   try {
     userCount = await prisma.user.count();
     videoCount = await prisma.video.count();
-    
-    const users = await prisma.user.findMany({
-      select: { credits: true }
-    });
-    totalCreditsInSystem = users.reduce((acc, user) => acc + user.credits, 0);
 
     allUsers = await prisma.user.findMany({
       orderBy: { email: 'asc' },
@@ -42,7 +36,6 @@ export default async function AdminPage() {
   const stats = {
     userCount,
     videoCount,
-    totalCreditsInSystem,
   };
 
   return (

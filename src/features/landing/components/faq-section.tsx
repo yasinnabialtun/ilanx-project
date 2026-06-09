@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     question: "Denemek ücretli mi? Kredi kartı girecek miyim?",
-    answer: "Hayır, kredi kartı gerekmez. Sisteme girip hemen ücretsiz deneyebilirsiniz. Sadece tüm özellikleri limitsiz ve filigransız kullanmak istediğinizde lisans almanız gerekir.",
+    answer: "Hayır, kredi kartı gerekmez. Sisteme girip hemen ücretsiz kullanmaya başlayabilirsiniz. Tüm özellikler tamamen ücretsizdir. Herhangi bir kredi kartı bilgisi girmenize gerek yoktur.",
   },
 ]
 

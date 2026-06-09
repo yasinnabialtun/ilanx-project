@@ -1,26 +1,23 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { Upload, X, Film, Image as ImageIcon, Sparkles, LayoutTemplate, Clock, MessageSquare, Play, Music, Settings2, GripVertical, ChevronDown, ChevronUp, Link2, Loader2 } from "lucide-react";
+import { Upload, X, Film, Image as ImageIcon, Sparkles, LayoutTemplate, Clock, MessageSquare, Music, Settings2, GripVertical, ChevronDown, ChevronUp, Link2, Loader2 } from "lucide-react";
 import { useAIVideoStore, VideoFormat, VideoDuration, VideoTemplate, VideoMusic, SubtitleStyle } from "../store/use-ai-video-store";
 import { cn } from "@/shared/utils/cn";
 import { Button } from "@/shared/components/ui/button";
-import { PaywallModal } from "./paywall-modal";
 import { LoginModal } from "@/features/auth/components/login-modal";
 import { useSession, signIn } from "next-auth/react";
 
 export const AIVideoSidebar = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [showPaywall, setShowPaywall] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
-  
+   
   const [importUrl, setImportUrl] = useState("");
   const [isImporting, setIsImporting] = useState(false);
   const [importMessage, setImportMessage] = useState<string | null>(null);
   
   const { data: session } = useSession();
-  const dbCredits = session?.user ? (session.user as any).credits : 0;
   
   const {
     images,
@@ -161,16 +158,10 @@ export const AIVideoSidebar = () => {
       alert("Lütfen en az 1 görsel yükleyin.");
       return;
     }
-
-    if (dbCredits <= 0) {
-      setShowPaywall(true);
-      return;
-    }
     
     startGeneration();
     setGenerationProgress(10, "Görseller yükleniyor...");
     
-    // Call the mock server API
     try {
       const response = await fetch("/api/video/generate", {
         method: "POST",
@@ -186,11 +177,7 @@ export const AIVideoSidebar = () => {
       const data = await response.json();
       
       if (!response.ok) {
-        if (response.status === 403) {
-          setShowPaywall(true);
-        } else {
-          alert("Bir hata oluştu: " + data.error);
-        }
+        alert("Bir hata oluştu: " + data.error);
         setResultVideoUrl("");
         startGeneration(); // Toggle off
         return;
@@ -212,18 +199,15 @@ export const AIVideoSidebar = () => {
 
           if (statusData.status === "succeeded") {
             clearInterval(pollInterval);
-            // Note: Assuming setCredits is available or handled via session refresh
             setResultVideoUrl(statusData.videoUrl);
             setGenerationProgress(100, "Tamamlandı!");
             startGeneration(); // Toggle off
           } else if (statusData.status === "failed" || statusData.status === "canceled") {
             clearInterval(pollInterval);
-            alert("Video üretimi başarısız oldu. Krediniz iade edildi.");
+            alert("Video üretimi başarısız oldu.");
             setResultVideoUrl("");
             startGeneration(); // Toggle off
           } else {
-            // Still processing
-            // We just set to a static 50% for visual feedback during processing since we don't have access to prev state directly here
             setGenerationProgress(
               50,
               statusData.status === "processing" ? "Kareler işleniyor..." : "Sırada bekleniyor..."
@@ -515,18 +499,12 @@ export const AIVideoSidebar = () => {
             <>
               <Sparkles className="w-5 h-5 fill-current" />
               Yapay Zeka ile Video Üret
-              {session && (
-                <div className="absolute top-1 right-2 text-[10px] bg-black/30 px-2 py-0.5 rounded-full font-mono">
-                  {dbCredits} Kredi
-                </div>
-              )}
             </>
           )}
         </Button>
       </div>
 
       {/* Modals */}
-      <PaywallModal isOpen={showPaywall} onClose={() => setShowPaywall(false)} />
       <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
 
     </div>

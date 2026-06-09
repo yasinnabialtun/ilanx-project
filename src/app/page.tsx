@@ -13,7 +13,6 @@ import { ProblemSection } from "@/features/landing/components/problem-section";
 import { FAQSection } from "@/features/landing/components/faq-section";
 import { contentDb } from "@/core/db/content-db";
 import { WhatsAppChatbot } from "@/features/landing/components/whatsapp-chatbot";
-import { PricingSection } from "@/features/landing/components/pricing-section";
 import { BeforeAfterShowcase } from "@/features/landing/components/before-after-showcase";
 
 export const dynamic = "force-dynamic";
@@ -145,7 +144,6 @@ export default function Home() {
         <UseCasesSection />
         <TechStackSection />
         <SocialProofSection />
-        <PricingSection />
         <FAQSection />
         <CTASection content={content.cta} />
         <Footer content={content.footer} />

@@ -3,69 +3,18 @@
 import React, { useState, useEffect } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { Navbar } from "@/features/landing/components/navbar";
-import { Video, CreditCard, PlayCircle, Download, ArrowRight, Gift, Copy, Sparkles, Loader2, Play, VideoIcon } from "lucide-react";
+import { Video, PlayCircle, Download, ArrowRight, Copy, Sparkles, Loader2, Play, VideoIcon, PenTool } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
-import { PaywallModal } from "@/features/ai-video/components/paywall-modal";
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
-  const [showPaywall, setShowPaywall] = useState(false);
   const [videos, setVideos] = useState<any[]>([]);
   const [loadingVideos, setLoadingVideos] = useState(true);
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   useEffect(() => {
     if (status === "authenticated") {
       fetchVideos();
-    }
-  }, [status]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const params = new URLSearchParams(window.location.search);
-    const buyPkg = params.get("buy");
-
-    if (buyPkg) {
-      if (status === "authenticated") {
-        const handleAutoPurchase = async () => {
-          setCheckoutLoading(true);
-          try {
-            const response = await fetch("/api/shopier/checkout", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ packageId: buyPkg })
-            });
-            const data = await response.json();
-            if (data.success && data.action && data.inputs) {
-              const form = document.createElement("form");
-              form.method = "POST";
-              form.action = data.action;
-              Object.entries(data.inputs).forEach(([key, val]) => {
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = key;
-                input.value = val as string;
-                form.appendChild(input);
-              });
-              document.body.appendChild(form);
-              form.submit();
-            } else {
-              alert(data.message || "Ödeme altyapısına bağlanırken bir sorun oluştu.");
-              setCheckoutLoading(false);
-            }
-          } catch (err) {
-            console.error("Auto purchase error:", err);
-            alert("Bir hata oluştu.");
-            setCheckoutLoading(false);
-          }
-        };
-        handleAutoPurchase();
-      } else if (status === "unauthenticated") {
-        // Automatically redirect to google login and preserve search query
-        signIn("google", { callbackUrl: window.location.href });
-      }
     }
   }, [status]);
 
@@ -84,13 +33,10 @@ export default function DashboardPage() {
     }
   };
 
-  if (status === "loading" || checkoutLoading) {
+  if (status === "loading") {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-neutral-950 gap-4">
         <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
-        {checkoutLoading && (
-          <p className="text-white/60 text-sm animate-pulse">Ödeme sayfasına güvenli bir şekilde yönlendiriliyorsunuz...</p>
-        )}
       </div>
     );
   }
@@ -111,7 +57,6 @@ export default function DashboardPage() {
     );
   }
 
-  const credits = session?.user ? (session.user as any).credits : 0;
   const user = session?.user as any;
 
   return (
@@ -128,73 +73,46 @@ export default function DashboardPage() {
             <p className="text-white/60">Yapay zeka video stüdyonuza ve geçmiş çalışmalarınıza buradan ulaşabilirsiniz.</p>
           </div>
 
-          {/* Stats & Referral Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {/* Quick Access Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
             
-            {/* Credits Card */}
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-indigo-500/10 rounded-full flex items-center justify-center border border-indigo-500/20">
-                  <CreditCard className="w-6 h-6 text-indigo-400" />
-                </div>
-                <div>
-                  <h3 className="text-white/60 text-sm font-medium">Kalan Krediniz</h3>
-                  <div className="text-3xl font-black text-white">{credits}</div>
-                </div>
-              </div>
-              <Button onClick={() => window.location.href = "/ai-video"} className="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold gap-2">
-                Stüdyoya Git <ArrowRight className="w-4 h-4" />
-              </Button>
-            </div>
-
-            {/* Buy Credits Card */}
-            <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center border border-purple-500/20">
-                  <Sparkles className="w-6 h-6 text-purple-400" />
-                </div>
-                <div>
-                  <h3 className="text-white/60 text-sm font-medium">Kredi Yükle</h3>
-                  <div className="text-sm font-medium text-white/60 mt-1">Shopier ile güvenle</div>
-                </div>
-              </div>
-              <Button onClick={() => setShowPaywall(true)} className="w-full bg-white/10 hover:bg-white/20 text-white font-bold gap-2 border border-white/10">
-                Paketleri İncele
-              </Button>
-            </div>
-
-            {/* Referral / Gift Card */}
-            <div className="bg-gradient-to-br from-emerald-900/40 to-teal-900/40 border border-emerald-500/30 rounded-2xl p-6 relative overflow-hidden group flex flex-col justify-between">
-              <div>
-                <div className="flex justify-between items-start mb-2">
-                  <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-500/30">
-                    <Gift className="w-5 h-5 text-emerald-400" />
+            {/* AI Studio Card */}
+            <Link href="/ai-video">
+              <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(99,102,241,0.2)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-indigo-500/10 rounded-full flex items-center justify-center border border-indigo-500/20">
+                    <Sparkles className="w-6 h-6 text-indigo-400" />
                   </div>
-                  <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-bold px-2 py-1 rounded">BEDAVA KREDİ</span>
+                  <div>
+                    <h3 className="text-white font-bold text-lg">AI Video Stüdyosu</h3>
+                    <div className="text-sm text-white/50">Görsellerden video oluşturun</div>
+                  </div>
                 </div>
-                <h3 className="text-white font-bold text-lg mb-1 mt-2">Arkadaşını Davet Et</h3>
-                <p className="text-emerald-100/60 text-xs mb-4">
-                  Bu linkle kayıt olan her arkadaşınız için siz de o da <strong>+1 Kredi</strong> kazanırsınız.
-                </p>
+                <div className="flex items-center gap-2 text-indigo-400 text-sm font-medium group-hover:gap-3 transition-all">
+                  Stüdyoya Git <ArrowRight className="w-4 h-4" />
+                </div>
               </div>
-              
-              <div className="flex items-center gap-2 bg-black/40 border border-emerald-500/20 rounded-lg p-2 mt-auto">
-                <code className="text-[10px] text-emerald-300 font-mono truncate flex-1">
-                  https://ilanx.com/?ref={user?.id?.substring(0, 8) || "demo"}
-                </code>
-                <button 
-                  onClick={() => {
-                    navigator.clipboard.writeText(`https://ilanx.com/?ref=${user?.id?.substring(0, 8) || "demo"}`);
-                    alert("Kopyalandı!");
-                  }}
-                  className="p-1.5 hover:bg-emerald-500/20 rounded-md transition-colors text-emerald-400 shrink-0"
-                >
-                  <Copy className="w-4 h-4" />
-                </button>
+            </Link>
+
+            {/* Editor Card */}
+            <Link href="/editor">
+              <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-cyan-500/10 rounded-full flex items-center justify-center border border-cyan-500/20">
+                    <PenTool className="w-6 h-6 text-cyan-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-bold text-lg">Arsa İşaretleme</h3>
+                    <div className="text-sm text-white/50">3D etiketlerle profesyonel görseller</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-cyan-400 text-sm font-medium group-hover:gap-3 transition-all">
+                  Düzenleyiciye Git <ArrowRight className="w-4 h-4" />
+                </div>
               </div>
-            </div>
+            </Link>
 
           </div>
 
@@ -250,15 +168,18 @@ export default function DashboardPage() {
               /* Empty State placeholder */
               <div className="col-span-full aspect-[9/16] max-w-sm mx-auto border-2 border-dashed border-white/10 rounded-2xl flex flex-col items-center justify-center p-6 text-center bg-white/[0.02]">
                 <VideoIcon className="w-8 h-8 text-white/20 mb-3" />
-                <p className="text-sm text-white/50">Daha fazla video ürettikçe burada listelenecektir.</p>
+                <p className="text-sm text-white/50">Henüz hiç video oluşturmadınız. Hemen stüdyoya gidin ve ilk videonuzu oluşturun.</p>
+                <Link href="/ai-video" className="mt-4">
+                  <Button className="bg-indigo-500 hover:bg-indigo-600 text-white">
+                    AI Video Stüdyosuna Git <ArrowRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
               </div>
             )}
           </div>
         </div>
 
       </main>
-
-      <PaywallModal isOpen={showPaywall} onClose={() => setShowPaywall(false)} />
     </div>
   );
 }

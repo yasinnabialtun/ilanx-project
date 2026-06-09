@@ -19,17 +19,6 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user && token.sub) {
         (session.user as any).id = token.sub;
-        
-        // Fetch credits from db
-        const dbUser = await prisma.user.findUnique({
-          where: { id: token.sub },
-        });
-        
-        if (dbUser) {
-          (session.user as any).credits = dbUser.credits;
-        } else {
-          (session.user as any).credits = 0;
-        }
       }
       return session;
     },

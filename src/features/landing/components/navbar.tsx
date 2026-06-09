@@ -83,7 +83,6 @@ export function Navbar() {
                   )}
                   <div className="flex flex-col text-xs">
                     <span className="text-white font-medium line-clamp-1 max-w-[100px]">{session.user.name}</span>
-                    <span className="text-indigo-400 font-bold">{(session.user as any).credits || 0} Kredi</span>
                   </div>
                 </div>
                 <button onClick={() => signOut()} className="text-white/50 hover:text-white transition">
@@ -143,7 +142,6 @@ export function Navbar() {
                   <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/10 mt-2">
                     <div className="flex items-center gap-2 text-sm text-white">
                       <span>{session.user.name}</span>
-                      <span className="text-indigo-400 font-bold ml-2">{(session.user as any).credits || 0} Kredi</span>
                     </div>
                     <button onClick={() => signOut()} className="text-white/50 hover:text-white p-2">
                       <LogOut className="w-4 h-4" />

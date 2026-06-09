@@ -95,12 +95,6 @@ export async function POST(req: Request) {
     } else if (status === "failed" || status === "canceled") {
       const user = await prisma.user.findUnique({ where: { id: userId } });
       if (user) {
-        // Refund credit
-        await prisma.user.update({
-          where: { id: user.id },
-          data: { credits: user.credits + 1 },
-        });
-
         // Mark as failed
         await prisma.video.create({
           data: {

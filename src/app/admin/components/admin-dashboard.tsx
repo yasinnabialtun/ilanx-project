@@ -34,7 +34,6 @@ interface AdminDashboardProps {
   initialStats: {
     userCount: number;
     videoCount: number;
-    totalCreditsInSystem: number;
   };
   initialUsers: UserData[];
   isGoogleAdmin: boolean;
@@ -42,7 +41,7 @@ interface AdminDashboardProps {
 }
 
 export function AdminDashboard({ initialStats, initialUsers, isGoogleAdmin, dbError }: AdminDashboardProps) {
-  const [activeTab, setActiveTab] = useState<"stats" | "credits" | "licenses" | "cms">("stats");
+  const [activeTab, setActiveTab] = useState<"stats" | "licenses" | "cms">("stats");
   const [adminSecret, setAdminSecret] = useState("");
   
   // Custom states for DB resilience & Client login
@@ -359,17 +358,6 @@ export function AdminDashboard({ initialStats, initialUsers, isGoogleAdmin, dbEr
           Genel Özet
         </button>
         <button
-          onClick={() => setActiveTab("credits")}
-          className={`px-6 py-3 font-semibold text-sm transition-all border-b-2 flex items-center gap-2 whitespace-nowrap ${
-            activeTab === "credits"
-              ? "border-indigo-500 text-indigo-400 bg-indigo-500/[0.02]"
-              : "border-transparent text-white/60 hover:text-white"
-          }`}
-        >
-          <Users className="w-4 h-4" />
-          Müşteri Kredi Yönetimi
-        </button>
-        <button
           onClick={() => setActiveTab("licenses")}
           className={`px-6 py-3 font-semibold text-sm transition-all border-b-2 flex items-center gap-2 whitespace-nowrap ${
             activeTab === "licenses"
@@ -427,32 +415,7 @@ export function AdminDashboard({ initialStats, initialUsers, isGoogleAdmin, dbEr
                 <div className="text-4xl font-black text-white">{stats.videoCount}</div>
               </div>
 
-              <div className="bg-neutral-900 border border-white/10 rounded-2xl p-6 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity" />
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center border border-emerald-500/20">
-                    <CreditCard className="w-6 h-6 text-emerald-400" />
-                  </div>
-                  <h3 className="text-white/60 text-sm font-medium">Piyasadaki Toplam Kredi</h3>
-                </div>
-                <div className="text-4xl font-black text-white">{stats.totalCreditsInSystem}</div>
-              </div>
             </div>
-          )
-        )}
-
-        {/* CREDITS TAB */}
-        {activeTab === "credits" && (
-          dbError ? (
-            <div className="py-12 text-center text-white/40 space-y-4 border border-white/10 rounded-2xl bg-neutral-900">
-              <ShieldAlert className="w-12 h-12 text-red-500 mx-auto animate-pulse" />
-              <h4 className="font-bold text-white text-lg">Veritabanı Bağlantısı Bulunmuyor</h4>
-              <p className="text-sm max-w-md mx-auto">
-                Kullanıcı listesi ve kredi yönetimi için aktif bir veritabanı bağlantısı gereklidir. Lütfen sunucudaki .env dosyasında DATABASE_URL değişkeninin doğru yapılandırıldığından emin olun.
-              </p>
-            </div>
-          ) : (
-            <UserTable initialUsers={users} />
           )
         )}
 

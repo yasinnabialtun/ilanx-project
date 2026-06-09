@@ -11,13 +11,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Get user from DB to check credits
     const user = await prisma.user.findUnique({
       where: { email: session.user.email as string },
     });
 
-    if (!user || user.credits <= 0) {
-      return NextResponse.json({ error: "Yetersiz kredi." }, { status: 403 });
+    if (!user) {
+      return NextResponse.json({ error: "Kullanıcı bulunamadı." }, { status: 404 });
     }
 
     const body = await req.json();
@@ -25,12 +24,6 @@ export async function POST(req: Request) {
     
     // We expect at least one image (Base64) from the frontend for Image-to-Video
     const firstImage = images && images.length > 0 ? images[0] : undefined;
-
-    // Deduct 1 credit immediately
-    await prisma.user.update({
-      where: { email: user.email! },
-      data: { credits: user.credits - 1 },
-    });
 
     const replicate = new Replicate({
       auth: process.env.REPLICATE_API_TOKEN,
@@ -58,7 +51,6 @@ export async function POST(req: Request) {
       success: true,
       jobId: prediction.id,
       status: prediction.status, // "starting" or "processing"
-      remainingCredits: user.credits - 1
     });
 
   } catch (error) {
